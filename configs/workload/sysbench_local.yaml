@@ -1,0 +1,8 @@
+defaults:
+  - base
+  - sysbench
+  - _self_
+
+client:
+  httphost: workload_sb.local
+  httpport: 8080

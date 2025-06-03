@@ -1,0 +1,12 @@
+learn:
+  _target_: bandits.reward.ADBMSBufferCacheRewardNormal2
+  action_minmax: ${...actions.minmax}
+
+
+
+
+test:
+  _target_: bandits.reward.ADBMSBufferCacheRewardNormal2
+  action_minmax: ${...actions.minmax}
+
+

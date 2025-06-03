@@ -1,0 +1,15 @@
+
+# Choose ratio=80 for 80% train and 20% eval/test. Choose ratio=0 for a separation by clients. Ex Train on all Odd wl_clients num and eval/test on even wl_clients num
+#clients: [1,2,3,4,5,6,7,8,9,10,11,12]
+_target_: bandits.datasource.adbms_dataframe.TrainTestDataSets
+testastrain: False
+ratio: 0 # even clients for training & odd clients for tests (eval+tests)
+ratio_eval_test: 50
+version: ${version}
+pickles_path: ./ #${output_path}
+pickles_prefix: ${datasets_prefix}
+perf_level: ${IPERF_LEVEL}
+randtypes: [ "special", "gaussian", "pareto" ]
+clients: [1,2,3,4,5,6,7,8,9,10,11,12]
+seed: 42
+verbose: 1

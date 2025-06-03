@@ -1,0 +1,10 @@
+
+_partial_: true
+_target_: bandits.datasource.adbms_dataframe.ADBMSBufferCacheStatesFullRandomSelector
+seed: ${RND_SEED}
+sla_tipping_field: sla_tipping01
+sigma_tipping_ratio: -0.50 # The sigma value for the random gaussian distribution around the "mean" (or "mu"), the point of SLA tipping. If <0 use the auto-computing based on tipping point.
+qpslat_w: "01"
+context_elems: ${..observations.elems} #tuner.env
+normalize: ${...NORMALIZE_OBS} # tuner.
+

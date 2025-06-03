@@ -1,0 +1,41 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: a2c
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: A2C with Sigmoid reward and hyper params optim with Optuna + gamma with large variation [0.1,1] + fixed ALPHA=0.2 and BETA=0 + Optimized OBS (David) + cleaned WL (c98, Yif)
+
+n_seeds: 4
+n_jobs: 4 # Number of parallel trainings with different seed
+n_trials: 80
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+
+
+learning_rate: 0.0007
+n_steps: 5
+gamma: 0.99
+gae_lambda: 1
+
+hydra:
+  sweeper:
+    params:
+      learning_rate: range(0.0001,0.01, step=0.0005)
+      n_steps: range(3,70, step=5)
+      gamma: range(0.01,1, step=0.05) # Lower value enforce reward values earlier (on first steps)
+      gae_lambda: range(0.1,1, step=0.1)
+
+
+
+tuner:
+  TRAINING_COVERAGE: 9
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      n_steps:  ${n_steps}
+      gamma: ${gamma}
+      gae_lambda: ${gae_lambda}

@@ -1,0 +1,54 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: ppo
+  - override /tuner/env: discrete_actions
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: PPO hyper params optim with Optuna with discrete action space + rew=sigmoidhybriddiscretmoveidelta + ALPHA=0.2 and BETA=0 +  Optimized OBS (David) + cleaned WL (c98, Yif)
+
+n_seeds: 3
+n_jobs: 3 # Number of parallel trainings with different seed
+n_trials: 80
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.2 
+REW_BETA_COEF: 0
+# learning_rate=0.0003, n_steps=2048, batch_size=64, n_epochs=10, gamma=0.99, gae_lambda=0.95, clip_range=0.2, clip_range_vf=None, normalize_advantage=True, 
+# ent_coef=0.0, vf_coef=0.5, max_grad_norm=0.5, use_sde=False, sde_sample_freq=-1, rollout_buffer_class=None, rollout_buffer_kwargs=None, 
+# target_kl=None, stats_window_size=100, 
+# tensorboard_log=None, policy_kwargs=None, verbose=0, seed=None, device='auto', _init_setup_model=True
+learning_rate: 0.0003
+batch_size: 64
+normalize_advantage: False
+n_epochs: 12
+gamma: 0.99
+#use_sde: False  # Works only with continous action space
+
+hydra:
+  sweeper:
+    params:
+      learning_rate: range(0.0001,0.001, step=0.0001)
+      batch_size: choice(16,32,64,128,256)
+      normalize_advantage: choice(True,False)
+      n_epochs: choice(3,6,12,24)
+      gamma: range(0.01,1, step=0.05) # Lower value enforce reward values earlier (on first steps)
+#      use_sde: choice(True,False)
+#      DETERMINISTIC: choice(True,False)
+#      gae_lambda: choice(0.90,0.95,0.98)
+#      clip_range: choice(0.1,0.2,0.4,0.6)
+#      steps_success_count_threshold: choice(8,12)
+
+
+tuner:
+  TRAINING_COVERAGE: 9
+  agent:
+    policy:
+      discrete_arms_mode: True  # This choice must be done in conformance with the choosen Gym Env (discrete or continous) in configuration
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+#      use_sde: ${use_sde}

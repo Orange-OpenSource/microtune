@@ -1,0 +1,10 @@
+defaults:
+  - base_baseline
+  - override env/observations: chr
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_baselines.CacheHitRatioPolicy
+    threshold: 0.96
+

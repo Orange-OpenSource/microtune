@@ -1,0 +1,31 @@
+# Get conf by running --cfg job --resolve
+
+# State selector choices, env/datasource/state_selector:
+# df_fullrandom
+# df_randombuffer - Choix DD avec HSLinUCB mais pb. singular matrix avec KFOO
+# df_sequential - At each reset choose the workload from the current episode index, go to the top or bottom state of the workload as specified by topdown argument.
+# df_fullsequential - Choix PR, Optmal? - Start at the begining of the dataset and go to the next state at each reset. When bottom state is reached, next reset will go to the next workload (auto rewind)
+# df_topdownrocker - Especially for tests Start sequentialy each workload twice. First from Top, second from Bottom
+# df_randomtopdown - Starts randomly at each Reset from Top buffer value or Bottom buffer value
+# db_live - Connected to a live database, at each reset do not touch the buffer value
+
+# All agents:
+# linucb_kfoo (LinUCB)
+# linucb_hs   (HSLinUCB, i.e. HorizontalScaling LinUCB)
+# ppo
+# dqn
+# a2c
+# sac
+# ddpg
+
+# python run_agent.py --cfg job agent/env/state_selector@agent.env.state_selector_train=df_topdownrocker
+
+defaults:
+  - agent
+  - override tuner: bfr
+  - _self_
+
+oracle:
+  actions: ${tuner.actions}
+  reward: ${tuner.reward}
+  

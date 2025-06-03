@@ -1,0 +1,19 @@
+defaults:
+  - env: continous_actions
+  - base_nn
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_sb3.SB3PolicyDDPG
+    policy: "MlpPolicy"
+    action_noise:
+      _target_: bandits.actions.NormalActionNoise
+      noise_sigma: 0.1
+    learning_rate: 0.001
+    seed: ${RND_SEED}
+    verbose: ${verbosity}
+
+
+#policy = SB3PolicyDDPG(actions=reward_learning.actions, ctx=ds_train.contextElems(),
+#                      policy="MlpPolicy", env=env_train, action_noise=action_noise, learning_rate=0.001, verbose=0)

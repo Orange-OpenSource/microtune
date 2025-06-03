@@ -1,0 +1,11 @@
+
+# See: https://stable-baselines3.readthedocs.io/en/master/guide/custom_policy.html
+# For 1D observation space, a 2 layers fully connected net is used with:
+# 64 units (per layer) for PPO/A2C/DQN
+# 256 units for SAC
+# [400, 300] units for TD3/DDPG (values are taken from the original TD3 paper)
+
+policy_kwargs:
+  net_arch: [16, 16]
+  activation_fn: 
+    _target_: torch.nn.ReLU

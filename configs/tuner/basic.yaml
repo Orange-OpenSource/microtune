@@ -1,0 +1,8 @@
+defaults:
+  - base_baseline
+  - override env/observations: basic
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_baselines.BasicPolicy

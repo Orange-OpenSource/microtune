@@ -1,0 +1,82 @@
+
+defaults:
+  - datasets: traintest-full
+#  - override /hydra/sweeper: basic
+  - _self_
+
+version: 11  # Config version. MariaDB since version 8. Mixed dataset V9+V10 in version 11
+datasets_prefix: workloads_c098  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
+version_minor: 58
+
+info: na
+run_info: ${version}_${version_minor}_${hydra:runtime.choices.tuner}-${info}
+
+
+# agent-Experiment-Trial_letter. Trial (job) number will follow the trial letter. No use of ${hydra:job.config_name}
+iterations_name: agent-T
+output_path: ./outputs
+model_cache_path: ${output_path}/cache
+
+pickles_dirname: ${version}_${version_minor}_${hydra:runtime.choices.tuner}
+pickles_disq_dirname: ${pickles_dirname}_disq
+#pickles_path: ${hydra:runtime.cwd}/${pickles_dirname}
+pickles_path: ${output_path}/${pickles_dirname}
+pickles_disq_path: ${output_path}/${pickles_disq_dirname}
+tensorboard_path: ${pickles_path}/tb
+
+# Customizing logging: https://hydra.cc/docs/1.1/configure_hydra/logging/
+#logfile_symlink: ${hydra:runtime.cwd}/${hydra:job.name}-${hydra:job.num}.log
+link2logs: ${pickles_path}/logs/${now:%Y%m%d}_${now:%H%M%S}_${hydra:job.name} #${hydra.job.num} #-${version}_${version_minor} #_${hydra:job.name}
+
+hydra.verbose: true # Accept [NAME1,NAME2] to set DEBUG level to NAME1 and NAME2 loggers
+
+hydra:
+  run:
+    dir: ${link2logs}
+  sweep:
+#    dir: ${logdir} # Not compatible with -m option on CLI
+    subdir: ${hydra:job.name}${hydra.job.num}
+  job_logging:
+    root:
+      # Disable or not console handler (log to file handler only)
+      handlers:
+      - file
+      - console
+  job:
+    env_set:
+      TF_ENABLE_ONEDNN_OPTS: 0 # oneDNN custom operations. Turn off (0) to avoid slightly different numerical results due to floating-point round-off errors from different computation orders
+#      RANK: ${hydra:job.num}  # automatically set the rank for Torch Distributed (https://pytorch.org/tutorials/intermediate/dist_tuto.html) run to match the job number in the sweep
+#    config:
+#      override_dirname:
+#        item_sep: _
+#        exclude_keys:
+#          - seed
+
+hydra_launcher_n_jobs: 1 # Unused when hydra launcher is basic (or joblib?)
+verbosity: 0
+xtraverbosity: 0
+
+graph_renderer: None #browser  # "plotly_mimetype+notebook": Ex: png, jpg, svg, vscode or None
+graph_keep_html: ${xtraverbosity}
+s3_storage: poc/s3selfcare-vstune
+#s3_storage: None
+
+RND_SEED: 4242
+n_seeds: 2
+IPERF_LEVEL: 0.98    # 0.98=20ms [0.9   0.95  0.965 0.98  0.99  0.995 0.997]
+DETERMINISTIC: False # Use Deterministic option in model.predict() function ?
+REW_ALPHA_COEF: -1
+REW_BETA_COEF: -1
+
+
+
+
+
+
+
+# Optuna plugin: https://hydra.cc/docs/plugins/optuna_sweeper/
+# python learn.py hydra/sweeper=optuna --cfg hydra -p hydra.sweeper
+
+# NOT USED 
+# AX plugin:  https://hydra.cc/docs/plugins/ax_sweeper/
+# python learn.py hydra/sweeper=ax --cfg hydra -p hydra.sweeper

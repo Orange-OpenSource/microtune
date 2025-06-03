@@ -1,0 +1,11 @@
+learn:
+  _target_: bandits.reward.ADBMSBufferCacheRewardSigmoid
+  action_minmax: ${...actions.minmax}
+  alpha: ${REW_ALPHA_COEF}
+  beta: ${REW_BETA_COEF}
+
+test:
+  _target_: bandits.reward.ADBMSBufferCacheRewardSigmoid
+  action_minmax: ${...actions.minmax}
+  alpha: ${REW_ALPHA_COEF}
+  beta: ${REW_BETA_COEF}

@@ -1,0 +1,9 @@
+
+defaults:
+  - warmups: shorter
+  - cache: 4GB
+  - variables: mariadb
+  
+host: db.local
+port: 3306
+user: adbms

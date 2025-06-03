@@ -1,0 +1,47 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: dqn
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: DQN with Sigmoid reward and hyper params optim with Optuna + fixed ALPHA=0.2 and BETA=0 + Optimized OBS (David) + cleaned WL (c98, Yif)
+
+n_seeds: 3
+n_jobs: 3 # Number of parallel trainings with different seed
+n_trials: 50
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+# learning_rate=0.0001, buffer_size=1000000, learning_starts=100, batch_size=32, tau=1.0, gamma=0.99, train_freq=4, gradient_steps=1, 
+# replay_buffer_class=None, replay_buffer_kwargs=None, optimize_memory_usage=False, target_update_interval=10000, 
+# exploration_fraction=0.1, exploration_initial_eps=1.0, exploration_final_eps=0.05, max_grad_norm=10, stats_window_size=100, 
+# tensorboard_log=None, policy_kwargs=None, verbose=0, seed=None, device='auto', _init_setup_model=True
+learning_rate: 0.0006
+batch_size: 64
+train_freq: 4
+gamma: 0.99
+
+hydra:
+  sweeper:
+    params:
+      learning_rate: range(0.0003,0.0012, step=0.00003)
+      batch_size: choice(32,64,128)
+      train_freq: choice(2,4,8,16,64, 128)
+      gamma: range(0.90,0.996, step=0.005) # Default 0.99. Lower value enforce reward values earlier (on first steps)
+#      DETERMINISTIC: choice(True,False)
+#      gae_lambda: choice(0.90,0.95,0.98)
+#      clip_range: choice(0.1,0.2,0.4,0.6)
+#      noise_sigma: choice(0.1,0.2,0.3)
+#      steps_success_count_threshold: choice(8,12)
+
+
+tuner:
+  TRAINING_COVERAGE: 9
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      train_freq: ${train_freq}
+      gamma: ${gamma}

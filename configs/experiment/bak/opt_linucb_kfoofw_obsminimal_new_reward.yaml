@@ -1,0 +1,24 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: normal
+  - override /tuner/env/observations: prod_minimal
+  - _self_
+
+info: AlphaBeta Optuna sweep, 5x5 values and misc learning_rate with prod_minima observations
+n_trials: 1 # job.num will be in range [0, n_trials-1]
+
+learning_rate: 0.9
+n_seeds: 1
+
+hydra:
+  sweeper:
+    params:
+      learning_rate: range(0.4, 1.2, step=0.4)
+
+
+tuner:
+  agent:
+    policy:
+      learning_rate: ${learning_rate}

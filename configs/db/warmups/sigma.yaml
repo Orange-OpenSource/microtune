@@ -1,0 +1,9 @@
+# For usage with the latency sigma calculation to decide when the tuning is stable or not (under a constant workload)
+on_start: 150.  # On server's start
+on_buf_update: 55. # On new buffer size modification, max time to wait the stabilisation of the 'latency_sigma' value around the defined value hereafter
+
+# Speed up the waiting time at each buf update !
+# Do not wait up to the on_buf_update time value if in the mean time the sigma latency is acceptable (i.e. the workload runs with stability). 
+# Thus the on_buf_update value becomes a timeout value. 
+#sigma_latency_toleration: 0.05 in v9 
+sigma_latency_toleration: 0.03 

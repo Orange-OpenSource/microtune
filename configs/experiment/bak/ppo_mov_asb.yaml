@@ -1,0 +1,21 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: ppo
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: basic
+  - _self_
+
+info: Move reward idelta, arch_nn and on_terminate. Basic baseline OBS (latency included)
+
+n_seeds: 8
+tuner:
+  TRAINING_COVERAGE: 10
+
+hydra:
+  sweeper:
+    params:
+      tuner.reward.learn.move_idelta: 0,0.003,0.004
+      tuner/arch_nn: dft,nn16x16relu,nn48x48relu
+      tuner.env.wrapper.env.on_terminate: -1,3,8
+

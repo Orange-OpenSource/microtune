@@ -1,0 +1,9 @@
+
+defaults:
+  - warmups: sigma # Sigma method checking the measure server's stability and expect reduced wait time at each step
+  - cache: 8GB
+  - variables: mariadb
+ 
+host: 192.168.0.143 # TUN06
+port: 3306
+user: adbms

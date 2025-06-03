@@ -1,0 +1,20 @@
+defaults:
+  - env: continous_actions
+  - base_nn
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_sb3.SB3PolicySAC
+    policy: "MlpPolicy"
+    learning_rate: 0.0003
+    batch_size: 32
+    action_noise:
+      _target_: bandits.actions.NormalActionNoise
+      noise_sigma: 0.1
+    seed: ${RND_SEED}
+    verbose: ${verbosity}
+
+
+#policy = SB3PolicySAC(actions=reward_learning.actions, ctx=ds_train.contextElems(),
+#                      policy="MlpPolicy", env=env_train, learning_rate=ALPHA*2, seed=RND_SEED, batch_size=TRAINING_STEPS_PER_EPISODE, train_freq=(16, "step"), verbose=0)

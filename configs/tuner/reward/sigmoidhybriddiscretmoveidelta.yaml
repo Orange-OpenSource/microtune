@@ -1,0 +1,13 @@
+learn:
+  _target_: bandits.reward.ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta
+  action_minmax: ${...actions.minmax}
+  move_idelta: 0
+  alpha: ${REW_ALPHA_COEF}
+  beta: ${REW_BETA_COEF}
+
+test:
+  _target_: bandits.reward.ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta
+  action_minmax: ${...actions.minmax}
+  move_idelta: 0
+  alpha: ${REW_ALPHA_COEF}
+  beta: ${REW_BETA_COEF}

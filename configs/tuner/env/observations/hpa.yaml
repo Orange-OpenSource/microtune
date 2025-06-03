@@ -1,0 +1,11 @@
+# HPA baseline observation elements with threshold defined in observations
+
+ext_threshold: None
+
+elems: 
+  - buf_size_idx                      # Index form of the buffer size value [0, 63]
+  - sysbench_filtered.latency_mean    # [0, 1000] ms. Filtered latency from client. In inference/live mode, it should be a predicted value (see predictor.ipynb using XGBoost)
+  - latency_threshold                 # Latency threshold for the SLA
+
+ 
+

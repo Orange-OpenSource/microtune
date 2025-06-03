@@ -1,0 +1,30 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: ppo
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: PPO with fixed hyper-parameters and multiple seeds + Sigmoid reward +  Optimized OBS (Dav.) + cleaned WL (c98, Yif.)
+n_seeds: 10
+n_jobs: 3 # Number of parallel trainings with different seed
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+learning_rate: 0.0007
+batch_size: 64
+normalize_advantage: True
+n_epochs: 3
+gamma: 0.85
+
+
+tuner:
+  TRAINING_COVERAGE: 9
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+#      use_sde: ${use_sde}

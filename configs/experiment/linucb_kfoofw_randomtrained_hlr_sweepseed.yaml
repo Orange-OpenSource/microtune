@@ -1,0 +1,29 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/state_selector@tuner.env.state_selector_train: df_randombuffer # Instead of full sequential
+  - _self_
+
+info: LinUCB with fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  Optimized OBS (Dav.) + cleaned WL (c98, Yif.) and trained randomly on dataset as all SB3 algos
+n_seeds: 1   # Nb seeds per trials
+n_jobs: 1 # Number of parallel trainings with different seed of a trial
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+
+hydra:
+  sweeper:
+    params:
+      RND_SEED: range(4242, 4252, step=1)
+
+tuner:
+  TRAINING_COVERAGE: 9 # Instead of 2. As for SB3 algos
+  TRAINING_STEPS_PER_EPISODE: 68 # Instead of 1. As for SB3 algos
+  agent:
+    policy:
+      learning_rate: 1.4
+
+#      use_sde: ${use_sde}

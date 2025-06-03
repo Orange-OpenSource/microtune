@@ -1,0 +1,67 @@
+# Agent single objective sweeper
+# Get conf by running --cfg job --resolve
+
+# State selector choices, env/datasource/state_selector:
+# df_fullrandom - Choix David D avec HSLinUCB mais pb. singular matrix avec KFOO
+# df_randombuffer 
+# df_sequential - At each reset choose the workload from the current episode index, go to the top or bottom state of the workload as specified by topdown argument.
+# df_fullsequential - Choix PR, Optmal? - Start at the begining of the dataset and go to the next state at each reset. When bottom state is reached, next reset will go to the next workload (auto rewind)
+# df_topdownrocker - Especially for tests Start sequentialy each workload twice. First from Top, second from Bottom
+# df_randomtopdown - Starts randomly at each Reset from Top buffer value or Bottom buffer value
+# db_live - Connected to a live database, at each reset do not touch the buffer value
+
+# All agents:
+# linucb_kfoo (LinUCB)
+# linucb_hs   (HSLinUCB, i.e. HorizontalScaling LinUCB)
+# ppo
+# dqn
+# a2c
+# sac
+# ddpg
+
+# python run_agent.py --cfg job agent/env/state_selector@agent.env.state_selector_train=df_topdownrocker
+
+defaults:
+  - base  # ouput paths, verbosity, ...
+  - workload/base
+  - tuner: linucb_kfoofw
+  - tuner@oracle: oracle
+  - tuner@bfr: bfr
+  - tuner@basic: basic
+  - tuner@hpa: hpa
+  - tuner@chr: chr
+  - override /hydra/launcher: joblib
+  - _self_
+
+n_trials: -1
+n_jobs: 2 # Parallel tasks at each trials (different than parallelized sweeper tasks in sweeper config)
+use_real_perf: True # Use "Real" perf (distance with Oracle) to evaluate the best model else use cumulated Regret
+
+hydra:
+  mode: MULTIRUN
+  sweep:
+    subdir: ${hydra:job.name}${hydra.job.num}-${hydra.job.override_dirname}
+  launcher:
+    n_jobs: 3 # Max jobs in //
+
+# Ensure to use the same reward than the main model
+oracle:
+  reward:
+    test: ${tuner.reward.test}
+
+bfr:
+  reward:
+    test: ${tuner.reward.test}
+
+basic:
+  reward:
+    test: ${tuner.reward.test}
+
+hpa:
+  reward:
+    test: ${tuner.reward.test}
+
+chr:
+  reward:
+    test: ${tuner.reward.test}
+

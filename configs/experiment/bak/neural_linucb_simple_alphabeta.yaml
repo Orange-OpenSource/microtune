@@ -1,0 +1,20 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: neural_linucb
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: Simple run of Neural LinUCB ALPHA coef (0.5, 0.8) involvment, in complement to previous xxx_simple expes 
+
+n_seeds: 1
+REW_ALPHA_COEF: 0.5
+REW_BETA_COEF: 0.2
+
+hydra:
+  sweeper:
+    params:
+      tuner.agent.policy.beta: 0.8,1.2
+      tuner.TRAINING_COVERAGE: 3,5
+      REW_ALPHA_COEF: 0.5,0.8
+

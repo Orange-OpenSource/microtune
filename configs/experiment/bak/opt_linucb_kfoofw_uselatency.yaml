@@ -1,0 +1,28 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: labo_nocolin
+  - _self_
+
+info: Best learning rate with observations (No Colinearity) that use latency and few choices for APHABETA
+
+n_trials: 70 # job.num will be in range [0, n_trials-1]
+REW_ALPHA_COEF: 0.5  # UP Arm, while Down arm use (1-ALPHA)
+REW_BETA_COEF: 0.2
+
+learning_rate: 0.9
+n_seeds: 1
+
+hydra:
+  sweeper:
+    params:
+      learning_rate: range(0.5, 1.2, step=0.05)
+      REW_BETA_COEF: choice(0.1,0.15,0.2)
+      REW_ALPHA_COEF: choice(0.8,0.9,1)
+
+tuner:
+  agent:
+    policy:
+      learning_rate: ${learning_rate}

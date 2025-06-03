@@ -1,0 +1,2 @@
+_target_: bandits.actions.Actions
+minmax: [-1,1]

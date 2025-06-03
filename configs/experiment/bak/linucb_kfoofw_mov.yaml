@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - base_basicsweep
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+n_seeds: 2
+
+hydra:
+  sweeper:
+    params: 
+      tuner.reward.learn.move_idelta: -0.88,-0.68,-0.48,-0.28,-0.10,-0.08,-0.06,-0.04,-0.02,-0.01,-0.005,-0.002,0,0.003,0.006,0.009,0.012,0.015,0.018

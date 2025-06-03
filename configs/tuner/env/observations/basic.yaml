@@ -1,0 +1,12 @@
+# Basic basline policy observations elements
+
+
+elems:
+  - sysbench_filtered.latency_mean    # [0, 1000] ms. Filtered latency from client. In inference/live mode, it should be a predicted value (see predictor.ipynb using XGBoost)
+  - latency_threshold                 # Latency threshold for the SLA
+  - objective_gap
+  - latency_mean_min
+  - latency_mean_max
+
+ 
+

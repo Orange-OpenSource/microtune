@@ -1,0 +1,10 @@
+# HPA baseline observation elements with threshold defined out of the observations
+
+ext_threshold: 0.90
+
+elems: 
+  - buf_size_idx                        # Index form of the buffer size value [0, 63]
+  - observation.cache_used_pages_ratio  # Buffer cache fill rate in [0., 1.]
+
+ 
+

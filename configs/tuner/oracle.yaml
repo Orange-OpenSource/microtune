@@ -1,0 +1,7 @@
+defaults:
+  - base_baseline
+
+env:
+  wrapper_test:
+    perf_meter:
+      baseline: 1 # Oracle is 1, other will be set to higher

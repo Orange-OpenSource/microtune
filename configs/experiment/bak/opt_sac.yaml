@@ -1,0 +1,32 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: sac
+  - _self_
+
+
+learning_rate: 0.0003
+batch_size: 64
+
+hydra:
+  #sweep:
+    #dir: /var/local/data/trainer/multirun/ppo_${now:%Y%m%d}-${now:%H%M%S}
+  sweeper:
+    params:
+      learning_rate: range(0.00007,0.001, step=0.00005)
+      batch_size: choice(64,128,256,512)
+#      n_epochs: choice(3,5,10,15,20)
+#      gamma: choice(0.87,0.92,0.99,0.999) # Default 0.99. Lower value enforce reward values earlier (on first steps)
+#      gae_lambda: choice(0.90,0.95,0.98)
+#      clip_range: choice(0.1,0.2,0.4,0.6)
+#      normalize_advantage: choice(True,False)
+#      noise_sigma: choice(0.1,0.2,0.3)
+#      seed: choice(581, 22, 312)
+#      steps_success_count_threshold: choice(8,12)
+
+
+tuner:
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}

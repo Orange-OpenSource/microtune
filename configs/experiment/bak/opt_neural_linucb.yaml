@@ -1,0 +1,38 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: neural_linucb
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: Neural LinUCB hyper params optim with Optuna and variable reward ALPHA in [0.6,1] and BETA in [0.1,0.5] with reduced NN size and Optimal OBS (David)
+
+n_seeds: 3
+n_jobs: 3 # Number of parallel trainings with different seed
+n_trials: 30
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+REW_ALPHA_COEF: 0.9
+REW_BETA_COEF: 0
+
+# beta=1, hidden_dim1=100, hidden_dim2=30, H_q=100
+beta: 1.2
+hidden_dim1: 42
+hidden_dim2: 30
+H_q: 100
+
+hydra:
+  sweeper:
+    params:
+      beta: range(0.4, 1.6, step=0.4)
+      H_q: choice(10, 50, 100)
+      REW_ALPHA_COEF: range(0.7, 0.9, step=0.1)
+      REW_BETA_COEF: range(0.00001, 0.1, step=0.049999)
+
+tuner:
+  TRAINING_COVERAGE: 9
+  agent:
+    policy:
+      beta: ${beta}
+      hidden_dim1: ${hidden_dim1}
+      hidden_dim2: ${hidden_dim2}
+      H_q: ${H_q}

@@ -1,0 +1,21 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: neural_linucb
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: Simple run of Neural LinUCB to see explore policy.beta and fixed ALPHA=1 and BETA=0.2 and train cov=12
+
+n_seeds: 2
+REW_ALPHA_COEF: 1
+REW_BETA_COEF: 0.2
+
+tuner:
+  TRAINING_COVERAGE: 12
+
+hydra:
+  sweeper:
+    params:
+      tuner.agent.policy.beta: 1,1.5,2
+

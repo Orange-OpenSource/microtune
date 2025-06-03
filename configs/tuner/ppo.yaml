@@ -1,0 +1,22 @@
+
+defaults:
+  - env: continous_actions
+  - base_nn
+#  - override env/state_selector@env.state_selector_train: df_randombuffer #df_fullsequential
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_sb3.SB3PolicyPPO
+    discrete_arms_mode: False
+    policy: "MlpPolicy"
+    learning_rate: 0.0003
+    n_steps: 1024
+    batch_size: 32
+    n_epochs: 5
+    gamma: 0.99
+    gae_lambda: 0.95
+    clip_range: 0.2
+    seed: ${RND_SEED}
+    verbose: ${verbosity}
+    policy_kwargs: ${tuner.arch_nn.policy_kwargs}

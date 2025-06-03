@@ -1,0 +1,26 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+#oracle:
+#  reward: ${tuner.reward}
+
+n_seeds: 1
+learning_rate: 0.9
+move_idelta: 0
+
+hydra:
+  sweeper:
+    params:
+      move_idelta: range(-0.08, 0.005, step=0.005)
+      learning_rate: range(0.5, 1.2, step=0.05)
+
+tuner:
+  reward:
+    move_idelta: ${move_idelta}
+  agent:
+    policy:
+      learning_rate: ${learning_rate}

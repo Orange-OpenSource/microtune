@@ -1,0 +1,38 @@
+defaults:
+  - actions: lessoneplusone      # The Min and Max action values. Arms count and the position of the "STAY" arm are depending on it.
+  - reward: continousv3E
+  - arch_nn: dft
+
+NORMALIZE_OBS: True
+
+TRAINING_COVERAGE: 9 # Coverage of the total states present in dataset. 1.0 means that almost all the dataset will be covered (depends also on the random distribution that may repeat twice the same state)
+TRAINING_STEPS_PER_EPISODE: 68    # Important to take benefit of the decreasing exploration vs exploitation tradeoff
+
+# In Labo mode, we consider that having usage of client's latency in LinUCB context, in both learning and test, is not an issue
+# In Prod mode, we can access client's latency only during learning process. Latency cannot be part of the LinUCB context. The only viable and comparable baseline is BFR (Buffer Filling Rate) baseline.
+#LABO_EXPE is True ?
+#TRAINING_USE_SLA_PROTECT: True #use or NOT Use the reactive mode to protect the SLA. Let see where we are going without this protection...
+#TEST_USE_SLA_PROTECT: True #True if "sysbench_filtered.latency_mean" in OBSERVATION_SPACE_ELEMS else False
+
+#LABO_EXPE is False ?
+TRAINING_USE_SLA_PROTECT: False #It makes no sense to put it at True if we cannot use it in test..
+TEST_USE_SLA_PROTECT: False   # Must be like that (False)
+
+TEST_EPISODES_COUNT: -2    # If <0, abs(EPISODES_COUNT) is a multiple of workloads count 
+TEST_STEPS_PER_EPISODE: -2 # If val<0, abs(val) will be a multiple of buffer values count
+
+# Base config for all NN agents
+agent:
+  _target_: bandits.agent.SB3VSAgent
+  policy:
+    _target_: bandits.policy_sb3.SB3PolicyPPO
+    actions: ${...actions} 
+    ctx: ${...env.observations.elems}
+
+
+# ON_TERMINATE: N
+# If >=0 Stop the episode, if STAY action is done without any regret during N steps! In such a case reward is increased relatively to N
+env:
+  wrapper:
+    env:
+      on_terminate: -1

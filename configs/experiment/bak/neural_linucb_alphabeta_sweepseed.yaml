@@ -1,0 +1,31 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: neural_linucb
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: Neural_linucb with fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  Optimized OBS (Dav.) + cleaned WL (c98, Yif.)
+n_seeds: 1   # Nb seeds per trials
+n_jobs: 1 # Number of parallel trainings with different seed of a trial
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+
+
+beta: 0.8
+H_q: 100
+
+
+hydra:
+  sweeper:
+    params:
+      RND_SEED: range(4242, 4252, step=1)
+tuner:
+  TRAINING_COVERAGE: 9
+  agent:
+    policy:
+      beta: ${beta}
+      H_q: ${H_q}
+  

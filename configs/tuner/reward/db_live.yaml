@@ -1,0 +1,7 @@
+learn: null
+
+test:
+  _target_: bandits.reward.RewardNA
+  action_minmax: ${...actions.minmax}
+  alpha: ${REW_ALPHA_COEF}
+  beta: ${REW_BETA_COEF}

@@ -1,0 +1,10 @@
+defaults:
+  - base_baseline
+#  - override actions: less64plus64
+  - override env/observations: hpa
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_baselines.HpaPolicy
+

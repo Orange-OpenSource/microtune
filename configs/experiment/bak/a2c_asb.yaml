@@ -1,0 +1,23 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: a2c 
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: basic
+  - _self_
+
+info: Move learning reward idelta to 0.002. Basic baseline obs (latency included). NN archi 
+
+n_seeds: 10
+tuner:
+  TRAINING_COVERAGE: 12
+  reward:
+    learn:
+      move_idelta: 0.002  
+# 0,0.002,0.003,0.004,0.005
+
+hydra:
+  sweeper:
+    params:
+      tuner/arch_nn: dft,nn16x16relu,nn32x32-16x16relu,nn48x48relu
+

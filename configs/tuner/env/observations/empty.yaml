@@ -1,0 +1,10 @@
+# Empty observations (i.e. for Oracle)
+
+# Do not use elems: [], leads to problem in Env's context preparation and may be definition of Gym env observation_space....
+
+
+elems:
+  - buf_size_idx                        # Index form of the buffer size value [0, 63]
+
+ 
+

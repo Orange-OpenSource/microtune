@@ -1,0 +1,26 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: basic
+  - _self_
+
+n_trials: 100 # job.num will be in range [0, n_trials-1]
+
+learning_rate: 0.9
+n_seeds: 2
+
+hydra:
+  #sweep:
+    #dir: /var/local/data/trainer/multirun/ppo_${now:%Y%m%d}-${now:%H%M%S}
+  sweeper:
+    params:
+      learning_rate: range(0.5, 1.2, step=0.05)
+      REW_ALPHA_COEF: choice(-1, 0, 0.2, 0.5, 0.8, 1)
+      REW_BETA_COEF: choice(-1, 0, 0.2, 0.5, 0.8, 1)
+
+tuner:
+  agent:
+    policy:
+      learning_rate: ${learning_rate}

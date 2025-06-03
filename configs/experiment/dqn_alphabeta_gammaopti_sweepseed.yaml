@@ -1,0 +1,37 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: dqn
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+version_minor: 57   # To use optimal gamma 
+
+info: DQN with fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + Optimal gamma + Optimized OBS (Dav.) + cleaned WL (c98, Yif.)
+n_seeds: 1   # Nb seeds per trials
+n_jobs: 1 # Number of parallel trainings with different seed of a trial
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+
+# Best gamma evaluation is 0.76 (learning_rate=0.00054 batch_size=64 train_freq=128)
+learning_rate: 0.00054
+batch_size: 64
+train_freq: 128
+gamma: 0.76
+
+
+hydra:
+  sweeper:
+    params:
+      RND_SEED: range(4242, 4252, step=1)
+tuner:
+  TRAINING_COVERAGE: 9
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      gamma: ${gamma}
+      train_freq: ${train_freq}
+#      use_sde: ${use_sde}

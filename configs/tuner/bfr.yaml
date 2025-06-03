@@ -1,0 +1,10 @@
+defaults:
+  - base_baseline
+  - override env/observations: bfr
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_baselines.BufFillingRatePolicy
+    threshold: 0.85
+

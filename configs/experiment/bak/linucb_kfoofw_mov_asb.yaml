@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: basic
+  - _self_
+
+info: Move reward idelta. Basic baseline obs (latency included)
+
+n_seeds: 2
+tuner:
+  TRAINING_COVERAGE: 3
+
+hydra:
+  sweeper:
+    params: 
+      tuner.reward.learn.move_idelta: 0,0.002,0.003,0.004,0.005

@@ -1,0 +1,11 @@
+# Get conf by running --cfg job --resolve
+
+# python run_dataset.py --cfg job 
+
+defaults:
+  - base  # ouput paths, verbosity, ...
+  - workload/base
+  - tuner: oracle
+  - tuner@oracle: oracle
+  - _self_
+

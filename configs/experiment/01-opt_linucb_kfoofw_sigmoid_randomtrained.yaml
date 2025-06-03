@@ -1,0 +1,30 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/state_selector@tuner.env.state_selector_train: df_randombuffer # Instead of full sequential
+  - _self_
+
+info: LinUCB (kfoofw) hyper params optim with Optuna and fixed reward ALPHA=0.2 and BETA=0 with Optimized OBS (David) and trained randomly on dataset as all SB3 algos
+
+n_trials: 25 # job.num will be in range [0, n_trials-1]
+n_seeds: 3
+n_jobs: 3 # Number of parallel trainings with different seed
+hydra_launcher_n_jobs: 3 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+learning_rate: 0.9
+
+hydra:
+  sweeper:
+    params:
+      learning_rate: range(0.1, 1.2, step=0.1)
+
+tuner:
+  TRAINING_COVERAGE: 9 # Instead of 2. As for SB3 algos
+  TRAINING_STEPS_PER_EPISODE: 68 # Instead of 1. As for SB3 algos
+  agent:
+    policy:
+      learning_rate: ${learning_rate}

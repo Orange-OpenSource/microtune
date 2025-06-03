@@ -1,0 +1,30 @@
+# @package _global_
+defaults:
+  - base_optuna
+  - override /tuner: linucb_kfoofw
+  - override /tuner/reward: continousv3E
+  - _self_
+
+info: LinUCB (kfoofw) hyper params optim with Optuna + rew=continousv3E and variable ALPHA in [-0.1,1] and BETA in [0,1] + Optimized OBS (David) + cleaned WL (Yif)
+
+n_trials: 80 # job.num will be in range [0, n_trials-1]
+n_seeds: 2
+n_jobs: 2 # Number of parallel trainings with different seed
+hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: -0.1
+REW_BETA_COEF: -0.1
+learning_rate: 0.9
+
+hydra:
+  sweeper:
+    params:
+      REW_ALPHA_COEF: range(-0.1, 1, step=0.1)
+      REW_BETA_COEF:  range(0, 1, step=0.1)
+      learning_rate: range(0.4, 1.2, step=0.1)
+
+tuner:
+  TRAINING_COVERAGE: 2
+  agent:
+    policy:
+      learning_rate: ${learning_rate}

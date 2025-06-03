@@ -1,0 +1,10 @@
+# BufferFillingRate baseline observation elements with threshold defined out of the observations
+
+ext_threshold: 0.96
+
+elems: 
+  - observation.cache_hit_ratio
+
+
+ 
+

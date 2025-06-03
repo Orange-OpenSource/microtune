@@ -1,0 +1,3 @@
+
+on_start: 360.  # On server's start
+on_buf_update: 50. # On new buffer size modification

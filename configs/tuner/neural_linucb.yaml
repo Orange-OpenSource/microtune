@@ -1,0 +1,18 @@
+defaults:
+  - env: discrete_actions
+  - base_nn_linear
+  - override env/state_selector@env.state_selector_train: df_randombuffer #df_randombuffer df_fullsequential 
+  - _self_
+
+tuner:
+
+# beta=1, hidden_dim1=100, hidden_dim2=30, H_q=100
+agent:
+  policy:
+    _target_: bandits.policy_neural_linucb.NeuralLinUCBPolicy
+    beta: 1
+    hidden_dim1: 100
+    hidden_dim2: 30
+    H_q: 100
+
+

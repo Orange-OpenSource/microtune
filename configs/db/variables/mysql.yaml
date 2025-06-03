@@ -1,0 +1,58 @@
+
+server_name: mysql
+server_version: 8.0.31
+
+
+other_knobs:
+  - innodb_buffer_pool_chunk_size # For buffer size increment computation
+  - innodb_buffer_pool_instances # For buffer size increment computation
+  - tmp_table_size # involved with max_heap_table_size in temporary table creation in MySQL (user created and those created automatically during evaluation of certain statements).
+  - max_heap_table_size #  sets the maximum size of an user-created table that can be created in memory
+  - innodb_log_buffer_size # Not Dynamic! used to control the size of the buffer that stores transaction log information in the InnoDB storage engine. Default is 8MB
+  - innodb_change_buffering # Control/determines which form of change buffering, if any, to use: insert, deltes, changes, purges, all, none
+
+# See https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html
+global_status:
+  - Bytes_received
+  - Connections
+  - threads_created
+  - threads_running
+  - threads_connected
+  - max_used_connections # 
+  - aborted_clients #
+  - aborted_connects #
+  - created_tmp_files # How many temporary files mysqld has created
+  - created_tmp_tables # The number of internal temporary tables created by the server while executing statements
+  - created_tmp_disk_tables # The number of internal on-disk temporary tables created by the server while executing statements
+  - binlog_cache_disk_use # The number of transactions that used the temporary binary log cache but that exceeded the value of binlog_cache_size and used a temporary file to store statements from the transaction.
+  - binlog_stmt_cache_disk_use
+  - handler_delete # The number of times that rows have been deleted from tables
+  - handler_update # The number of requests to update a row in a table
+  - handler_write # The number of requests to insert a row in a table
+  - innodb_pages_created # The number of pages created by operations on InnoDB tables
+  - innodb_pages_read # The number of pages read from the InnoDB buffer pool by operations on InnoDB tables
+  - innodb_pages_written # The number of pages written by operations on InnoDB tables
+  - innodb_rows_deleted 
+  - innodb_rows_inserted
+  - innodb_rows_read
+  - innodb_rows_updated
+  - innodb_row_lock_current_waits
+  - innodb_row_lock_time
+  - innodb_row_lock_time_avg
+  - innodb_row_lock_time_max
+  - innodb_row_lock_waits
+#  - innodb_buffer_pool_pages_latched # EXPENSIVE BUT...? The number of latched pages in the InnoDB buffer pool. These are pages currently being read or written, or that cannot be flushed or removed for some other reason. Calculation of this variable is expensive, so it is available only when the UNIV_DEBUG system is defined at server build time
+  - innodb_buffer_pool_bytes_data # The total number of bytes in the InnoDB buffer pool containing data. The number includes both dirty and clean pages
+  - innodb_buffer_pool_bytes_dirty # The total current number of bytes held in dirty pages in the InnoDB buffer pool
+  - innodb_buffer_pool_pages_data # The total number of pages in the InnoDB buffer pool containing data. The number includes both dirty and clean pages
+  - innodb_buffer_pool_pages_total # Total count of pages in the memory buffer
+  - innodb_buffer_pool_pages_free  # Free pages count in the memory buffer 
+  - innodb_buffer_pool_pages_misc # Is = innodb_buffer_pool_pages_total-innodb_buffer_pool_pages_free.The number of pages that are busy because they have been allocated for administrative overhead such as row locks or the adaptive hash index
+  - innodb_buffer_pool_reads         # The number of physical reads of a page from disk, ie, cache misses because not satisfied from the buffer pool
+  - innodb_buffer_pool_read_requests # The number of read requests of a page from the Cache that came either from disk or from the buffer pool
+  - innodb_buffer_pool_wait_free # Total number of waits for pages to be flushed first from the InnoDB buffer pool
+  - innodb_buffer_pool_write_requests # The number of writes done to the InnoDB buffer pool
+
+# Other collected data with a "Select name, count from information_schema.<elem> where enabled=1"
+information_schemas:
+  - innodb_metrics

@@ -1,0 +1,41 @@
+# buf_reset_policy parameter:
+#   stay (default): keep its current value
+#   min: set min at each reset
+#   max: set max at each reset
+#   mean: set the mean value in the parameter's range, at each reset
+#   default: apply default value of this knob, at each reset
+#   rand: apply a random value into the parameter's range, at each reset
+#   roundrobin: At each reset, get cycliquely the value defined by either "min", "mean", "max"
+#   pop: Pop a new value since last reset. It is a cycle, if all possible values have been already popped, restart from the first of the list
+
+
+_partial_: true
+_target_: bandits.datasource.adbms_live.ADBMSBufferCacheStatesLive
+perf_target_level: ${IPERF_LEVEL}
+qpslat_w: "01"
+ram_limit: ${db.cache.max}
+buf_reset_policy: mean
+db_warmup_time: ${db.warmups.on_start}
+#metrics_picker: 
+#  _target_: bandits.datasource.workloader.sbperfmonitor.SysbenchMetricsPicker
+#  warmups: ${db.warmups}
+#  observation_time: 3. # Seconds to wait before picking up perf metrics
+dba:
+  _target_: bandits.datasource.db.dbadminmysql.DBAdminMySql
+  servername: ${db.variables.server_name}
+  serverversion: ${db.variables.server_version}
+  dbhost: ${db.host}
+  dynamicKnobsToDrive:
+    - innodb_buffer_pool_size
+  buffer_pool_size_increment: 134217728 # 128MB, typically like ${db.cache.min}
+  global_status: ${db.variables.global_status}
+  other_knobs: ${db.variables.other_knobs}
+  information_schemas: ${db.variables.information_schemas}
+  information_schemas_mapping: ${db.variables.information_schemas_mapping}
+context_elems: ${..observations.elems} #tuner.env
+normalize: ${...NORMALIZE_OBS} # tuner.
+
+
+
+# Depends on:
+# - db

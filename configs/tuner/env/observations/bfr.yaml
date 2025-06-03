@@ -1,0 +1,10 @@
+# BufferFillingRate baseline observation elements with threshold defined out of the observations
+
+ext_threshold: 0.92
+
+elems: 
+  - observation.cache_used_pages_ratio
+
+
+ 
+

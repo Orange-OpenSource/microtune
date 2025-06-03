@@ -1,0 +1,68 @@
+# Observation without latency (production UC) where all colinarities and redundancies have been eliminated
+# Data v11 were analysed to identify correlation with the "Spearman" method.
+# Statistical analysis has been made too
+
+elems:
+  - db_size_mb                      # Initial DB size after creation of all tables+indexes and before the workload with all clients
+  - observation.cache_used_pages_ratio
+  - observation.cache_hit_ratio
+  - extra_info.usage.db_size_initial.IndexSizeMB # Initial Indexes DB size 
+  - extra_info.usage.qps            # QPS picked on server ("Questions" Global status variable throughput)
+  - observation.write_wait_ratio      # Seems not relevant nor usable on MariaDB
+  - extra_info.global_status.created_tmp_tables_diff # ?
+  - extra_info.global_status.innodb_buffer_pool_read_requests_diff
+  - extra_info.global_status.innodb_buffer_pool_write_requests_diff
+  - extra_info.global_status.innodb_buffer_pool_wait_free_diff
+  - extra_info.global_status.innodb_data_reads_diff
+  - extra_info.global_status.innodb_data_written_diff
+  - extra_info.global_status.threads_running_end
+  - extra_info.global_status.threads_connected_end
+  - extra_info.global_status.innodb_buffer_pool_bytes_dirty_diff # Seems cool to have it
+  - extra_info.global_status.innodb_buffer_pool_pages_free_diff  # Seems cool to have it
+  - extra_info.global_status.information_schema.innodb_metrics.lock_row_lock_time_max
+  - extra_info.global_status.information_schema.innodb_metrics.lock_row_lock_waits
+  - extra_info.global_status.information_schema.innodb_metrics.os_pending_reads
+  - extra_info.global_status.information_schema.innodb_metrics.os_pending_writes
+  - extra_info.global_status.information_schema.innodb_metrics.file_num_open_files
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.MODIFIED_DATABASE_PAGES # Sounds COOL to have it!!
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PAGES_READ_RATE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PAGES_CREATE_RATE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PAGES_WRITTEN_RATE  # CATASTROPHIC at an incredible point !!!???
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.READ_AHEAD_EVICTED_RATE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PAGES_MADE_YOUNG_RATE # Sounds COOL to have it!!
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.POOL_SIZE # Sounds COOL to have it!!
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.FREE_BUFFERS
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.DATABASE_PAGES
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PENDING_READS       #?
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PENDING_FLUSH_LRU       #?
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PENDING_FLUSH_LIST       #?
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PAGES_MADE_YOUNG
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PAGES_NOT_MADE_YOUNG
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PAGES_MADE_NOT_YOUNG_RATE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.HIT_RATE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.YOUNG_MAKE_PER_THOUSAND_GETS         #?
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NOT_YOUNG_MAKE_PER_THOUSAND_GETS         #?
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NUMBER_PAGES_READ_AHEAD         #?
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.LRU_IO_TOTAL
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.LRU_IO_CURRENT
+
+#  - sysbench_filtered.latency_mean   # [0, 1000] ms. Filtered latency from client. In inference/live mode, it should be a predicted value (see predictor.ipynb using XGBoost)
+#  - observation.normalized_buf_size  # [0., 1.] Taille normalisée courante du buffer cache
+#  - extra_info.global_status.KBps    # Kilo Bytes per seconds picked on server with "Bytes_sent" Global status variable throughput
+#  - extra_info.global_status.handler_delete_diff # ?
+#  - extra_info.global_status.handler_update_diff # ?
+#  - extra_info.global_status.handler_write_diff # ?
+#  - extra_info.global_status.max_used_connections_end
+#  - extra_info.global_status.innodb_buffer_pool_bytes_dirty_end # Seems cool to have it
+#  - extra_info.global_status.innodb_buffer_pool_pages_free_end  # Seems cool to have it
+#  - extra_info.global_status.innodb_buffer_pool_pages_data_diff
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.READ_AHEAD_RATE
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.OLD_DATABASE_PAGES
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PENDING_DECOMPRESS       #?
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NUMBER_PAGES_READ       #?
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NUMBER_PAGES_CREATED    #?
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NUMBER_PAGES_WRITTEN    # ? 
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NUMBER_PAGES_GET
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NUMBER_READ_AHEAD_EVICTED         #?
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.UNCOMPRESS_TOTAL
+#  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.UNCOMPRESS_CURRENT

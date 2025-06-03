@@ -1,0 +1,8 @@
+
+_partial_: true
+_target_: bandits.datasource.adbms_dataframe.ADBMSBufferCacheStatesRandomBufferSelector
+seed: ${RND_SEED}
+qpslat_w: "01"
+context_elems: ${..observations.elems} #tuner.env
+normalize: ${...NORMALIZE_OBS} # tuner.
+

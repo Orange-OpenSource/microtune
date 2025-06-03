@@ -1,0 +1,10 @@
+
+client:
+  _target_: sbrequest.SysbenchRequest
+  httphost: ???
+  httpport: ???
+  dbhost: ${db.host}  # Database to bench!
+  dbport: ${db.port}  # Database to bench!
+  id: ${..crud.id}
+  tables: ${..dbsize.tables}
+  tablesize: ${..dbsize.rows}

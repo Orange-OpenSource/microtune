@@ -1,0 +1,8 @@
+defaults:
+  - base
+  - sysbench
+  - _self_
+
+client:
+  httphost: 192.168.0.136
+  httpport: 8080

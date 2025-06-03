@@ -1,0 +1,10 @@
+defaults:
+  - env: discrete_actions
+  - base_linear
+#  - override env/state_selector@env.state_selector_train: df_fullsequential
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_linucb_hs.HSLinUCBPolicy
+    learning_rate: 0.9

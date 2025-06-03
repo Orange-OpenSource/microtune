@@ -1,0 +1,49 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: ppo
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+# learning_rate=0.0003, n_steps=2048, batch_size=64, n_epochs=10, gamma=0.99, gae_lambda=0.95, clip_range=0.2, clip_range_vf=None, normalize_advantage=True,
+# ent_coef=0.0, vf_coef=0.5, max_grad_norm=0.5, use_sde=False, sde_sample_freq=-1, rollout_buffer_class=None, rollout_buffer_kwargs=None,
+# target_kl=None, stats_window_size=100,
+# tensorboard_log=None, policy_kwargs=None, verbose=0, seed=None, device='auto', _init_setup_model=True
+learning_rate: 0.0003
+batch_size: 64
+normalize_advantage: False
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+use_sde: False  # Works only with continous action space
+move_idelta: 0
+
+hydra:
+  sweeper:
+    params:
+      move_idelta: range(-0.08, 0.005, step=0.005)
+      learning_rate: range(0.0001,0.001, step=0.0001)
+      batch_size: choice(32,64,128,256)
+      normalize_advantage: choice(True,False)
+      n_epochs: choice(3,6,12,24)
+      gamma: range(0.8,0.99, step=0.01) # Lower value enforce reward values earlier (on first steps)
+      gae_lambda: range(0.90,0.99, step=0.01)
+      use_sde: choice(True,False)
+#      DETERMINISTIC: choice(True,False)
+#      clip_range: choice(0.1,0.2,0.4,0.6)
+#      steps_success_count_threshold: choice(8,12)
+
+
+tuner:
+  reward:
+    move_idelta: ${move_idelta}
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+      gae_lambda: ${gae_lambda}
+      use_sde: ${use_sde}
+#

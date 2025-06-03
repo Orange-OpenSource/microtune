@@ -1,0 +1,19 @@
+defaults:
+  - env: discrete_actions
+  - base_nn
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_sb3.SB3PolicyA2C
+    policy: "MlpPolicy"
+    learning_rate: 0.0007
+    n_steps: 1024
+    gamma: 0.99
+    seed: ${RND_SEED}
+    verbose: ${verbosity}
+
+
+
+#policy = SB3PolicyA2C(actions=reward_learning.actions, ctx=ds_train.contextElems(),
+#                      policy="MlpPolicy", env=env_train, learning_rate=0.0007, n_steps=n_steps//10, gamma=0.99, normalize_advantage=False, verbose=0)

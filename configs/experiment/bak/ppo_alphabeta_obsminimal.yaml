@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+  - base
+  - override /tuner: ppo
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: prod_minimal
+  - _self_
+
+info: Basic Sweep ALPHA BETA over 16 possibilities and default's PPO HyperParams with minimal observations (no lat)
+n_seeds: 3
+
+hydra:
+  sweeper:
+    params:
+      REW_ALPHA_COEF: range(0.6, 0.9, step=0.1)
+      REW_BETA_COEF: choice(0, 0.1)
+
+
