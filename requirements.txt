@@ -1,4 +1,4 @@
-mysql-connector-python==8.1.0  # Note: Do not install mysql-connector instead of this mysql-connector-python
+mysql-connector-python==9.1.0  # Note: Do not install mysql-connector instead of this mysql-connector-python
 
 python-logging-loki==0.3.1
 # See https://pypi.org/project/prometheus-api-client/
@@ -22,7 +22,7 @@ sb3-contrib
 
 # https://pymongo.readthedocs.io/en/stable/
 #pymongo==3.5.1
-pymongo==4.4.1
+pymongo==4.6.3
 
 # Package for application's configuration
 hydra-core==1.3.2
@@ -40,7 +40,7 @@ nbformat == 5.9.0
 
 # Misc
 #minio=7.2.9
-scikit-learn==1.3.1
+scikit-learn==1.5.1
 scipy==1.11.4
 xgboost==2.0.3
 xxhash==3.5.0 #3.4.1
