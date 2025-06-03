@@ -4,10 +4,10 @@
  * SPDX-FileCopyrightText: Copyright (c) Orange SA
  * SPDX-License-Identifier: MIT
  *
- * This software is distributed under the <license-name>,
- * see the "LICENSE.txt" file for more details or <license-url>
+ * This software is distributed under the MIT license,
+ * see the "LICENSE" file for more details
  *
- * <Authors: optional: see CONTRIBUTORS.md
+ * Authors: see CONTRIBUTORS.md
  * Software description: MicroTune is a RL-based DBMS Buffer Pool Auto-Tuning for Optimal and Economical Memory Utilization. Consumed RAM is continously and optimally adjusted in conformance of a SLA constraint (maximum mean latency).
  */
 """
