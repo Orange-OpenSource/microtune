@@ -57,7 +57,7 @@ Each stage has a python or shell script:
 	+ test best model and generate graphs (html)
 	+ Optionaly, publish results on S3, disabled from a command line option.
 + Optional `python run_simple_test.py`: 
-        + SLA curve, i.e. latency curve on N steps during evaluation and tests. Each workload is crossed twice, one time starting from the maximum buffer size, the second time starting from the minimmu buffer size
+	+ SLA curve, i.e. latency curve on N steps during evaluation and tests. Each workload is crossed twice, one time starting from the maximum buffer size, the second time starting from the minimmu buffer size
 + Variability tests 
 
 ### Chained execution from learning models up to variability tests
