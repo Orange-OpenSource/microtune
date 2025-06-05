@@ -19,7 +19,7 @@ from pandas import DataFrame
 
 class DBCon():
     # See https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection.html
-    # Config: host, user, password, database, ...
+    # Config: host, port, user, password, database, ...
     def __init__(self, config={}):
 
         try:

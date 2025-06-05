@@ -46,8 +46,10 @@ import bandits.datasource.db.dberrors as dberrors
 # See also: Metrics of type value and not counter: see https://github.com/HustAIsGroup/CDBTune/blob/master/environment/utils.py#L40
  """
 class DBAdminMySql():
+    # See args list here: https://dev.mysql.com/doc/connector-python/en/connector-python-connectargs.html
     config = {
         "host": "db.local", 
+        "port": 3306,  # Default MySQL port
         "user": "adbms",  # Since Granted rights have evolved, we can use adbms user instead of root
         "password": "adbms", 
         "database": "adbms",
@@ -59,12 +61,16 @@ class DBAdminMySql():
     # Bytes_sent: The number of bytes sent to all clients.
     # Bytes_received: The number of bytes received from all clients.
     # buffer_pool_size_increment is 128 MB as default value 
-    def __init__(self, servername: str = "mysql", serverversion: str = "0", dbhost="db.local", 
+    def __init__(self, servername: str = "mysql", serverversion: str = "0", dbhost="db.local", dbport=3306, user="adbms", password="adbms", database="adbms",
                  dynamicKnobsToDrive=[], buffer_pool_size_increment=134217728, other_knobs=[], 
                  global_status=[], information_schemas=[], information_schemas_mapping: dict = None):   #, env_metadata={}):
         self._servername = servername
         self._serverversion = serverversion
         self.config["host"] = dbhost
+        self.config["port"] = dbport
+        self.config["user"] = user
+        self.config["password"] = password
+        self.config["database"] = database
         self._dbCon = DBCon(self.config)
         vers = self._dbCon.version()
         if vers["version"].startswith(serverversion) is False:

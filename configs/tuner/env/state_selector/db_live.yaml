@@ -25,6 +25,10 @@ dba:
   servername: ${db.variables.server_name}
   serverversion: ${db.variables.server_version}
   dbhost: ${db.host}
+  port: ${db.port}
+  user: ${db.user}
+  password: ${db.password}
+  database: ${db.database}
   dynamicKnobsToDrive:
     - innodb_buffer_pool_size
   buffer_pool_size_increment: 134217728 # 128MB, typically like ${db.cache.min}
