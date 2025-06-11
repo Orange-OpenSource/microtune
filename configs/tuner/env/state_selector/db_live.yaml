@@ -25,7 +25,7 @@ dba:
   servername: ${db.variables.server_name}
   serverversion: ${db.variables.server_version}
   dbhost: ${db.host}
-  port: ${db.port}
+  dbport: ${db.port}
   user: ${db.user}
   password: ${db.password}
   database: ${db.database}
