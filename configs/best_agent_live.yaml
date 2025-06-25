@@ -36,17 +36,17 @@ defaults:
 version_minor: 56_a2c_alphabeta_sweepseed # => E11_56_a2c_alphabeta_sweepseed_disq
 live_iterations_name: agent-T7S0
 
-db:
-  warmups:
-    on_start: 30        # This value is badly used for bith episodes and tests. Not ideal, should be fixed. Wait time at each new episode and new step
-    #on_buf_update: 30  # NOT USED - hard coded with db_warmup_time below
+#db:
+#  warmups:
+#    on_start: 50        # This value is badly used for bith episodes and tests. Not ideal, should be fixed. Wait time at each new episode and new step
+#    on_buf_update: 30  # NOT USED - hard coded with db_warmup_time below
 tuner:
   TEST_EPISODES_COUNT: 1
   TEST_STEPS_PER_EPISODE: 50000
   env:
     state_selector_train: null
     state_selector_test:
-      buf_reset_policy: mean # min, mean, max, ...
+      buf_reset_policy: mean # stay, min, mean, max, ...
 
 
 DETERMINISTIC: False  # Flag passed to SB3's predict method. Default is False

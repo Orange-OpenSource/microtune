@@ -15,7 +15,7 @@ perf_target_level: ${IPERF_LEVEL}
 qpslat_w: "01"
 ram_limit: ${db.cache.max}
 buf_reset_policy: mean
-db_warmup_time: ${db.warmups.on_start}
+db_warmups: ${db.warmups}
 #metrics_picker: 
 #  _target_: bandits.datasource.workloader.sbperfmonitor.SysbenchMetricsPicker
 #  warmups: ${db.warmups}

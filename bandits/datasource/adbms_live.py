@@ -78,15 +78,16 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
     def __init__(self, perf_target_level= 0.98, qpslat_w="01",                 
                  ram_limit: int = 8589934592,   # 8GB
                  buf_reset_policy="stay",
-                 db_warmup_time=6,
+                 db_warmups={'on_start': 60, 'on_buf_update': 30},  # in seconds
                  metrics_picker: SysbenchMetricsPicker = None,  # {'on_start': 50.0, 'on_buf_update': 20.0, 'use_sigma_metric': True}
                  dba: DBAdminMySql = None,
                  context_elems=None, normalize=False, with_scaler:MinMaxScaler=None):
         self._qpslat_w = qpslat_w
         self._dba = dba
         self._knobs_policy = None
-        self._sbperf = metrics_picker
-        self.db_warmup_time = db_warmup_time
+        self._sbperf = None
+        self.db_warmup_time = db_warmups["on_start"]
+        self.buf_update_warmup_time = db_warmups["on_buf_update"]
         self._dbstatus_observation_time = 5.
         #self._metrics_observation_time = 3.  # Prometheus metrics
         #state = self.state()
@@ -344,10 +345,8 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
 
             real_incr = bufferidx_increment
 
-            # HOT PATCH!!! TO BE FIXED Apply always the warmup time, whatever a change on knobs has been made or not....
-            if self._sbperf is None:
-                print(datetime.now(), "No SbPerfMonitor enabled -> Wait at Step time:", self.db_warmup_time, "s ...")
-                time.sleep(self.db_warmup_time)
+            print(datetime.now(), "No SbPerfMonitor enabled -> Wait at Step time:", self.db_warmup_time, "s ...")
+            time.sleep(self.buf_update_warmup_time)  # Wait for the DB to warmup after a knob update
 
         except dberrors.KnobDriveError as err:
             sleeptime_err = self.db_warmup_time
@@ -511,6 +510,6 @@ class ADBMSBufferCacheStates(ADBMSBufferCacheStatesLive):
                          qpslat_w=qpslat_w,                 
                          ram_limit=ram_limit,
                          buf_reset_policy=buf_reset_policy,
-                         db_warmup_time=warmups["on_start"],
+                         db_warmups=warmups,
                          metrics_picker=SysbenchMetricsPicker(warmups=warmups), 
                          dba=dba)
