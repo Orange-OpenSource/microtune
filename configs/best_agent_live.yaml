@@ -42,11 +42,11 @@ live_iterations_name: agent-T7S0
 #    on_buf_update: 30  # NOT USED - hard coded with db_warmup_time below
 tuner:
   TEST_EPISODES_COUNT: 1
-  TEST_STEPS_PER_EPISODE: 50000
+  TEST_STEPS_PER_EPISODE: null  # Never stop the first episode, eq. to numpy.inf
   env:
-    state_selector_train: null
+    state_selector_train: null  # Do not use any state selector for training. Training is out of scope
     state_selector_test:
-      buf_reset_policy: mean # stay, min, mean, max, ...
+      buf_reset_policy: stay # stay, min, mean, max, ...
 
 
 DETERMINISTIC: False  # Flag passed to SB3's predict method. Default is False

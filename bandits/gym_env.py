@@ -49,7 +49,9 @@ class VSEnv(gym.Env):
     # Note that the performance Objective Gap in percent defining the admitted gap around the performance objective (a value in 0.5, 0.9, 0.95, 0.98, 0.99, 0.995, 0.999) is picked up from the dataset. 
     def __init__(self, state_selector: ADBMSDataSetEntryContextSelector, reward: RewardDownStayUp = None, notify_react=False, max_steps_per_episode=64, on_terminate=-1, verbose=0):    
         self.ds = state_selector
-        if max_steps_per_episode<0:
+        if max_steps_per_episode is None:
+            max_steps_per_episode = np.inf
+        elif max_steps_per_episode<0:
             max_steps_per_episode = self.ds.getStatesCountPerWorkload()*abs(max_steps_per_episode)
 
         self.max_steps_per_episode = max_steps_per_episode 
