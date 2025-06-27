@@ -15,10 +15,6 @@
 import time
 from bandits.tools.sysbench.sbrequest import SysbenchRequest
 
-#SysbenchRequest.set("host", "workload_sb_dev.local")
-#SysbenchRequest.set("host", "workload_sb.local")
-#SysbenchRequest.set("host", "192.168.0.136") #TUN04 (dedicated to workload generators)
-
 # Admin request
 #wl = SysbenchRequest(dbhost="192.168.0.206", id="oltp_read_write", tables=3, tablesize=50000) #TUN03
 #wl = SysbenchRequest(dbhost="db.local", id="oltp_read_write", tables=2, tablesize=500)

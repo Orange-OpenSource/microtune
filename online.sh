@@ -6,31 +6,40 @@
 MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST:="localhost"}
 MYSQL_DATABASE=${MYSQL_DATABASE:=adbms}
 MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:=adbms}
-MICROTUNE_SHOW_CONFIG=${MICROTUNE_SHOW_CONFIG:="--cfg job --resolve"}
-MICROTUNE_ITERATIONS_COUNT=${MICROTUNE_ITERATIONS_COUNT:="null"}
+MICROTUNE_VERBOSE=${MICROTUNE_VERBOSE:=0}
+MICROTUNE_ITERATIONS_COUNT=${MICROTUNE_ITERATIONS_COUNT:=0}
 MICROTUNE_ITERATIONS_DELAY=${MICROTUNE_ITERATIONS_DELAY:=60}
+export=${MICROTUNE_HYDRA_CUSTOM_ARGS:=""}
 
-echo "Running online microtune with ${MICROTUNE_ITERATIONS_COUNT} iterations."
+echo "Using database host: ${MYSQL_DATABASE_HOST}"
 echo "Using database schema: ${MYSQL_DATABASE}"
-
-echo "Microtune is enabled with a delay before to start tuning: ${MICROTUNE_ITERATIONS_DELAY} seconds..."
-sleep ${MICROTUNE_ITERATIONS_DELAY}
-
-
-
-CMD="run_best_agent_live.py db=node db.password="${MYSQL_ROOT_PASSWORD}"  db.database="${MYSQL_DATABASE}" \
-    tuner.TEST_STEPS_PER_EPISODE=${MICROTUNE_ITERATIONS_COUNT} \
-    db.host=${MYSQL_DATABASE_HOST} \
-    db.warmups.on_start=${MICROTUNE_ITERATIONS_DELAY} \
-    tuner.env.state_selector_test.buf_reset_policy=stay
-"
-
-if [ -n "${MICROTUNE_SHOW_CONFIG}" ]; then
-    echo "Configuration for microtune:"
-    python ${CMD} ${MICROTUNE_SHOW_CONFIG}
+echo "Microtune is enabled with a delay before to start tuning: ${MICROTUNE_ITERATIONS_DELAY} seconds."
+if [ -z "${MICROTUNE_ITERATIONS_COUNT}" ] || [ "${MICROTUNE_ITERATIONS_COUNT}" -eq 0 ]; then
+    MICROTUNE_ITERATIONS_COUNT="null"
+    echo "MICROTUNE_ITERATIONS_COUNT is not set or is 0. Run indefinitely."
+    iterations="indefinitely"
+else
+    echo "MICROTUNE_ITERATIONS_COUNT is set to ${MICROTUNE_ITERATIONS_COUNT}."
+    iterations="for ${MICROTUNE_ITERATIONS_COUNT} iterations"
 fi
 
-echo "Running microtune..."
+CMD="run_best_agent_live.py \
+    verbosity=${MICROTUNE_VERBOSE} \
+    db=node \
+    db.host=${MYSQL_DATABASE_HOST} db.password="${MYSQL_ROOT_PASSWORD}"  db.database="${MYSQL_DATABASE}" \
+    db.warmups.on_start=${MICROTUNE_ITERATIONS_DELAY} \
+    tuner.env.state_selector_test.buf_reset_policy=stay \
+    tuner.TEST_STEPS_PER_EPISODE=${MICROTUNE_ITERATIONS_COUNT} \
+    ${MICROTUNE_HYDRA_CUSTOM_ARGS} \
+"
+
+if [ "${MICROTUNE_VERBOSE}" -ne 0 ]; then
+    echo "Hydra Configuration passed to microtune:"
+    python ${CMD} --cfg job --resolve
+    echo "python ${CMD}"
+fi
+
+echo "Running microtune ${iterations}..."
 python ${CMD}
 
 exit $?
