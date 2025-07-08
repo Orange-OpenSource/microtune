@@ -42,10 +42,12 @@ class DBCon():
         self.cnx.close()
 
     # Options, see: https://dev.mysql.com/doc/refman/8.0/en/flush.html
+    # BINARY LOGS
     # ENGINE LOGS
     # ERROR LOGS
     # LOGS
     # STATUS (default)
+    # Flush what is passed as option (default is "STATUS") with "NO_WRITE_TO_BINLOG" to avoid writing to the binary log
     def flushStatement(self, option:str="STATUS"):
         query="FLUSH NO_WRITE_TO_BINLOG "+option+";"
         cursor = self.cnx.cursor(buffered=False)    

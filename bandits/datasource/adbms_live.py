@@ -281,6 +281,8 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
     # Reset position onto a new workload and a new buffer index in the workload's entries
     def reset(self, workload_idx: int = 0):
         try:
+            n_tables = self._dba.getDatabaseReady(n_tables=1)
+
             self._dba.sanity()           
 
             self._createOnceKnobsPolicy() # Creates it only once!!

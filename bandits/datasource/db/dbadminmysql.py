@@ -63,7 +63,8 @@ class DBAdminMySql():
     # buffer_pool_size_increment is 128 MB as default value 
     def __init__(self, servername: str = "mysql", serverversion: str = "0", dbhost="db.local", dbport=3306, user="adbms", password="adbms", database="adbms",
                  dynamicKnobsToDrive=[], buffer_pool_size_increment=134217728, other_knobs=[], 
-                 global_status=[], information_schemas=[], information_schemas_mapping: dict = None):   #, env_metadata={}):
+                 global_status=[], information_schemas=[], information_schemas_mapping: dict = None,
+                 sanity_statements=["LOGS"]):   #, env_metadata={}):
         self._servername = servername
         self._serverversion = serverversion
         self.config["host"] = dbhost
@@ -72,6 +73,7 @@ class DBAdminMySql():
         self.config["password"] = password
         self.config["database"] = database
         self._dbCon = DBCon(self.config)
+        self._sanity_statements = sanity_statements
         vers = self._dbCon.version()
         if vers["version"].startswith(serverversion) is False:
             raise dberrors.DBServerVersionError(vers["version"], serverversion)
@@ -123,7 +125,7 @@ class DBAdminMySql():
 
     # Raises:
     # StatusVarGetError, KnobMetadataValueNotFound
-    def initGlobalStatus(self, otherKnobNames=[]):
+    def initGlobalStatusOLD(self, otherKnobNames=[]):
         # Collect Information Schemas
         self._getInformationSchema()
             
@@ -150,16 +152,51 @@ class DBAdminMySql():
     def isConnected(self) -> bool :
         return self._dbCon.isConnected()
 
+    # Sanity check on the database, by executing a flush statements
+    # Flush the choosen sanity statment(s) with "NO_WRITE_TO_BINLOG" to avoid writing to the binary log
+    # The statements are defined here: https://dev.mysql.com/doc/refman/8.0/en/flush.html 
+    # For MariaDB: https://mariadb.com/docs/server/reference/sql-statements/administrative-sql-statements/flush-commands/flush
+    # If a statement is "LOGS" or "BINARY LOGS", it will fpurge BINARY LOGS before NOW().
     def sanity(self, duration=0.):
-        self._dbCon.flushStatement("LOGS")
-        try:
-            req = 'PURGE BINARY LOGS BEFORE NOW();'
-            self._dbCon.statement(req)
-            if duration > 0.:
-                time.sleep(duration)
-        except mysql.connector.Error as err:
-            print(err)
+        for stmt in self._sanity_statements:
+            try:
+                self._dbCon.flushStatement(stmt)
+                if stmt == "LOGS" or stmt == "BINARY LOGS":
+                    req = 'PURGE BINARY LOGS BEFORE NOW();'
+                    self._dbCon.statement(req)
+            except mysql.connector.Error as err:
+                print("Sanity statement failed:", stmt, "Error:", err)
+        if duration > 0.:
+            time.sleep(duration)
 
+    # Try to use the database, by executing a simple query. 
+    # Check database readiness every 3 seconds, until the database exists and at least "n_tables" table exists and wait indefinitely...
+    # Return the tables count present in the database if tables count >= "n_tables".
+    def getDatabaseReady(self, n_tables: int=0) -> int:
+        """
+        Wait for the database to be ready, by executing a simple query.
+        If the database is not ready, it will raise an exception.
+        """
+        count = -1
+        dbname = self.config["database"]
+        duration = 3
+
+        # Wait for the database to be ready
+        while count < n_tables:
+            try:
+                self._dbCon.statement("USE "+dbname+";")
+                qres = self._dbCon.fetchOne("SELECT COUNT(*) as C FROM `information_schema`.`tables` WHERE `table_schema` = '"+dbname+"';")
+                count = int(qres["C"])
+            except mysql.connector.Error as err:
+                print(dberrors.DBNotReadyError(dbname, err.msg))
+            
+            if count < n_tables:
+                print(datetime.now(), "Waiting for the database to be ready... Tables count:", count, "Expected:", n_tables)
+                time.sleep(duration)
+                duration = min(60, duration+3)  # Increase the duration up to 60 seconds
+        
+        return count
+        
     def close(self):
         self._dbCon.close()
 
@@ -205,6 +242,7 @@ class DBAdminMySql():
         # SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'my_database_name';
         # SELECT SUM(TABLE_ROWS) FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_SCHEMA = '{your_db}';
         if self._dbStatus["__complete_globavars_collected"] is False and complete:
+            # Get the database size and index size
             dbname = self.config["database"]
             req = 'SELECT table_schema "Schema", engine "Engine", ROUND(SUM(data_length)/1024/1024,2) "TableSizeMB", ROUND(SUM(index_length)/1024/1024,2) "IndexSizeMB" \
             FROM information_schema.tables \
@@ -212,14 +250,27 @@ class DBAdminMySql():
             AND engine IS NOT NULL \
             GROUP BY table_schema, engine;'
             qres = self._dbCon.fetchOne(req)
+            if qres is None or len(qres) == 0:
+                qres = { "Schema": dbname, "Engine": "NA", "TableSizeMB": 0, "IndexSizeMB": 0 }
+            self._dbStatus["db_size"] = qres
             qres["TableSizeMB"] = round(float(qres["TableSizeMB"]), 2)
             qres["IndexSizeMB"] = round(float(qres["IndexSizeMB"]), 2)
-            self._dbStatus["db_size"] = qres
+
+            # Get the table count for the database
             qres = self._dbCon.fetchOne("SELECT COUNT(*) as count FROM `information_schema`.`tables` WHERE `table_schema` = '"+dbname+"';")
-            self._dbStatus["table_count"] =  int(qres["count"])
+            if qres is None or len(qres) == 0:
+                self._dbStatus["table_count"] = 0
+            else:
+                self._dbStatus["table_count"] =  int(qres["count"])
+
+            # Get the row count for the database
             qres = self._dbCon.fetchOne("SELECT SUM(TABLE_ROWS) as count FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_SCHEMA = '"+dbname+"';")    
-            self._dbStatus["row_count"] = int(qres["count"])
-            self._dbStatus["__complete_globavars_collected"] = True
+            if qres is None or qres["count"] is None or len(qres) == 0:
+                self._dbStatus["count"] = 0
+            else:
+                print("ROW COUNT:", qres)
+                self._dbStatus["row_count"] = int(qres["count"])
+                self._dbStatus["__complete_globavars_collected"] = True
 
 
     # Get global status variables. Metadata must be defined as expected.

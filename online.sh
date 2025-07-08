@@ -2,6 +2,12 @@
 
 # This script is used to run the online version of microtune.
 # It is expected to be run from the root directory of the microtune project.
+whoami
+id
+ls -la /
+cat /etc/passwd
+cat /etc/group
+ls -la /home
 
 MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST:="localhost"}
 MYSQL_DATABASE=${MYSQL_DATABASE:=adbms}
@@ -32,6 +38,9 @@ CMD="run_best_agent_live.py \
     tuner.TEST_STEPS_PER_EPISODE=${MICROTUNE_ITERATIONS_COUNT} \
     ${MICROTUNE_HYDRA_CUSTOM_ARGS} \
 "
+
+pip list
+env |grep PYTHON
 
 if [ "${MICROTUNE_VERBOSE}" -ne 0 ]; then
     echo "Hydra Configuration passed to microtune:"
