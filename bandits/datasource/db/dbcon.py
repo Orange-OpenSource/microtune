@@ -15,25 +15,31 @@ import mysql.connector
 from mysql.connector import errorcode
 import pandas as pd
 from pandas import DataFrame
+import bandits.datasource.db.dberrors as dberrors
 
 
 class DBCon():
     # See https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection.html
     # Config: host, port, user, password, database, ...
     def __init__(self, config={}):
-
         try:
             self.cnx = mysql.connector.connect(**config)
 
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print("Something is wrong with your user name or password")
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Something is wrong with your user name or password")
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print("Database does not exist")
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Database does not exist")
+            elif err.errno == errorcode.ER_BAD_HOST_ERROR:
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Host is not reachable")
+            elif err.errno == errorcode.ER_NOT_SUPPORTED_AUTH_MODE:
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Authentication method is not supported by the server")
+            elif err.errno == errorcode.ER_DBACCESS_DENIED_ERROR:
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Access to the database is denied")
+            elif err.errno == errorcode.ER_SERVER_SHUTDOWN:
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Database server is shutdown and not ready to accept connections")
             else:
-                print(err)
-#        else:
-#            self.cnx.close()
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Unknown error occurred while connecting to the database")
 
     def isConnected(self) -> bool :
         return self.cnx.is_connected()

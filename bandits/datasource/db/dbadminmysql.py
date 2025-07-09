@@ -17,7 +17,6 @@ import numpy as np
 import mysql.connector
 from mysql.connector import errorcode
 import time
-import pandas as pd
 from pandas import DataFrame
 from datetime import datetime
 
@@ -72,11 +71,9 @@ class DBAdminMySql():
         self.config["user"] = user
         self.config["password"] = password
         self.config["database"] = database
-        self._dbCon = DBCon(self.config)
         self._sanity_statements = sanity_statements
-        vers = self._dbCon.version()
-        if vers["version"].startswith(serverversion) is False:
-            raise dberrors.DBServerVersionError(vers["version"], serverversion)
+        self._serverversion = serverversion
+        self._dbCon = None
 
         self._metadata = {
             # System Variables (not read like Status variable !)
@@ -94,7 +91,6 @@ class DBAdminMySql():
            self._dynKnobs[knob] = "" 
         self._otherKnobs = {}
         self._dbStatus = { "__globvars_collected": False, "__complete_globavars_collected": False }
-        #self._dbStatus_init = {}
         self._ps_histo_global1 = None
         self._ps_histo_global2 = None
         self._min_buffer_pool_size = buffer_pool_size_increment # Default assignment 
@@ -125,7 +121,7 @@ class DBAdminMySql():
 
     # Raises:
     # StatusVarGetError, KnobMetadataValueNotFound
-    def initGlobalStatusOLD(self, otherKnobNames=[]):
+    def _initGlobalStatus(self, otherKnobNames=[]):
         # Collect Information Schemas
         self._getInformationSchema()
             
@@ -150,6 +146,8 @@ class DBAdminMySql():
         return self._min_buffer_pool_size
 
     def isConnected(self) -> bool :
+        if self._dbCon is None:
+            return False
         return self._dbCon.isConnected()
 
     # Sanity check on the database, by executing a flush statements
@@ -169,6 +167,19 @@ class DBAdminMySql():
         if duration > 0.:
             time.sleep(duration)
 
+    def connect(self):
+        """
+        Connect to the database using the configuration provided.
+        If the connection fails, it will raise an exception.
+        Raise: DBConnexionError, DBServerVersionError
+        """
+        self._dbCon = DBCon(self.config)
+        vers = self._dbCon.version()
+        if vers["version"].startswith(self._serverversion) is False:
+            raise dberrors.DBServerVersionError(vers["version"], self._serverversion)
+
+
+    
     # Try to use the database, by executing a simple query. 
     # Check database readiness every 3 seconds, until the database exists and at least "n_tables" table exists and wait indefinitely...
     # Return the tables count present in the database if tables count >= "n_tables".
@@ -194,7 +205,9 @@ class DBAdminMySql():
                 print(datetime.now(), "Waiting for the database to be ready... Tables count:", count, "Expected:", n_tables)
                 time.sleep(duration)
                 duration = min(60, duration+3)  # Increase the duration up to 60 seconds
-        
+
+        self._initGlobalStatus()
+                
         return count
         
     def close(self):
