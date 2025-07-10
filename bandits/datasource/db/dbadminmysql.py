@@ -66,11 +66,15 @@ class DBAdminMySql():
                  sanity_statements=["LOGS"]):   #, env_metadata={}):
         self._servername = servername
         self._serverversion = serverversion
+#        self.config["pool_name"] = "adbms_pool"
+#        self.config["pool_size"] = 5
+#        self.config["pool_reset_session"] = True # Important to effectively disconnect on close() method
         self.config["host"] = dbhost
         self.config["port"] = dbport
         self.config["user"] = user
         self.config["password"] = password
         self.config["database"] = database
+#        self.config["use_pure"] = True  # Use pure Python implementation (not C extension) for compatibility with all platforms
         self._sanity_statements = sanity_statements
         self._serverversion = serverversion
         self._dbCon = None
@@ -89,8 +93,8 @@ class DBAdminMySql():
         self._dynKnobs = {}
         for knob in dynamicKnobsToDrive:
            self._dynKnobs[knob] = "" 
-        self._otherKnobs = {}
-        self._dbStatus = { "__globvars_collected": False, "__complete_globavars_collected": False }
+        self._otherKnobs = {} # Dictionary or collected Other Knobs values from metadata list
+        self._dbStatus = { "__globvars_and_status_collected": False } # Reset status after a drive (and before the collect of global values)
         self._ps_histo_global1 = None
         self._ps_histo_global2 = None
         self._min_buffer_pool_size = buffer_pool_size_increment # Default assignment 
@@ -125,7 +129,7 @@ class DBAdminMySql():
         # Collect Information Schemas
         self._getInformationSchema()
             
-        self._dbStatus = { "__globvars_collected": False, "__complete_globavars_collected": False }
+        self._dbStatus = { "__globvars_and_status_collected": False } # Reset status after a drive (and before the collect of global values)
         self._dbGetStatusAtStep(step="init", statusVars=self._metadata["global_status_variables"], scope="GLOBAL")
         self._dbGetStatusAtStep(step="init", statusVars=self._metadata["usage_status_variables"], scope="GLOBAL")
 
@@ -182,6 +186,7 @@ class DBAdminMySql():
     
     # Try to use the database, by executing a simple query. 
     # Check database readiness every 3 seconds, until the database exists and at least "n_tables" table exists and wait indefinitely...
+    # When the database is ready, it means adbms user can access to the database and the tables are present. Then the intial global status variables are collected.
     # Return the tables count present in the database if tables count >= "n_tables".
     def getDatabaseReady(self, n_tables: int=0) -> int:
         """
@@ -199,7 +204,7 @@ class DBAdminMySql():
                 qres = self._dbCon.fetchOne("SELECT COUNT(*) as C FROM `information_schema`.`tables` WHERE `table_schema` = '"+dbname+"';")
                 count = int(qres["C"])
             except mysql.connector.Error as err:
-                print(dberrors.DBNotReadyError(dbname, err.msg))
+                print(dberrors.DBNotReadyError(dbname, err))
             
             if count < n_tables:
                 print(datetime.now(), "Waiting for the database to be ready... Tables count:", count, "Expected:", n_tables)
@@ -212,6 +217,7 @@ class DBAdminMySql():
         
     def close(self):
         self._dbCon.close()
+        self._dbCon = None
 
     def getMetaData(self):
         return self._metadata.copy()
@@ -224,7 +230,8 @@ class DBAdminMySql():
     def getOtherKnobs(self):
         return self._otherKnobs.copy()
 
-    def _collectUsageStatusValues(self, complete: bool = False):
+    # Collect Global Status values AND Usage status values, like QPS, BPS
+    def _collectUsageStatusValues(self):
         self._dbStatus["__status_collect_obs_duration"] = 0
 
         multi_observation_time = 1
@@ -251,39 +258,36 @@ class DBAdminMySql():
         self._dbStatus["created_tmp_disk_tables_per_sec"] = np.mean(ctdt)/multi_observation_time
         #self._dbStatus["threads_connected"] = int(self._dbStatus["threads_connected_end"])
 
-        # Complete information on DB schema, Index size... ?
-        # SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'my_database_name';
-        # SELECT SUM(TABLE_ROWS) FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_SCHEMA = '{your_db}';
-        if self._dbStatus["__complete_globavars_collected"] is False and complete:
-            # Get the database size and index size
-            dbname = self.config["database"]
-            req = 'SELECT table_schema "Schema", engine "Engine", ROUND(SUM(data_length)/1024/1024,2) "TableSizeMB", ROUND(SUM(index_length)/1024/1024,2) "IndexSizeMB" \
-            FROM information_schema.tables \
-            WHERE table_schema IN ("'+dbname+'") \
-            AND engine IS NOT NULL \
-            GROUP BY table_schema, engine;'
-            qres = self._dbCon.fetchOne(req)
-            if qres is None or len(qres) == 0:
-                qres = { "Schema": dbname, "Engine": "NA", "TableSizeMB": 0, "IndexSizeMB": 0 }
-            self._dbStatus["db_size"] = qres
-            qres["TableSizeMB"] = round(float(qres["TableSizeMB"]), 2)
-            qres["IndexSizeMB"] = round(float(qres["IndexSizeMB"]), 2)
+        #
+        # USAGE Status
+        #
+        # Get the database size and index size
+        dbname = self.config["database"]
+        req = 'SELECT table_schema "Schema", engine "Engine", ROUND(SUM(data_length)/1024/1024,2) "TableSizeMB", ROUND(SUM(index_length)/1024/1024,2) "IndexSizeMB" \
+        FROM information_schema.tables \
+        WHERE table_schema IN ("'+dbname+'") \
+        AND engine IS NOT NULL \
+        GROUP BY table_schema, engine;'
+        qres = self._dbCon.fetchOne(req)
+        if qres is None or len(qres) == 0:
+            qres = { "Schema": dbname, "Engine": "NA", "TableSizeMB": 0, "IndexSizeMB": 0 }
+        self._dbStatus["db_size"] = qres
+        qres["TableSizeMB"] = round(float(qres["TableSizeMB"]), 2)
+        qres["IndexSizeMB"] = round(float(qres["IndexSizeMB"]), 2)
 
-            # Get the table count for the database
-            qres = self._dbCon.fetchOne("SELECT COUNT(*) as count FROM `information_schema`.`tables` WHERE `table_schema` = '"+dbname+"';")
-            if qres is None or len(qres) == 0:
-                self._dbStatus["table_count"] = 0
-            else:
-                self._dbStatus["table_count"] =  int(qres["count"])
+        # Get the table count for the database
+        qres = self._dbCon.fetchOne("SELECT COUNT(*) as count FROM `information_schema`.`tables` WHERE `table_schema` = '"+dbname+"';")
+        if qres is None or len(qres) == 0:
+            self._dbStatus["table_count"] = 0
+        else:
+            self._dbStatus["table_count"] =  int(qres["count"])
 
-            # Get the row count for the database
-            qres = self._dbCon.fetchOne("SELECT SUM(TABLE_ROWS) as count FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_SCHEMA = '"+dbname+"';")    
-            if qres is None or qres["count"] is None or len(qres) == 0:
-                self._dbStatus["count"] = 0
-            else:
-                print("ROW COUNT:", qres)
-                self._dbStatus["row_count"] = int(qres["count"])
-                self._dbStatus["__complete_globavars_collected"] = True
+        # Get the row count for the database
+        qres = self._dbCon.fetchOne("SELECT SUM(TABLE_ROWS) as count FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_SCHEMA = '"+dbname+"';")    
+        if qres is None or qres["count"] is None or len(qres) == 0:
+            self._dbStatus["count"] = 0
+        else:
+            self._dbStatus["row_count"] = int(qres["count"])
 
 
     # Get global status variables. Metadata must be defined as expected.
@@ -300,7 +304,7 @@ class DBAdminMySql():
     #
     # Raises :
     # DBStatusError (on flush), StatusVarGetError
-    def collectGlobalStatusValues(self, observation_time=1., complete: bool = False):
+    def collectGlobalStatusValues(self, observation_time=1.):
         # Almost straight on collect of Global variables
         self._getInformationSchema()
         self._dbGetStatusAtStep(step="start", statusVars=self._metadata["global_status_variables"], scope="GLOBAL")
@@ -312,14 +316,14 @@ class DBAdminMySql():
         # Manage differently the collect of some Usage Status Global variables, averaged on several seconds
         # There is a problem (LOCK??) just hereafter!!!!! => DISABLED
         #self.startLatencyFromPerformanceSchema()
-        self._collectUsageStatusValues(complete=complete)
+        self._collectUsageStatusValues()
         #self._dbStatus["perfschema_latency"] = self.endLatentyFromPerformanceSchema()
         
-        self._dbStatus["__globvars_collected"] = True
+        self._dbStatus["__globvars_and_status_collected"] = True
 
 
     def getDBStatus(self):
-        if self._dbStatus["__globvars_collected"] is False:
+        if self._dbStatus["__globvars_and_status_collected"] is False:
             return {}
         
         out = self._dbStatus.copy()
@@ -355,7 +359,7 @@ class DBAdminMySql():
     # Raises:
     # StatusVarGetError
     def getDBUsageStatus(self) -> dict:
-        if self._dbStatus["__globvars_collected"] is False:
+        if self._dbStatus["__globvars_and_status_collected"] is False:
             return {}
         return self._mapFullUsageStatus()
 
@@ -466,11 +470,6 @@ class DBAdminMySql():
         except mysql.connector.Error as err:
             raise dberrors.DBStatusError(err.msg)
 
-
-
-    #def isGlobalStatusCollected(self) -> bool:
-    #    return self._dbStatus["__globvars_collected"]    
-
     # Initialise context before updates
     def _beginKnobsDriving(self):
         self._dynKnobsPrevious = {}
@@ -483,10 +482,6 @@ class DBAdminMySql():
     def _endKnobsDriving(self):
         self._dynKnobsUpdatedInDB = {}
         self._dynKnobsPrevious = {}
-        self._dbStatus = { "__globvars_collected": False,
-                           "__complete_globavars_collected": False
-                         } # Reset status after a drive (and before the collect of global values)
-
 
     #  Restore updated knobs to their previous value
     # Raise KnobRollbackError, KnobUpdateInProgress
@@ -536,7 +531,7 @@ class DBAdminMySql():
                 time.sleep(3.)
 
         print("Collect status...")
-        self.collectGlobalStatusValues(observation_time=1, complete=True)
+        self.collectGlobalStatusValues(observation_time=1)
         print("Collect DONE!")
         return  self.getDBUsageStatus()         
 

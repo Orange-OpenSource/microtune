@@ -39,13 +39,14 @@ class DBCon():
             elif err.errno == errorcode.ER_SERVER_SHUTDOWN:
                 raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Database server is shutdown and not ready to accept connections")
             else:
-                raise dberrors.DBConnexionError(config.get('database', 'unknown'), "Unknown error occurred while connecting to the database")
+                raise dberrors.DBConnexionError(config.get('database', 'unknown'), f"Unknown error occurred while connecting to the database: {err}")
 
     def isConnected(self) -> bool :
         return self.cnx.is_connected()
 
     def close(self):
         self.cnx.close()
+        #self.cnx.disconnect()
 
     # Options, see: https://dev.mysql.com/doc/refman/8.0/en/flush.html
     # BINARY LOGS
