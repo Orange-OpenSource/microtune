@@ -69,14 +69,13 @@ class DBAdminMySql():
 #        self.config["pool_name"] = "adbms_pool"
 #        self.config["pool_size"] = 5
 #        self.config["pool_reset_session"] = True # Important to effectively disconnect on close() method
+#        self.config["use_pure"] = True  # Use pure Python implementation (not C extension) for compatibility with all platforms
         self.config["host"] = dbhost
         self.config["port"] = dbport
         self.config["user"] = user
         self.config["password"] = password
         self.config["database"] = database
-#        self.config["use_pure"] = True  # Use pure Python implementation (not C extension) for compatibility with all platforms
         self._sanity_statements = sanity_statements
-        self._serverversion = serverversion
         self._dbCon = None
 
         self._metadata = {
