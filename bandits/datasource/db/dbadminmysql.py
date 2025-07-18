@@ -19,6 +19,7 @@ from mysql.connector import errorcode
 import time
 from pandas import DataFrame
 from datetime import datetime
+from packaging.version import Version
 
 from bandits.datasource.db.dbcon import DBCon
 import bandits.datasource.db.dberrors as dberrors
@@ -373,15 +374,21 @@ class DBAdminMySql():
     # Return 0 if the buffer's resize status is completed
     # For MySQL returns the value of innodb_buffer_pool_resize_status_code status variable
     def _innodb_buffer_pool_resize_status_code(self): # -> (int, str):
-        if self._servername == "mariadb":
+        resize_status_code = 0
+        resize_status = "?"
+
+        if (self._servername == "mysql" and Version(self._serverversion) >= Version("8")) or (self._servername == "mariadb" and Version(self._serverversion) < Version("11.4")):
             resize_status = self._dbCon.showStatus(varname="innodb_buffer_pool_resize_status")
             if resize_status.startswith("Completed "):
                 return 0, resize_status
-            return 1, resize_status
-        
-        # 'innodb_buffer_pool_resize_status_code' and 'innodb_buffer_pool_resize_status_progress' are only available since MySQL 8.0(.31?) and not in MariaDB too
-        resize_status_code = int(self._dbCon.showStatus(varname="innodb_buffer_pool_resize_status_code"))
-        return resize_status_code, "..."
+
+            # 'innodb_buffer_pool_resize_status_code' and 'innodb_buffer_pool_resize_status_progress' are only available since MySQL 8.0(.31?) and not in MariaDB too
+            if self._servername == "mysql" and Version(self._serverversion) >= Version("8"):
+                resize_status_code = int(self._dbCon.showStatus(varname="innodb_buffer_pool_resize_status_code"))
+            else:
+                resize_status_code = 1            
+
+        return resize_status_code, resize_status
 
     # Raises:
     # KnobSetError

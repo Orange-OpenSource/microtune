@@ -47,3 +47,4 @@ scipy==1.11.4
 #xgboost==2.0.3
 #typing-extensions==4.12.2 is INCOMPATIBLE with 
 #typing-extensions==4.3.0
+packaging==25.0

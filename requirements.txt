@@ -45,3 +45,4 @@ xgboost==2.0.3
 xxhash==3.5.0 #3.4.1
 #typing-extensions==4.12.2 is INCOMPATIBLE with 
 #typing-extensions==4.3.0
+packaging==25.0
