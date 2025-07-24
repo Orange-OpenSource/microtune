@@ -45,8 +45,9 @@ class DBCon():
         return self.cnx.is_connected()
 
     def close(self):
-        self.cnx.close()
-        #self.cnx.disconnect()
+        #self.cnx.close()
+        #self.cnx.shutdown()
+        self.cnx.disconnect()
 
     # Options, see: https://dev.mysql.com/doc/refman/8.0/en/flush.html
     # BINARY LOGS

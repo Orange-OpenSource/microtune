@@ -66,8 +66,9 @@ class DBAdminMySql():
                  global_status=[], information_schemas=[], information_schemas_mapping: dict = None,
                  sanity_statements=["LOGS"]):   #, env_metadata={}):
         self._servername = servername
-        self._serverversion = serverversion
-#        self.config["pool_name"] = "adbms_pool"
+        self._serverversion = serverversion # EXPECTED Server's version as defined by the configuration!!
+        self._real_serverversion = None # Real server's version, collected at the connection time
+#        self.config["pool_name"] = "microtune"
 #        self.config["pool_size"] = 5
 #        self.config["pool_reset_session"] = True # Important to effectively disconnect on close() method
 #        self.config["use_pure"] = True  # Use pure Python implementation (not C extension) for compatibility with all platforms
@@ -178,9 +179,10 @@ class DBAdminMySql():
         Raise: DBConnexionError, DBServerVersionError
         """
         self._dbCon = DBCon(self.config)
-        vers = self._dbCon.version()
-        if vers["version"].startswith(self._serverversion) is False:
-            raise dberrors.DBServerVersionError(vers["version"], self._serverversion)
+        ver = self._dbCon.version()
+        self._real_serverversion = ver["version"]
+        if self._real_serverversion.startswith(self._serverversion) is False:
+            raise dberrors.DBServerVersionError(self._real_serverversion, self._serverversion)
 
 
     
@@ -379,6 +381,7 @@ class DBAdminMySql():
 
         if (self._servername == "mysql" and Version(self._serverversion) >= Version("8")) or (self._servername == "mariadb" and Version(self._serverversion) < Version("11.4")):
             resize_status = self._dbCon.showStatus(varname="innodb_buffer_pool_resize_status")
+            print("Resize status:", resize_status, self._servername, self._serverversion, self._real_serverversion)
             if resize_status.startswith("Completed "):
                 return 0, resize_status
 
