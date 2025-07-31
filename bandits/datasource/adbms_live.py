@@ -378,7 +378,7 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
 
             real_incr = bufferidx_increment
 
-            print(datetime.now(), "No SbPerfMonitor enabled -> Wait at Step time:", self.db_warmup_time, "s ...")
+            print(datetime.now(), "SbPerfMonitor disabled -> Wait at Step time:", self.buf_update_warmup_time, "s ...")
             time.sleep(self.buf_update_warmup_time)  # Wait for the DB to warmup after a knob update
 
         except dberrors.KnobDriveError as err:

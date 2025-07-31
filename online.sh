@@ -2,13 +2,6 @@
 
 # This script is used to run the online version of microtune.
 # It is expected to be run from the root directory of the microtune project.
-whoami
-id
-ls -la /
-cat /etc/passwd
-cat /etc/group
-ls -la /home
-
 MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST:="localhost"}
 MYSQL_DATABASE=${MYSQL_DATABASE:=adbms}
 MYSQL_MICROTUNE_PASSWORD=${MYSQL_MICROTUNE_PASSWORD:=adbms}
