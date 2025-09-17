@@ -202,3 +202,13 @@ class TopDownPolicyNormalized(CtxPolicy):
         else:
             return self.getUpArmIndex() # Up arm
 
+
+# A policy that always select the STAY action. Created to test a fixed buffer size whatever the workload.
+class StayPolicy(CtxPolicy):
+    def __init__(self,actions: Actions, ctx=[], seed=None):
+        super().__init__(actions, ctx=ctx, use_tips=False, seed=seed)
+
+    # Overrides virtual method off ABC CtxPolicy class
+    def select_arm(self, context, deterministic=False, debug=False):
+        return self.getStayArmIndex()   
+

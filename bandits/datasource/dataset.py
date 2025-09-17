@@ -181,10 +181,11 @@ class ADBMSDataSetEntryContextSelector(DataSetEntryContextSelector):
     def reset(self, workload_idx: int = 0):
         self._selectGroupFromUnboundIndex(workload_idx)
 
+    # Move to the next entry into the group (by default a random entry, but this behaviour can be changed in sub-classes) 
     def next(self):
         self._selectEntryURandomly()
 
-    # Move in current group
+    # Move in current group (i.e. workload) with a buffer increment specified in argument
     # Here incr is used as an increment on current index (in dataframe)
     # action: -N for DOWN, 0 for STAY, +N for UP
     # Return the real increment applied, that can be different than the one in argument if the move goes out of range (in group)

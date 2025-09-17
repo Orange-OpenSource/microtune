@@ -1,0 +1,8 @@
+
+_partial_: true
+_target_: bandits.datasource.adbms_dataframe.ADBMSBufferCacheStatesFixedBufferSelector
+qpslat_w: "01"
+context_elems: ${..observations.elems}
+normalize: ${...NORMALIZE_OBS}
+fixed_percents: 0.47
+

@@ -323,10 +323,10 @@ class ADBMSBufferCacheStatesSequentialSelector(ADBMSBufferCacheStates):
         super().__init__(df, group_id_field="combined_column", entry_id_field="buf_size_idx", qpslat_w=qpslat_w, context_elems=context_elems, normalize=normalize, with_scaler=with_scaler)
         if topdown:
             self._from_max=True
-            self._incr = 1
+            #self._incr = 1
         else:
             self._from_max=False
-            self._incr = -1
+            #self._incr = -1
 
     # Reset to new current workload
     def reset(self, workload_idx: int = 0):
@@ -344,7 +344,7 @@ class ADBMSBufferCacheStatesFullSequentialSelector(ADBMSBufferCacheStates):
 
     # Reset to new current workload
     def reset(self, workload_idx: int = 0):
-        self.idx = (self.idx+1)%self.getTotalStatesCount()
+        self.idx = (self.idx+1)%self.getTotalStatesCount() 
         self.group_idx = self.idx//self.getStatesCountPerWorkload()
         self.entry_idx = self.idx - (self.group_idx * self.getStatesCountPerWorkload())
 
@@ -374,7 +374,7 @@ class ADBMSBufferCacheStatesRandomTopDownSelector(ADBMSBufferCacheStates):
 class ADBMSBufferCacheStatesTopDownRockerSelector(ADBMSBufferCacheStates):
     def __init__(self, df, qpslat_w="01", context_elems=None, normalize=False, with_scaler:MinMaxScaler=None):
         super().__init__(df, group_id_field="combined_column", entry_id_field="buf_size_idx", qpslat_w=qpslat_w, context_elems=context_elems, normalize=normalize, with_scaler=with_scaler)
-        self._incr = 0
+        #self._incr = 0
         self._from_max = False
 
     # Reset to a new current workload every 2 workload_idx
@@ -386,3 +386,18 @@ class ADBMSBufferCacheStatesTopDownRockerSelector(ADBMSBufferCacheStates):
     def next(self):
         self._selectEntryMinMax(set_to_min=self._from_max)
         return self.entry_idx
+
+class ADBMSBufferCacheStatesFixedBufferSelector(ADBMSBufferCacheStates):
+    def __init__(self, df, qpslat_w="01", context_elems=None, normalize=False, with_scaler:MinMaxScaler=None, fixed_percents=0.8):
+        super().__init__(df, group_id_field="combined_column", entry_id_field="buf_size_idx", qpslat_w=qpslat_w, context_elems=context_elems, normalize=normalize, with_scaler=with_scaler)
+        self._fixed_percents_inv =1.-fixed_percents
+        self._selectEntryFromRatio(ratio=(self._fixed_percents_inv))
+
+    # Reset to new current workload
+    def reset(self, workload_idx: int = 0):
+        self._selectGroupFromUnboundIndex(workload_idx//2)
+
+    def next(self):
+        self._selectEntryFromRatio(ratio=(self._fixed_percents_inv))
+        return self.entry_idx
+
