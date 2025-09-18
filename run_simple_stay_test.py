@@ -81,7 +81,8 @@ def run(cfg: DictConfig) -> None:
 
     graph = GraphPredictionsStatus(title=f"SLA Graph Stage:{stage} Perf:{pf.getSessionPerformanceMultiObj()} {env_test.unwrapped.reward.name}")
     fig = graph.figure(states=m_sla.states, latencies=m_sla.latencies, buffers=m_sla.buffers_mb, step_in_wl=m_sla.step_in_wl)
-    htmlgraph = os.path.join(cfg.pickles_path, f'{filever}-{stage.lower()}-sla_perf-{agent.policy.name}-best.html')
+    pp=str(cfg.tuner.env.state_selector_test.fixed_percents).replace('.','')
+    htmlgraph = os.path.join(cfg.pickles_path, f'{filever}-{stage.lower()}-sla_perf-{agent.policy.name}-baseline{pp}.html')
     fig.write_html(htmlgraph)
     log.info(f'Saved SLA Graph: {htmlgraph}')
 

@@ -30,13 +30,12 @@ defaults:
 tuner:
   env:
     state_selector_test:
-      fixed_percents: 0.47
+      fixed_percents: 0.5
 
 version_minor: 56_simple_stay_test
 trial: 1
 seed: 0
 eval_data: False     # Use EVAL dataset or TEST dataset
-DETERMINISTIC: False  # Flag passed to SB3's predict method. Default is False
 
 verbosity: 1
 pickles_dirname: E${version}_${version_minor}
