@@ -27,6 +27,11 @@ defaults:
   - tuner: stay
   - _self_
 
+tuner:
+  env:
+    state_selector_test:
+      fixed_percents: 0.47
+
 version_minor: 56_simple_stay_test
 trial: 1
 seed: 0
