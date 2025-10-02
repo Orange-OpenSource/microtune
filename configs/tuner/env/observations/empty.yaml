@@ -1,4 +1,4 @@
-# Empty observations (i.e. for Oracle)
+# Empty observations (i.e. for Oracle or Stay baselines policies)
 
 # Do not use elems: [], leads to problem in Env's context preparation and may be definition of Gym env observation_space....
 

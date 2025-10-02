@@ -17,6 +17,15 @@ class DBError(Exception):
     """Base class for other exceptions"""
     pass
 
+class DBConnexionError(DBError):
+    """Raised when a DB connexion fails"""
+    def __init__(self, database, message="Unable to connect to database"):
+        self.msg = message
+        self.database = database
+
+    def __str__(self):
+        return f'{self.msg}: Database {self.database} is not reachable'
+
 class DBServerVersionError(DBError):
     """Raised when a DB server type or version is incorrect"""
     def __init__(self, curVersion="none", expectedVersion="none", message="Server type or version is not correct"):
@@ -26,6 +35,16 @@ class DBServerVersionError(DBError):
 
     def __str__(self):
         return f'{self.msg}: Server version {self.curVer}  does not starts with {self.expVer}'
+
+class DBNotReadyError(DBError):
+    """Raised when a DB server is not ready to accept connections"""
+    def __init__(self, database, message="Database is not ready to accept connections"):
+        self.msg = message
+        self.database = database
+        super().__init__(self.msg)
+
+    def __str__(self):
+        return f'self.msg: Database {self.database} is not ready to accept connections'
 
 class DBStatusError(DBError):
     def __init__(self, message=""):

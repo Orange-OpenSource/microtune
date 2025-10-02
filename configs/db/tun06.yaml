@@ -7,3 +7,5 @@ defaults:
 host: 192.168.0.143 # TUN06
 port: 3306
 user: adbms
+password: adbms
+database: adbms

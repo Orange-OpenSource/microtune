@@ -78,19 +78,17 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
     def __init__(self, perf_target_level= 0.98, qpslat_w="01",                 
                  ram_limit: int = 8589934592,   # 8GB
                  buf_reset_policy="stay",
-                 db_warmup_time=6,
+                 db_warmups={'on_start': 60, 'on_buf_update': 30},  # in seconds
                  metrics_picker: SysbenchMetricsPicker = None,  # {'on_start': 50.0, 'on_buf_update': 20.0, 'use_sigma_metric': True}
                  dba: DBAdminMySql = None,
                  context_elems=None, normalize=False, with_scaler:MinMaxScaler=None):
         self._qpslat_w = qpslat_w
         self._dba = dba
         self._knobs_policy = None
-        self._sbperf = metrics_picker
-        self.db_warmup_time = db_warmup_time
+        self._sbperf = None
+        self.db_warmup_time = db_warmups["on_start"]
+        self.buf_update_warmup_time = db_warmups["on_buf_update"]
         self._dbstatus_observation_time = 5.
-        #self._metrics_observation_time = 3.  # Prometheus metrics
-        #state = self.state()
-        #self.latency_range = state["latency_mean_max"] - state["latency_mean_min"]
         self.lat_gap = 0
         self._latgap_ms = "NA"
         self.lat_target = -1
@@ -99,10 +97,9 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
         self._ram_limit = ram_limit
         self.innodb_buffer_pool_size_reset_policy = buf_reset_policy
         self._createOnceKnobsPolicy()
+        self._initial_usage = None
         self._cur_state = {}
-        self._dba.collectGlobalStatusValues(observation_time=1, complete=True)
-        self._initial_usage = self._dba.getDBUsageStatus()
-        print("DB USAGE on reset: ", self._initial_usage)
+        self._workload_idx = 0
 
         super().__init__(group_list=["LIVE"], entries_per_group=self._entries_count, context_elems=context_elems, normalize=normalize, with_scaler=with_scaler)
         #self._context_elems = None
@@ -134,13 +131,13 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
         self._entries_count = len(d_values)
         print("** BUFFER VALUES:", d_values, self._entries_count, " values")
 
-    def _agent_location(self, dbstatus_observation_time=1, complete: bool = False):
+    def _agent_location(self, dbstatus_observation_time=1):
         obs = {}
         obs["innodb_buffer_pool_size"] = int(self._cur_knobs["innodb_buffer_pool_size"])
         obs["normalized_buf_size"] = self._knobs_policy.getNormalizedValue("innodb_buffer_pool_size", obs["innodb_buffer_pool_size"])
 
         # Manage to get OBS's Status parameters (calculated from DB Global variables)
-        self._dba.collectGlobalStatusValues(observation_time=dbstatus_observation_time, complete=complete)
+        self._dba.collectGlobalStatusValues(observation_time=dbstatus_observation_time)
         status = self._dba.getDBStatus()
 
         pool_wait_free = int(status["innodb_buffer_pool_wait_free_diff"])
@@ -221,10 +218,13 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
     # Update current State and Context vector
     def _set_cur_state(self):
         print(datetime.now(), "Collect all observed data...")
-        obs = self._agent_location(dbstatus_observation_time=self._dbstatus_observation_time, complete=True)
+        obs = self._agent_location(dbstatus_observation_time=self._dbstatus_observation_time)
         print("## TUNING OBSERVATION: ", knobs_prettifier(obs))
         print(datetime.now(), "End of waiting time.")
 
+        if self._initial_usage is None:
+            self._initial_usage = self._dba.getDBUsageStatus()
+        
         info = self._get_info()
         
         buf_min = self._dba.getMinBufferPoolSize()
@@ -277,13 +277,41 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
             incr = actions[idx] 
             buffunc(idx, incr) 
 
+    def _waitConnectionToDB(self, max_attempts: int = np.inf, retry_delay: int = 10) -> tuple[bool, int]:
+        reconnections_attempts = 0
+
+        while self._dba.isConnected() is False:
+            try:
+                self._dba.connect()
+            except (dberrors.DBConnexionError, dberrors.DBServerVersionError) as err:
+                extra = {"tags": {"ctx": "reset", "err": err.msg, "wid": self._workload_idx}}
+                logger.warning(err,
+                            extra=extra,
+                )
+                reconnections_attempts += 1
+                if reconnections_attempts >= max_attempts:
+                    logger.warning("Max reconnections attempts reached. Exiting...")
+                    #print("Max reconnections attempts reached. Exiting...")
+                    break
+
+                # Wait 10 seconds before retrying to connect
+                logger.info(f"Retrying ({reconnections_attempts}/{max_attempts}) to connect in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+        
+        return self._dba.isConnected(), reconnections_attempts
+
     # Reset position onto a new workload and a new buffer index in the workload's entries
     def reset(self, workload_idx: int = 0):
+
+        self._workload_idx = workload_idx
+        self._waitConnectionToDB()
+
         try:
+            n_tables = self._dba.getDatabaseReady(n_tables=1)
+            logger.info("Database is ready with %d tables", n_tables)
+
             self._dba.sanity()           
 
-            self._createOnceKnobsPolicy() # Creates it only once!!
-            
             self._cur_knobs = self._dba.getKnobsToDrive(sync_from_db=True)           
             print("CUR KNOBS on reset: "+str(knobs_prettifier(self._cur_knobs)))
             new_knobs = self._knobs_policy.applyResetPolicy(self._cur_knobs)
@@ -297,9 +325,8 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
             print(datetime.now(), "Wait at Episode time:", self.db_warmup_time, "s ...")
             time.sleep(self.db_warmup_time)
 
+            self._initial_usage = None
             self._set_cur_state()
-            self._initial_usage = self._dba.getDBUsageStatus()
-
             print("DB USAGE on reset: ", self._initial_usage)
 
         except (dberrors.KnobGetError,dberrors.KnobSetError,dberrors.KnobUpdateInProgress,dberrors.DBStatusError, dberrors.StatusVarGetError)  as err:
@@ -311,7 +338,7 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
                                 
         info = {}
         info["knobs_policy"] = self._knobs_policy.get()
-        info["usage"] = self._dba.getDBUsageStatus()
+        info["usage"] = self._initial_usage 
         obs = [v for k, v, in self._cur_state.items() if k.startswith("observation.")]
 
         extra = {"tags": {"ctx": "reset", "wid": workload_idx}, "observation": obs, "info": info }
@@ -330,7 +357,14 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
     # Return the real increment applied, that can be different than the one in argument if the move goes out of range (in group) or in case of database error
     def move(self, bufferidx_increment=0):
         real_incr = 0
-        sleeptime_err = 0 
+        sleeptime_err = 0
+        update_cur_state = True
+
+        is_connected, recon_attempts = self._waitConnectionToDB(max_attempts=5)
+        if not is_connected:
+            logger.warning("Unable to connect to the database after", recon_attempts, "attempts. Exiting...")
+            return 0 # STAY
+
         try:
             self._cur_knobs = self._dba.getKnobsToDrive(sync_from_db=True)
             print("CUR KNOBS: ", knobs_prettifier(self._cur_knobs))
@@ -344,45 +378,44 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
 
             real_incr = bufferidx_increment
 
-            # HOT PATCH!!! TO BE FIXED Apply always the warmup time, whatever a change on knobs has been made or not....
-            if self._sbperf is None:
-                print(datetime.now(), "No SbPerfMonitor enabled -> Wait at Step time:", self.db_warmup_time, "s ...")
-                time.sleep(self.db_warmup_time)
+            print(datetime.now(), "SbPerfMonitor disabled -> Wait at Step time:", self.buf_update_warmup_time, "s ...")
+            time.sleep(self.buf_update_warmup_time)  # Wait for the DB to warmup after a knob update
 
         except dberrors.KnobDriveError as err:
             sleeptime_err = self.db_warmup_time
-            #print("ERROR", err)
-            #self._cur_knobs["innodb_buffer_pool_size"] = int(err.newVal)
-            #self._set_cur_state()
             real_incr = 0
         except dberrors.KnobUpdateInProgress as err:
             sleeptime_err = self.db_warmup_time
-            print("ERROR", err)
         # Useless exception, warmup is managed now by the configuration and no longer KnobPolicy on knob update
         except dberrors.KnobDriveWarmupError as err:
             sleeptime_err = self.db_warmup_time
             print("!!!!!!!!!!!!!!!!! KNOB WARMUP EXCEPTION ?!")
-            print(err)
-        except (dberrors.KnobGetError, dberrors.KnobRollbackError, dberrors.KnobSetError) as err:
+            logger.error(err)
+        except (dberrors.DBConnexionError, dberrors.KnobGetError, dberrors.KnobRollbackError, dberrors.KnobSetError) as err:
+            update_cur_state = False
             sleeptime_err = self.db_warmup_time
             print("!!!!!!!!!!!!!!!!! DATABASE ACCESS TO KNOBS EXCEPTION ?!")
-            print(err)
+            logger.error(err)
         except:
+            update_cur_state = False
             sleeptime_err = self.db_warmup_time
             print("!!!!!!!!!!!!!!!!! UNKNOWN EXCEPTION ?!")
-            print("ERROR", sys.exc_info()[0])
+            logger.error("ERROR", sys.exc_info()[0])
 
-        try:
-            self._set_cur_state()
-        except (dberrors.DBStatusError, dberrors.StatusVarGetError) as err:
-            sleeptime_err = self.db_warmup_time
-            print("!!!!!!!!!!!!!!!!! DATABASE ACCESS TO GET OBSERVATION PARAMS ?!")
-            print("ERROR", err)
-        except:
-            sleeptime_err = self.db_warmup_time
-            print("!!!!!!!!!!!!!!!!! UNKNOWN EXCEPTION ?!")
-            print("ERROR", sys.exc_info()[0])
+        if update_cur_state:
+            try:
+                self._set_cur_state()
+            except (dberrors.DBStatusError, dberrors.StatusVarGetError) as err:
+                sleeptime_err = self.db_warmup_time
+                print("!!!!!!!!!!!!!!!!! DATABASE ACCESS TO GET OBSERVATION PARAMS ?!")
+                print("ERROR", err)
+            except:
+                sleeptime_err = self.db_warmup_time
+                print("!!!!!!!!!!!!!!!!! UNKNOWN EXCEPTION ?!")
+                print("ERROR", sys.exc_info()[0])
 
+        self._dba.close()  # Close the connection to the DB
+        logger.info("Database connection closed.")
         time.sleep(sleeptime_err)
 
         return real_incr
@@ -400,6 +433,11 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
 
         self._context_vectors = vectors
 
+
+
+###
+## ALL THE FOLLOWING IS DUMMY. ONLY FOR TESTING PURPOSES
+###
 """     
 global_status = [
         "Bytes_received",
@@ -511,6 +549,6 @@ class ADBMSBufferCacheStates(ADBMSBufferCacheStatesLive):
                          qpslat_w=qpslat_w,                 
                          ram_limit=ram_limit,
                          buf_reset_policy=buf_reset_policy,
-                         db_warmup_time=warmups["on_start"],
+                         db_warmups=warmups,
                          metrics_picker=SysbenchMetricsPicker(warmups=warmups), 
                          dba=dba)

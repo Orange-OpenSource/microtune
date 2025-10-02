@@ -7,3 +7,5 @@ defaults:
 host: db.local
 port: 3306
 user: adbms
+password: adbms
+database: adbms

@@ -1,0 +1,11 @@
+
+defaults:
+  - warmups: balanced
+  - cache: 8GB
+  - variables: mariadb
+ 
+host: localhost
+port: 3306
+user: microtune
+password: adbms
+database: adbms

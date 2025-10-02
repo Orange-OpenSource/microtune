@@ -1,0 +1,10 @@
+defaults:
+  - base_baseline
+  - override actions: stayonly
+  - override env/observations: empty
+  - override env/state_selector@env.state_selector_test: df_fixedbuffer
+  - _self_
+
+agent:
+  policy:
+    _target_: bandits.policy_baselines.StayPolicy

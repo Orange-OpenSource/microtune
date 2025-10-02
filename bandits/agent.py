@@ -44,7 +44,7 @@ class VSAgent():
     def _train(self, env: gym.Wrapper, episodes_max, update, deterministic=False, callback: BaseCallback=None, verbose=1):
         self.policy.initWithEnv(env)
 
-        itr = tqdm(range(episodes_max)) if verbose > 0 else range(episodes_max)
+        itr = tqdm(range(episodes_max)) if verbose > 0 and episodes_max < np.inf else range(episodes_max)
         debug_arm = bool(max(0,verbose-2))
         
         for episode in itr:
@@ -81,10 +81,21 @@ class VSAgent():
         if verbose > 1:
             env.showResults()
 
+    # predict: run the policy on the environment, i.e. predict the best arm to choose at each time step
+    # episodes_max:
+    #  -1: use all workloads in the dataset, i.e. episodes_max = ds.getWorkloadsCount() * abs(episodes_max), thus -N will run N workloads
+    #  None: Never stop to run new episodes, i.e. episodes_max = numpy.inf
+    #  >0: use episodes_max as the number of episodes to run
+    # deterministic: if True, the policy should always choose the same action for the same state    
+    # verbose: 0: no display, 1: display every episode, 2: display every 10 episodes, 3: display every 100 episodes, etc.
     def predict(self, env: VSMonitor, episodes_max=-1, deterministic=False, verbose=0, baseline_perf_meter=None, label: str="na"):
-        if episodes_max<0:    
-            episodes_max = env.unwrapped.ds.getWorkloadsCount()*abs(episodes_max)
-        status_at_episodes = 0 if verbose==0 else max(1, episodes_max//(verbose*5))
+        if episodes_max is None:
+            episodes_max = np.inf
+            status_at_episodes = 1
+        else:
+            if episodes_max<0:    
+                episodes_max = env.unwrapped.ds.getWorkloadsCount()*abs(episodes_max)
+            status_at_episodes = 0 if verbose==0 else max(1, episodes_max//(verbose*5))
         env.setEpisodesMax(episodes_max, status_at_episodes)
         self.log_interval = 1
         #verbose = verbose*episodes_max//50 # Determines frequency of the Episode display
