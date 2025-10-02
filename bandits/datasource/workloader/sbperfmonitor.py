@@ -427,7 +427,7 @@ class SysbenchMetricsPicker():
             print(datetime.now(), "Get perf metrics with",self._metrics_observation_time,"s. observation time...")
             while not stable and not timeout:
                 timeout, stable, metrics = self._pickup(self._metrics_observation_time) # wait self._metrics_observation_time before pickup again
-                print(datetime.now(), "Wait time:", self._total_time, "/", self._max_duration, "Cur Sigma latency:", metrics["latency_sigma"], "Target:", self._warmups["sigma_latency_toleration"])
+                print(datetime.now(), "Wait time:", self._total_time, "/", self._max_duration, "Cur Sigma latency:", metrics["latency_sigma"], "Target <", self._warmups["sigma_latency_toleration"])
 
             if not stable and timeout:
                 res = self._mostStableMetrics()
