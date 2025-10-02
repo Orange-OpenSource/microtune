@@ -126,10 +126,7 @@ class ObsSamplesDF():
         
         return df_out
 
-    def getSimuData(self, objective_margin=0.3):
-        list_documents, list_documents0 = self.retrieve_all_documents()
-        df_filtered = self.docs2flat_list(list_documents)
-        # Fixes ad some add columns with constants
+    def fixColumns(self, df_filtered, objective_margin=0.3, combined_col=True):
         df_filtered["db_size_mb"] = df_filtered["db_size_mb"].astype(int)
         buf_sizes_list = df_filtered["buf_size"].unique().tolist()
         df_filtered["buf_size_min_mb"] = buf_sizes_list[-1]//1024//1024
@@ -141,11 +138,11 @@ class ObsSamplesDF():
         #bidx = df_filtered["buf_size_idx"].unique().tolist()
         #print("BUFS IDX", bidx, len(bidx))
 
-        # get all the workloads
-        columns_to_combine = ["tables", "tables_rows_M", "wl_clients", "Rtype"]
-
-        # Create a new column with the combined values as strings
-        df_filtered['combined_column'] = df_filtered[columns_to_combine].astype(str).agg(' '.join, axis=1)
+        if combined_col:
+            # get all the workloads
+            columns_to_combine = ["tables", "tables_rows_M", "wl_clients", "Rtype"]
+            # Create a new column with the combined values as strings
+            df_filtered['combined_column'] = df_filtered[columns_to_combine].astype(str).agg(' '.join, axis=1)
 
         # Print the DataFrame with the new combined column
         workloads =  df_filtered['combined_column'].unique().tolist()
@@ -164,6 +161,12 @@ class ObsSamplesDF():
         df_filtered = self.add_perf_target_level(df_filtered, objective_margin=objective_margin, buf_values_count=buf_values_count)
 
         return df_filtered.reset_index(drop=True, inplace=False)
+
+    def getSimuData(self, objective_margin=0.3):
+        list_documents, list_documents0 = self.retrieve_all_documents()
+        df_filtered = self.docs2flat_list(list_documents)
+        # Fixes ad some add columns with constants
+        return self.fixColumns(df_filtered)
 
     def saveToPickle(self, fullname, df):
         df.to_pickle(fullname+'.pickle', compression={'method': 'gzip', 'compresslevel': 1, 'mtime': 1})
