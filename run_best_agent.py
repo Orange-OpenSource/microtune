@@ -84,7 +84,7 @@ def run(cfg: DictConfig) -> None:
         #        eval_iregrets=eval_iregret_cumsum, eval_ireg_perf=env_eval.getIRegretPerformance(), 
         #        sweeper_params=sweeper_params, sweep_perf=sweep_perf, eval_perf_meter=env_eval.perf_meter, oracle_eval_perf_meter=oracle_perf_meter,
         #        config=OmegaConf.to_yaml(cfg, resolve=True))
-        best_sid =  dgv(optdict,"sid")
+        best_sid =  dgv(optdict,"sid") # Seed ID
         eval_perf_meter = optdict["eval_perf_meter"]          
         agent_eval_perf_meter_list.append(eval_perf_meter)
 

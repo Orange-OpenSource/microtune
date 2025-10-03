@@ -1,0 +1,33 @@
+# List of observations used for DBSAS 
+# Based on prod_optimal.yaml removing some not relevant for the first case of generation
+
+
+elems:
+  - wl_clients
+  - buf_size
+  - sysbench_filtered.latency_mean
+  - db_size_mb
+  - observation.cache_used_pages_ratio
+  - observation.cache_hit_ratio
+  - extra_info.usage.db_size_initial.IndexSizeMB
+  - extra_info.usage.qps
+  - observation.write_wait_ratio
+  - extra_info.global_status.created_tmp_tables_diff
+  - extra_info.global_status.innodb_buffer_pool_read_requests_diff
+  - extra_info.global_status.innodb_buffer_pool_write_requests_diff
+  - extra_info.global_status.innodb_buffer_pool_wait_free_diff
+  - extra_info.global_status.innodb_data_reads_diff
+  - extra_info.global_status.innodb_data_written_diff
+  - extra_info.global_status.threads_connected_end
+  - extra_info.global_status.innodb_buffer_pool_pages_free_diff
+  - extra_info.global_status.information_schema.innodb_metrics.os_pending_reads
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.MODIFIED_DATABASE_PAGES
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.READ_AHEAD_EVICTED_RATE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.POOL_SIZE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.FREE_BUFFERS
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.DATABASE_PAGES
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.PENDING_FLUSH_LRU
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.HIT_RATE
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.YOUNG_MAKE_PER_THOUSAND_GETS
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.NOT_YOUNG_MAKE_PER_THOUSAND_GETS
+  - extra_info.global_status.information_schema.innodb_buffer_pool_stats.LRU_IO_TOTAL

@@ -149,11 +149,11 @@ class ObsSamplesDF():
         print("ALL workloads type:", workloads)
 
         # Add performance's min, max columns
-        df_filtered["latency_mean_min"] = self.LATENCY_MIN #5.  
-        df_filtered["latency_mean_max"] = self.LATENCY_MAX #900.
+        df_filtered["latency_mean_min"] = self.LATENCY_MIN #0.0001  
+        df_filtered["latency_mean_max"] = self.LATENCY_MAX #1000.
         #df_filtered["ilat"] = 0.
-        df_filtered["qps_mean_min"] = self.QPS_MIN #50.
-        df_filtered["qps_mean_max"] = self.QPS_MAX #40000.
+        df_filtered["qps_mean_min"] = self.QPS_MIN #1.
+        df_filtered["qps_mean_max"] = self.QPS_MAX #100000.
         #df_filtered["iqps"] = 0.    
         df_filtered["iqps"] = df_filtered.apply(lambda row: (row["extra_info.sysbench.statements_mean"]-row["qps_mean_min"])/(row["qps_mean_max"]-row["qps_mean_min"]), axis=1)
         df_filtered["ilat"] = df_filtered.apply(lambda row: (min(row["sysbench_filtered.latency_mean"], self.LATENCY_MAX)-row["latency_mean_max"])/(row["latency_mean_min"]-row["latency_mean_max"]), axis=1) # ms. /!\ MIN MAX INVERTED to reflect the improvement when the latency decreases

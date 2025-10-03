@@ -23,17 +23,17 @@
 
 defaults:
   - best_agent
-  - override tuner: linucb_kfoofw
-  - override tuner/reward: sigmoidhybriddiscretmoveidelta
-  - override tuner/env/observations: prod_optimal
+#  - tuner: linucb_kfoofw
+#  - tuner/reward: sigmoidhybriddiscretmoveidelta
+#  - tuner/env/observations: prod_optimal
   - _self_
 
-version_minor: 56_01-opt_linucb_kfoofw_sigmoid_randomtrained
-trial: 21
+#version_minor: 56_01-opt_linucb_kfoofw_sigmoid_randomtrained
+trial: 1
 seed: 0
 eval_data: False     # Use EVAL dataset or TEST dataset
-REW_ALPHA_COEF: 0.2
-REW_BETA_COEF: 0.
+#REW_ALPHA_COEF: 0.2
+#REW_BETA_COEF: 0.
 DETERMINISTIC: False  # Flag passed to SB3's predict method. Default is False
 
 verbosity: 1

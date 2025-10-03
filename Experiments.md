@@ -1,14 +1,14 @@
 
-# Intro
+# E11 Intro
 
-Experiments configuration overrides are located in Hydra's config folder: `configs/experiments`.
+Experiments E11 configuration overrides are located in Hydra's config folder: `configs/experiments`.
 
 All latest experiments use the Sigmoïd reward that revealed its superiority againts reward V3E for example.
 
 We do not list here, experiments done for:
     - determining best ALPHA and BETA values. We identified ALPHA=0.2 and BETA=0 are best.
 
-Some backuped experiments are located in `configs/experiments/bak`
+Some backuped experiments are located in `configs/experiments/bak...`
 
 
 # Hyper-parameters optimization with Optuna
@@ -19,7 +19,7 @@ The folder name, created in `outputs` folder is `E11_56_<experiment_name>`
 
 Hyper-parameters tuning experiments use Optuna on several trials and multiple seeds per trial, to find the best hyper-parameters.
 
-Experiments config files located in `configs/exeperiments` are:
+Experiments config files located in `configs/exeperiments/bakE11` are:
 
 	- `00-opt_a2c_alphabeta_sigmoid`, gamma: range(0.90,0.996, step=0.004), Best hyper-params: (learning_rate=0.0002 gamma=0.908 n_steps=18)
 	- `00-opt_ddpg_alphabeta_sigmoid`, (/!\ folder prefix `E11_55)`, Best hyper-params: (learning_rate=0.0007999999999999999 buffer_size=1000000 batch_size=512 gamma=0.94 noise_sigma=0.05 train_freq=1)
