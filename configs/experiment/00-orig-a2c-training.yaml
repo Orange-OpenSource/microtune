@@ -8,7 +8,7 @@ defaults:
   - _self_
 
 version: 13 # Digital Twin dataset
-version_minor: 2
+version_minor: 3
 datasets_prefix: workloads_orig  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
 
 info: A2C with original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 

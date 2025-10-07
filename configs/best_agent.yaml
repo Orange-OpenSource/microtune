@@ -23,5 +23,6 @@
 defaults:
   - base  # ouput paths, verbosity, ...
   - workload/base
+  - datasets: traintest-full
   - tuner: linucb_kfoofw
   - _self_

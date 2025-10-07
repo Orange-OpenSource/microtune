@@ -1,6 +1,6 @@
 
 defaults:
-  - datasets: traintest-full
+#  - datasets: traintest-full
 #  - override /hydra/sweeper: basic
   - _self_
 

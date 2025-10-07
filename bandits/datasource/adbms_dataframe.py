@@ -87,8 +87,9 @@ class TrainTestDataSets():
 
     def _loadCompleteDF(self, testastrain=False):
         pathprefix = os.path.join(self.filespath, self.filesprefix)
-        self._log(f"Load {pathprefix}...")
-        df = self.obssamples.mergeTrainTest(pathprefix)
+        self._log(f"Load Full DF with {pathprefix}...")
+        #df = self.obssamples.mergeTrainTest(pathprefix)
+        df = self.obssamples.loadFromPickle(f"{pathprefix}_full_{self.version}")
 
         # Workloads with bad quality data in version 8
         # 22 1.0 3 Un: Un pb sur le CHR (entre autre?) à mi-parcours, valeur 0

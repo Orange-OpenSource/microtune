@@ -1,0 +1,21 @@
+# Get conf by running --cfg job --resolve
+
+# python run_dbsas_xxx.py --cfg job 
+
+defaults:
+  - base  # ouput paths, verbosity, ...
+  - datasets@orig: traintest-dbsas
+  - datasets@dbsas: traintest-dbsas
+#  - tuner: oracle
+#  - tuner@oracle: oracle
+  - _self_
+
+datasets_prefix: workloads
+version: 13 # Digital Twin dataset
+version_minor: 3
+
+orig:
+  pickles_prefix: ${datasets_prefix}_orig
+
+dbsas:
+  pickles_prefix: ${datasets_prefix}_dbsas

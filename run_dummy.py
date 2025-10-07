@@ -35,7 +35,7 @@ log = logging.getLogger(__name__)
 
 #from typing import Tuple
 
-@hydra.main(version_base=None, config_path="configs", config_name="dataset")
+@hydra.main(version_base=None, config_path="configs", config_name="dummy")
 def run(cfg: DictConfig) -> float: #Tuple[float, float]:
     if not hu.prepare_run(cfg):
         return (np.inf, np.inf)

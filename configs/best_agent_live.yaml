@@ -23,8 +23,9 @@
 
 defaults:
   - base  # ouput paths, verbosity, ...
-  - db: tun06
   - workload/base
+  - datasets: traintest-full
+  - db: tun06
   - tuner: a2c
   - override tuner/env/state_selector@tuner.env.state_selector_test: db_live
   - override tuner/reward: db_live
