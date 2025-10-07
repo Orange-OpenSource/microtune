@@ -9,9 +9,9 @@ defaults:
 
 version: 13 # Digital Twin dataset
 version_minor: 2
-datasets_prefix: workloads_dbsas  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
+datasets_prefix: workloads_orig  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
 
-info: PPO with DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
+info: PPO with original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
 n_seeds: 1   # Nb seeds per trials
 n_jobs: 1 # Number of parallel trainings with different seed of a trial
 hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna

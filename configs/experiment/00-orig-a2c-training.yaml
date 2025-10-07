@@ -1,16 +1,17 @@
 # @package _global_
 defaults:
   - base
-  - override /tuner: ppo
+  - override /datasets: traintest-dbsas
+  - override /tuner: a2c
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
   - override /tuner/env/observations: dbsas00
   - _self_
 
 version: 13 # Digital Twin dataset
-version_minor: 00
-datasets_prefix: workloads  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
+version_minor: 2
+datasets_prefix: workloads_orig  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
 
-info: PPO with fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
+info: A2C with original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
 n_seeds: 1   # Nb seeds per trials
 n_jobs: 1 # Number of parallel trainings with different seed of a trial
 hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
@@ -18,23 +19,19 @@ hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
 REW_ALPHA_COEF: 0.2
 REW_BETA_COEF: 0
 
-learning_rate: 0.0005
-batch_size: 128
-normalize_advantage: True
-n_epochs: 3
-gamma: 0.81
-
+# Trial Sweeper over random seeds
+# RND_SEED is used by models for exploration and so on....
 hydra:
   sweeper:
     params:
       RND_SEED: range(4242, 4252, step=1)
+
 tuner:
   TRAINING_COVERAGE: 9
   agent:
     policy:
-      learning_rate: ${learning_rate}
-      batch_size: ${batch_size}
-      normalize_advantage: ${normalize_advantage}
-      n_epochs: ${n_epochs}
-      gamma: ${gamma}
+      learning_rate: 0.0001
+      n_steps: 13
+      gamma: 0.91
+      gae_lambda: 0.2
 #      use_sde: ${use_sde}

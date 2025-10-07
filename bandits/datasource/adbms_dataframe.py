@@ -22,11 +22,17 @@ import xxhash
 from bandits.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF 
 from bandits.datasource.dataset import ADBMSDataSetEntryContextSelector
 
-
+# testastrain: If True, the test set is the same as the train set
+# ratio: Percentage of workloads in the train set. If 0, the split is done by clients count (i.e. half of the clients in train, half in test)
+# ratio_eval_test: Percentage of workloads in the eval set from the test set.
+# perf_level: Perf level(s) choosen from ALL_PERF_OBJS = [0.9, 0.95, 0.965, 0.98, 0.99, 0.995, 0.997] # i.e 100ms, 50ms, 35ms, 20ms, 10ms, 5ms, 3ms with MIN=0, and MAX=1000
+# randtypes: Full list is [ "special", "gaussian", "uniform"]. v9 and + have "pareto" in more
+# clients: In v9 [1,2,3,4,5,6,7,8,10,12]. In v8 [ 3,4,6,8,12 ]
+# pickles_path: Path where to find or save the prepared dataframes
+# pickles_prefix: Prefix for the pickles files
+# seed: Random generator seed
+# verbose: Verbosity level
 class TrainTestDataSets():
-    # perf_level: Perf level(s) choosen from ALL_PERF_OBJS = [0.9, 0.95, 0.965, 0.98, 0.99, 0.995, 0.997] # i.e 100ms, 50ms, 35ms, 20ms, 10ms, 5ms, 3ms with MIN=0, and MAX=1000
-    # randtypes: Full list is [ "special", "gaussian", "uniform"]. v9 and + have "pareto" in more
-    # clients: In v9 [1,2,3,4,5,6,7,8,10,12]. In v8 [ 3,4,6,8,12 ]
     def __init__(self, version=8, testastrain=False, ratio=80, ratio_eval_test=50, 
                  perf_level=0.98, randtypes=[ "gaussian", "uniform" ], clients=[4,6], 
                  pickles_path="./", pickles_prefix="workloads", seed=42, verbose=1):
@@ -65,12 +71,13 @@ class TrainTestDataSets():
         self.eval_file = f'{pathprefix}_eval_v{self.version}-tmp.pickle'
         self.test_file = f'{pathprefix}_test_v{self.version}-tmp.pickle'
         if not force_reload and os.path.isfile(self.train_file) and os.path.isfile(self.eval_file) and os.path.isfile(self.test_file):
-            print("Loading dedicated DF...")
+            print("Loading already generated DF train, eval, test...")
             if not test_only:
                 self.df_train = pd.read_pickle(self.train_file)
                 self.df_eval = pd.read_pickle(self.eval_file)
             self.df_test = pd.read_pickle(self.test_file)
         else:
+            print(f"Force generation of train,eval,test DF from dedicated DF: {self.filesprefix}_train_{self.version}.pickle, {self.filesprefix}_test_{self.version}.pickle...")
             self._loadCompleteDF(testastrain=self.testastrain)
             # Save dedicated DataFrames
             self.df_eval, self.df_test = self.obssamples.spliDF(self.df_test, ratio=self.ratio_eval_test, rnd_seed=self.seed)
@@ -93,13 +100,13 @@ class TrainTestDataSets():
         #df = df.drop(df[df["tables"] == 5].index)
 
         ALL_PERF_OBJS = df["perf_target_level"].unique()
-        self._log(f'All possible perf levels: {ALL_PERF_OBJS} Choose:{self.perf_level}')
+        self._log(f'All dataframe available perf levels: {ALL_PERF_OBJS} Config choice:{self.perf_level}')
 
         ALL_RANDTYPES = df["randtype"].unique()
-        self._log(f'Workloads data access. All possible rand types distribution: {ALL_RANDTYPES} Choose:{self.randtypes}')
+        self._log(f'Workloads data access. All possible rand types distribution: {ALL_RANDTYPES} Config choice:{self.randtypes}')
 
         ALL_CON_CLIENTS = df["wl_clients"].unique()
-        self._log(f"All possible client connections count: {ALL_CON_CLIENTS} Choose:{self.clients}")
+        self._log(f"All dataframe available client connections count: {ALL_CON_CLIENTS} Config choice:{self.clients}")
 
         # Filter to get a smaller dataset
         df = df[(df["perf_target_level"].isin([ self.perf_level ])) & (df["randtype"].isin(self.randtypes)) & (df["wl_clients"].isin(self.clients))] # & (df["tables"] == 22) & (df["tables_rows"] == 1000000)]
@@ -107,7 +114,7 @@ class TrainTestDataSets():
         # Tolerancy over the SLA's max latency
         # i.e. GAP objective margin to compute SLA toleration around a performance objective
         objgap = df["objective_gap"].unique()
-        assert len(objgap) == 1, "ERROR: Only 1 objectif gap per dataset can exists. Dataset is corrupted!"
+        assert len(objgap) == 1, f"ERROR: Only 1 objectif gap per dataset can exists (found {objgap.tolist()}). Dataset is corrupted!"
         OBJECTIVE_GAP = objgap[0] 
         self._log(f'Tolerancy over SLA max latency: {OBJECTIVE_GAP}')
 

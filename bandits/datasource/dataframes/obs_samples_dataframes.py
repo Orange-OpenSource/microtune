@@ -86,7 +86,7 @@ class ObsSamplesDF():
             for lvl in self.PERF_OBJS:
                 df['perf_target_level'] = lvl
                 objective_gap = abs((lvl-1)*objective_margin)
-                df["objective_gap"] = objective_gap
+                df["objective_gap"] = round(objective_gap,4)
 
                 df["latency_threshold"] = df.apply(lambda row: (1.-row["perf_target_level"])*(row["latency_mean_max"] - row["latency_mean_min"]), axis=1)
 
