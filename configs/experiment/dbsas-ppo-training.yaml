@@ -1,15 +1,14 @@
 # @package _global_
 defaults:
-  - base
+  - base_dbsas
   - override /datasets: traintest-dbsas
   - override /tuner: ppo
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
-  - override /tuner/env/observations: dbsas00
+  - override /tuner/env/observations: dbsas
   - _self_
 
-version: 13 # Digital Twin dataset
-version_minor: 3
 datasets_prefix: workloads_dbsas  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
+version_minor: 3f
 
 info: PPO with DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
 n_seeds: 1   # Nb seeds per trials

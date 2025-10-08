@@ -1,4 +1,6 @@
 #!/bin/bash
+# Test ALL disqualified agents on Test dataset, and compare them to the Oracle(PO) and baselines policies.
+# Very similar to the test-perfmeter_comp(arison) graphn obtained during the pipeline of run_best_agent.py script but for all agents (the best + disqualified). 
 
 if [ "x$1" == "x--sleep" ]; then
     shift

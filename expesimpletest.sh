@@ -1,5 +1,6 @@
 #!/bin/bash
-# This script to launch the SLA performance on test(or eval) datasets using the last experimentation and the best model.
+# This script to launch a simple test on Test dataset, in particular shows in detail the SLA performance 
+# using the last experimentation and the best model.
 
 
 if [ "x$1" == "x--sleep" ]; then
@@ -15,8 +16,12 @@ shift
 [ -z "${expe_list}" ] && expe_list="linucb_kfoofw"
 expe_list="$(echo ${expe_list} | sed 's/,/ /g')"
 
+# /!\ SHOULD BE A LIST AS expe_list ABOVE !!!!!
 TRIAL=${1:-0}; shift
 SEEDID=${1:-0}; shift
+
+echo "Using Trial=${TRIAL} and Seed=${SEEDID}"
+#read -p "Press [Enter] key to start..."
 
 typeset -i res=0
 
@@ -24,7 +29,7 @@ typeset -i res=0
 echo "Check names of experiments and exit if error appears..."
 for expe in ${expe_list}
 do
-    python run_simple_test.py +experiment=${expe} --cfg job
+    python run_simple_test.py +experiment=${expe} ++trial=${TRIAL} ++seed=${SEEDID} --cfg job --resolve
     res=$?
     [ ${res} -ne 0 ] && echo "Error ${res}. run_simple_test" >> /dev/stderr && exit 100 
 done

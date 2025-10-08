@@ -2,4 +2,3 @@ defaults:
   - base
 
 n_trials: 50
-n_seeds: 8

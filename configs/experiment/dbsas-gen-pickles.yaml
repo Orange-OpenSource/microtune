@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - base_dbsas
+  - _self_
+
+
+info: DBSAS Train, Eval, Test Pickles generation from original and simulated pickles
+

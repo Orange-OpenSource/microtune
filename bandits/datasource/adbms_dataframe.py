@@ -84,6 +84,8 @@ class TrainTestDataSets():
             self.df_train.to_pickle(self.train_file)
             self.df_eval.to_pickle(self.eval_file)
             self.df_test.to_pickle(self.test_file)
+        
+        return self.train_file, self.eval_file, self.test_file
 
     def _loadCompleteDF(self, testastrain=False):
         pathprefix = os.path.join(self.filespath, self.filesprefix)
