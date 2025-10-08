@@ -9,8 +9,6 @@ defaults:
   - _self_
 
 datasets_prefix: workloads
-#version: 13 # Digital Twin dataset
-#version_minor: 3
 
 # Input datasets files with .pickles extension, for original and dbsas datasets
 dataset_orig_import_file: original_dataset

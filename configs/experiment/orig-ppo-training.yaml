@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base_dbsas
+  - base_orig
   - override /datasets: traintest-dbsas
   - override /tuner: ppo
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
@@ -8,6 +8,7 @@ defaults:
   - _self_
 
 datasets_prefix: workloads_orig  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
+version_minor: 3t
 
 info: PPO with original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
 n_seeds: 1   # Nb seeds per trials

@@ -1,5 +1,6 @@
 #!/bin/bash
-# This script to launch the SLA performance on test(or eval) datasets using the last experimentation and the best model.
+# Run DBSAS experiments and generates learning, eval, tests as well as graphs graphs.
+# Store all on S3 if defined.
 
 
 if [ "x$1" == "x--sleep" ]; then
@@ -12,6 +13,7 @@ fi
 expe_list="$1"
 shift
 
+# Generate pickles Datasets for ORIG and DBSAS if not already done
 python run_dbsas_gen_pickles.py +experiment=dbsas-gen-pickles
 
 [ -z "${expe_list}" ] && expe_list="orig-ppo-training,dbsas-ppo-training,orig-a2c-training,dbsas-a2c-training"
@@ -19,25 +21,8 @@ python run_dbsas_gen_pickles.py +experiment=dbsas-gen-pickles
 
 ./expetraintest.sh ${expe_list}
 ./expetestdisqualified.sh ${expe_list}
+./expesimpletest.sh ${expe_list} 
 
 exit $?
 
-#### BACKUP - NOT USED ANYMORE ####
-TRIAL=${1:-0}; shift
-SEEDID=${1:-0}; shift
 
-typeset -i res=0
-
-for expe in ${expe_list}
-do
-    ./expetraintest.sh ${expe}
-    [ ${res} -ne 0 ] && echo "Error ${res}. expetraintest" >> /dev/stderr && continue
-    ./expetestdisqualified.sh ${expe}
-    [ ${res} -ne 0 ] && echo "Error ${res}. expetestdisqualified" >> /dev/stderr && continue
-#    ./expesimpletest.sh ${expe} ${TRIAL} ${SEEDID}
-#    [ ${res} -ne 0 ] && echo "Error ${res}. expesimpletest" >> /dev/stderr && continue
-done
-
-[ ${res} -ne 0 ] && echo "Some Error(s) occured." >> /dev/stderr && exit 2 
-
-exit 0

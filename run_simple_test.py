@@ -76,7 +76,7 @@ def run(cfg: DictConfig) -> None:
     #            sweeper_params=sweeper_params, sweep_perf=sweep_perf, eval_perf_meter=env_eval.perf_meter, oracle_eval_perf_meter=oracle_perf_meter,
     #            eval_perf_meter_list=[],
     #            config=OmegaConf.to_yaml(cfg, resolve=True))    
-    files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=0, dftext='-best.pickle')
+    files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=0, dftext='-best.pickle') # Load the picckle specified by its Trial and Seed ID
 
 #    for ff in files_list:
 #        os.remove(ff)
@@ -91,7 +91,7 @@ def run(cfg: DictConfig) -> None:
     # Display Eval perf if available ?
     pm = optdict.get("eval_perf_meter")
     if pm:
-        log.info(f'Sweep eval perf: {optdict["sweep_perf"]} Model eval perf(MO): {pm.getSessionPerformanceMultiObj()} #Other Eval perfs to display:{len(optdict["eval_perf_meter_list"])}')
+        log.info(f'Sweep eval perf: {optdict["sweep_perf"]} Model eval perf(MO): {pm.getSessionPerformanceMultiObj()}') #Other Eval perfs to display:{len(optdict["eval_perf_meter_list"])}')
 
     log.info("Graph Best Train Perf against others...")
     env_test = hu.instantiate_env_wrapper_wa(cfg.tuner.env, to_train=False, dataframe=df_test, with_scaler=scaler, perf_meter_args={"name": f'{agent.policy.shortname}T{trial}S{sid}', "stage": stage.lower()})

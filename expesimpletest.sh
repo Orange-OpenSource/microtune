@@ -16,12 +16,8 @@ shift
 [ -z "${expe_list}" ] && expe_list="linucb_kfoofw"
 expe_list="$(echo ${expe_list} | sed 's/,/ /g')"
 
-# /!\ SHOULD BE A LIST AS expe_list ABOVE !!!!!
-TRIAL=${1:-0}; shift
-SEEDID=${1:-0}; shift
-
-echo "Using Trial=${TRIAL} and Seed=${SEEDID}"
-#read -p "Press [Enter] key to start..."
+typeset -i TRIAL=${1:--1}; shift
+typeset -i SEEDID=${1:-0}; shift
 
 typeset -i res=0
 
@@ -44,7 +40,27 @@ do
 
     picklefiles_dir="$(python run_simple_test.py +experiment=${expe} $* --cfg job --resolve | grep pickles_dirname | cut -d' ' -f 2)"
     picklefiles_path="$(python run_simple_test.py +experiment=${expe} $* --cfg job --resolve | grep pickles_path | cut -d' ' -f 2)"
-    
+
+    # Trial and SeedID identification from best agent file path ?
+    if [ ${TRIAL} -lt 0 ] 
+    then
+        best_agent_path="$(ls -1 ${picklefiles_path}/agent*-best.pickle | head -1)"
+        if [ "x${best_agent_path}" == "x" ]
+        then
+            echo "Error, no best agent found in ${picklefiles_path}" >> /dev/stderr
+            res=1
+            break
+        fi
+        best_agent_path="${best_agent_path##*/}"  # on travaille sur le nom du fichier seulement
+
+        if [[ "$best_agent_path" =~ ^agent-T([0-9]|[1-9][0-9]|100)S([0-9]|[1-9][0-9]|100)-.*\.pickle$ ]]; then
+            TRIAL="${BASH_REMATCH[1]}"
+            SEED="${BASH_REMATCH[2]}"
+            echo "Using Trial=${TRIAL} and Seed=${SEEDID}"
+            #read -p "Press [Enter] to continue..."
+       fi
+    fi
+
     cmd="python run_simple_test.py +experiment=${expe} ++trial=${TRIAL} ++seed=${SEEDID} $*"
     echo ${cmd}
     ${cmd}

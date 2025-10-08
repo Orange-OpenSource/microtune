@@ -8,8 +8,6 @@ defaults:
   - _self_
 
 version: 13 # Digital Twin dataset
-version_minor: 3
-datasets_prefix: workloads_dbsas  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
 
 info: A2C with DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
 n_seeds: 1   # Nb seeds per trials

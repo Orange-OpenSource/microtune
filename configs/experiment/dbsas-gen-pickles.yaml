@@ -1,8 +1,9 @@
 # @package _global_
 defaults:
-  - base_dbsas
+  - base
   - _self_
 
 
-info: DBSAS Train, Eval, Test Pickles generation from original and simulated pickles
+info: DF DBSAS and ORIF Train, Eval, Test Pickles generation from original and simulated pickles
 
+#version_minor: 3
