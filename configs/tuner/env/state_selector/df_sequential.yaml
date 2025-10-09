@@ -1,6 +1,6 @@
 
 _partial_: true
-_target_: bandits.datasource.adbms_dataframe.ADBMSBufferCacheStatesSequentialSelector
+_target_: pkg.datasource.adbms_dataframe.ADBMSBufferCacheStatesSequentialSelector
 qpslat_w: "01"
 topdown: True
 context_elems: ${..observations.elems} #tuner.env

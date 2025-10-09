@@ -4,10 +4,10 @@ defaults:
   - state_selector@state_selector_test: df_topdownrocker 
 
 wrapper:
-  _target_: bandits.gym_env.VSMonitor
+  _target_: pkg.gym_env.VSMonitor
   env:
     _partial_: true
-    _target_: bandits.gym_env.VSEnvContinousSpace
+    _target_: pkg.gym_env.VSEnvContinousSpace
 #    state_selector: ${...state_selector_train} # tuner.env.
     reward: ${tuner.reward.learn}
     notify_react: ${....TRAINING_USE_SLA_PROTECT} # tuner.
@@ -16,10 +16,10 @@ wrapper:
     verbose: ${xtraverbosity}
 
 wrapper_test:
-  _target_: bandits.gym_env.VSMonitor
+  _target_: pkg.gym_env.VSMonitor
   env:
     _partial_: true
-    _target_: bandits.gym_env.VSEnvContinousSpace
+    _target_: pkg.gym_env.VSEnvContinousSpace
 #    state_selector: ${...state_selector_test} # tuner.env.
     reward: ${tuner.reward.test}
     notify_react: ${....TEST_USE_SLA_PROTECT} # tuner.
@@ -27,6 +27,6 @@ wrapper_test:
     on_terminate: -1 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
     verbose: ${verbosity}
   perf_meter:
-    _target_: bandits.perf_meter.PerfMeter
+    _target_: pkg.perf_meter.PerfMeter
     name: NA
     

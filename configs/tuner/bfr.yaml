@@ -5,6 +5,6 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_baselines.BufFillingRatePolicy
+    _target_: pkg.policy_baselines.BufFillingRatePolicy
     threshold: 0.85
 

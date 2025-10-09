@@ -23,9 +23,9 @@ from hydra.utils import instantiate
 #from hydra.core.hydra_config import HydraConfig
 #import joblib
 
-#import bandits.datasource.adbms_dataframe as ds
+#import pkg.datasource.adbms_dataframe as ds
 import hydrauti as hu
-#from bandits.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF 
+#from pkg.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF 
 
 
 # A logger for this file

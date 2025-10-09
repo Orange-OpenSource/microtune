@@ -21,8 +21,8 @@ from omegaconf import DictConfig, OmegaConf
 from hydra.utils import instantiate
 from hydra.core.hydra_config import HydraConfig
 
-from bandits.agent import AgentsLoaderLoop
-import bandits.datasource.adbms_dataframe as ds
+from pkg.agent import AgentsLoaderLoop
+import pkg.datasource.adbms_dataframe as ds
 import hydrauti as hu
 
 # A logger for this file

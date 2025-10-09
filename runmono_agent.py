@@ -22,8 +22,8 @@ from omegaconf import DictConfig, OmegaConf
 from hydra.utils import instantiate
 from hydra.core.hydra_config import HydraConfig
 
-import bandits.datasource.adbms_dataframe as ds
-#from bandits.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF 
+import pkg.datasource.adbms_dataframe as ds
+#from pkg.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF 
 
 #from minio import Minio
 

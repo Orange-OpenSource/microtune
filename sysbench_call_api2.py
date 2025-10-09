@@ -13,7 +13,7 @@
 """
 
 import time
-from bandits.tools.sysbench.sbrequest import SysbenchRequest
+from pkg.tools.sysbench.sbrequest import SysbenchRequest
 
 # Admin request
 #wl = SysbenchRequest(dbhost="192.168.0.206", id="oltp_read_write", tables=3, tablesize=50000) #TUN03

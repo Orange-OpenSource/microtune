@@ -23,9 +23,9 @@ TEST_STEPS_PER_EPISODE: -2 # If val<0, abs(val) will be a multiple of buffer val
 
 # Base config for all NN agents
 agent:
-  _target_: bandits.agent.VSAgent
+  _target_: pkg.agent.VSAgent
   policy:
-    _target_: bandits.policy_neural_linucb.NeuralLinUCBPolicy
+    _target_: pkg.policy_neural_linucb.NeuralLinUCBPolicy
     actions: ${...actions} 
     ctx: ${...env.observations.elems}
 

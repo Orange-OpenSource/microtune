@@ -5,4 +5,4 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_baselines.BasicPolicy
+    _target_: pkg.policy_baselines.BasicPolicy

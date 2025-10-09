@@ -20,7 +20,7 @@ from omegaconf import DictConfig
 from hydra.utils import instantiate
 
 import hydrauti as hu
-from bandits.graph import GraphPerfMeterComparaison
+from pkg.graph import GraphPerfMeterComparaison
 
 # Test all agents of all trials on Test Dataset and produce a graph to compare them
 # Command: python run_disq_agent_test.py +experiment=<sweepseed_experiment> ++n_trials=N

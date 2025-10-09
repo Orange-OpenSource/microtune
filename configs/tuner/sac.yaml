@@ -5,12 +5,12 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_sb3.SB3PolicySAC
+    _target_: pkg.policy_sb3.SB3PolicySAC
     policy: "MlpPolicy"
     learning_rate: 0.0003
     batch_size: 32
     action_noise:
-      _target_: bandits.actions.NormalActionNoise
+      _target_: pkg.actions.NormalActionNoise
       noise_sigma: 0.1
     seed: ${RND_SEED}
     verbose: ${verbosity}

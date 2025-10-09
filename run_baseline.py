@@ -20,9 +20,9 @@ from omegaconf import DictConfig, OmegaConf
 from hydra.utils import instantiate
 from hydra.core.hydra_config import HydraConfig
 
-from bandits.policy_linucb_kfoofw import LinUCBPolicy_kfoofw
-from bandits.agent import VSAgent
-import bandits.datasource.adbms_dataframe as ds
+from pkg.policy_linucb_kfoofw import LinUCBPolicy_kfoofw
+from pkg.agent import VSAgent
+import pkg.datasource.adbms_dataframe as ds
 import hydrauti as hu
 
 # Command: python run_best_agent_test.py +experiment=linucb_kfoofw ++hydra.sweeper.n_trials=1 verbosity=1

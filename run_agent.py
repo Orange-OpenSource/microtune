@@ -24,7 +24,7 @@ from hydra.utils import instantiate
 import joblib
 
 import hydrauti as hu
-import bandits.datasource.adbms_dataframe as ds
+import pkg.datasource.adbms_dataframe as ds
 
 
 # A logger for this file

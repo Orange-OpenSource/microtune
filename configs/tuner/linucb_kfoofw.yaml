@@ -6,6 +6,6 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_linucb_kfoofw.LinUCBPolicy_kfoofw
+    _target_: pkg.policy_linucb_kfoofw.LinUCBPolicy_kfoofw
     learning_rate: 0.9
 

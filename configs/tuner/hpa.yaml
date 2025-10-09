@@ -6,5 +6,5 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_baselines.HpaPolicy
+    _target_: pkg.policy_baselines.HpaPolicy
 

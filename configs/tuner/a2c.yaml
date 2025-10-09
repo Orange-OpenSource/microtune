@@ -5,7 +5,7 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_sb3.SB3PolicyA2C
+    _target_: pkg.policy_sb3.SB3PolicyA2C
     policy: "MlpPolicy"
     learning_rate: 0.0007
     n_steps: 1024

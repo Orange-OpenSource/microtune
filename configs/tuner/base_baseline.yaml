@@ -12,9 +12,9 @@ TEST_STEPS_PER_EPISODE: -2 # If val<0, abs(val) will be a multiple of buffer val
 
 # Base config for all baselines
 agent:
-  _target_: bandits.agent.VSAgent
+  _target_: pkg.agent.VSAgent
   policy:
-    _target_: bandits.policy_baselines.OraclePolicy
+    _target_: pkg.policy_baselines.OraclePolicy
     actions: ${...actions} 
     ctx: ${...env.observations.elems}
 

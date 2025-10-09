@@ -20,8 +20,8 @@ from omegaconf import DictConfig
 from hydra.utils import instantiate
 
 import hydrauti as hu
-from bandits.graph import GraphPredictionsStatus
-from bandits.gym_env import VSEnv, VSMonitorCallback
+from pkg.graph import GraphPredictionsStatus
+from pkg.gym_env import VSEnv, VSMonitorCallback
 
 # Command: python run_best_agent_test.py +experiment=linucb_kfoofw ++hydra.sweeper.n_trials=1 verbosity=1
 

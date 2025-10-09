@@ -9,7 +9,7 @@ TRAINING_STEPS_PER_EPISODE: 68    # Important to take benefit of the decreasing 
 
 agent:
   policy:
-    _target_: bandits.policy_linucb_discounted.DLinUCBPolicy
+    _target_: pkg.policy_linucb_discounted.DLinUCBPolicy
     delta: 0.1
     gamma: 0.1
     _lambda: 1.

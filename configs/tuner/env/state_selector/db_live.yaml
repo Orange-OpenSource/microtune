@@ -10,18 +10,18 @@
 
 
 _partial_: true
-_target_: bandits.datasource.adbms_live.ADBMSBufferCacheStatesLive
+_target_: pkg.datasource.adbms_live.ADBMSBufferCacheStatesLive
 perf_target_level: ${IPERF_LEVEL}
 qpslat_w: "01"
 ram_limit: ${db.cache.max}
 buf_reset_policy: mean
 db_warmups: ${db.warmups}
 #metrics_picker: 
-#  _target_: bandits.datasource.workloader.sbperfmonitor.SysbenchMetricsPicker
+#  _target_: pkg.datasource.workloader.sbperfmonitor.SysbenchMetricsPicker
 #  warmups: ${db.warmups}
 #  observation_time: 3. # Seconds to wait before picking up perf metrics
 dba:
-  _target_: bandits.datasource.db.dbadminmysql.DBAdminMySql
+  _target_: pkg.datasource.db.dbadminmysql.DBAdminMySql
   servername: ${db.variables.server_name}
   serverversion: ${db.variables.server_version}
   dbhost: ${db.host}

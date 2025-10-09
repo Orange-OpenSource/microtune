@@ -9,7 +9,7 @@ tuner:
 # beta=1, hidden_dim1=100, hidden_dim2=30, H_q=100
 agent:
   policy:
-    _target_: bandits.policy_neural_linucb.NeuralLinUCBPolicy
+    _target_: pkg.policy_neural_linucb.NeuralLinUCBPolicy
     beta: 1
     hidden_dim1: 100
     hidden_dim2: 30

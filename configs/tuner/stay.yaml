@@ -7,4 +7,4 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_baselines.StayPolicy
+    _target_: pkg.policy_baselines.StayPolicy

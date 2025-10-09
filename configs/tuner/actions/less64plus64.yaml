@@ -1,2 +1,2 @@
-_target_: bandits.actions.Actions
+_target_: pkg.actions.Actions
 minmax: [-64,64]

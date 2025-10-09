@@ -1,6 +1,6 @@
 
 _partial_: true
-_target_: bandits.datasource.adbms_dataframe.ADBMSBufferCacheStatesTopDownRockerSelector
+_target_: pkg.datasource.adbms_dataframe.ADBMSBufferCacheStatesTopDownRockerSelector
 qpslat_w: "01"
 context_elems: ${..observations.elems}
 normalize: ${...NORMALIZE_OBS}

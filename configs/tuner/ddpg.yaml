@@ -5,10 +5,10 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_sb3.SB3PolicyDDPG
+    _target_: pkg.policy_sb3.SB3PolicyDDPG
     policy: "MlpPolicy"
     action_noise:
-      _target_: bandits.actions.NormalActionNoise
+      _target_: pkg.actions.NormalActionNoise
       noise_sigma: 0.1
     learning_rate: 0.001
     seed: ${RND_SEED}

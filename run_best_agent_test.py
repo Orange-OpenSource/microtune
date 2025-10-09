@@ -20,7 +20,7 @@ from omegaconf import DictConfig
 from hydra.utils import instantiate
 
 import hydrauti as hu
-from bandits.graph import GraphPerfMeterComparaison
+from pkg.graph import GraphPerfMeterComparaison
 
 # Command: python run_best_agent_test.py +experiment=linucb_kfoofw ++hydra.sweeper.n_trials=1 verbosity=1
 

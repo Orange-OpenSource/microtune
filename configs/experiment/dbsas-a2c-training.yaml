@@ -8,7 +8,7 @@ defaults:
   - _self_
 
 version: 13 # Digital Twin dataset
-
+version_minor: 3tt
 info: A2C with DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  DT OBS 
 n_seeds: 1   # Nb seeds per trials
 n_jobs: 1 # Number of parallel trainings with different seed of a trial

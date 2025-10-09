@@ -8,7 +8,7 @@ import hydra
 from omegaconf import DictConfig
 from hydra.utils import instantiate
 import hydrauti as hu
-from bandits.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF
+from pkg.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF
 
 
 def gen_full_datasets(version="13", dbsas_dataset="./db_fullnetwork_generated_full_dataset_discrete", orig_dataset="./original_dataset"):

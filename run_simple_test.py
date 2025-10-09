@@ -20,8 +20,8 @@ from omegaconf import DictConfig
 from hydra.utils import instantiate
 
 import hydrauti as hu
-from bandits.graph import GraphPredictionsStatus
-from bandits.gym_env import VSEnv, VSMonitorCallback
+from pkg.graph import GraphPredictionsStatus
+from pkg.gym_env import VSEnv, VSMonitorCallback
 
 # Command: python run_best_agent_test.py +experiment=linucb_kfoofw ++hydra.sweeper.n_trials=1 verbosity=1
 
@@ -76,7 +76,7 @@ def run(cfg: DictConfig) -> None:
     #            sweeper_params=sweeper_params, sweep_perf=sweep_perf, eval_perf_meter=env_eval.perf_meter, oracle_eval_perf_meter=oracle_perf_meter,
     #            eval_perf_meter_list=[],
     #            config=OmegaConf.to_yaml(cfg, resolve=True))    
-    files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=0, dftext='-best.pickle') # Load the picckle specified by its Trial and Seed ID
+    files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=0, dftext='*.pickle') # Load the picckle specified by its Trial and Seed ID
 
 #    for ff in files_list:
 #        os.remove(ff)

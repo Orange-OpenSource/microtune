@@ -6,5 +6,5 @@ defaults:
 
 agent:
   policy:
-    _target_: bandits.policy_linucb_hs.HSLinUCBPolicy
+    _target_: pkg.policy_linucb_hs.HSLinUCBPolicy
     learning_rate: 0.9

@@ -18,8 +18,8 @@ from omegaconf import DictConfig, OmegaConf
 from hydra.utils import instantiate
 from hydra.core.hydra_config import HydraConfig
 
-from bandits.gym_env import VSMonitor
-import bandits.datasource.adbms_dataframe as ds
+from pkg.gym_env import VSMonitor
+import pkg.datasource.adbms_dataframe as ds
 
 # A logger for this file
 log = logging.getLogger(__name__)

@@ -13,7 +13,7 @@
 """
 
 import time
-from bandits.tools.sysbench.sbrequest import SysbenchRequest
+from pkg.tools.sysbench.sbrequest import SysbenchRequest
 
 wl1 = SysbenchRequest(httphost="workload_sb.local", dbhost="db.local", id="oltp_read_write", tables=30, tablesize=220000)
 wl2 = SysbenchRequest(httphost="workload_sb.local", dbhost="db.local", id="oltp_read_write", tables=25, tablesize=110000)
