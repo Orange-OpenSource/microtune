@@ -11,6 +11,9 @@
  * Software description: MicroTune is a RL-based DBMS Buffer Pool Auto-Tuning for Optimal and Economical Memory Utilization. Consumed RAM is continously and optimally adjusted in conformance of a SLA constraint (maximum mean latency).
  */
 """
+
+# Export dataframes from pickle files to CSV for analysis
+
 import sys
 sys.path.append('.')
 

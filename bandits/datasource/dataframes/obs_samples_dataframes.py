@@ -32,13 +32,13 @@ class ObsSamplesDF():
     def getPossiblePerfObjectives(self):
         return self.PERF_OBJS
     
-    def retrieve_all_documents(self):
-        # Connect to MongoDB
-        client = MongoClient("mongodb://192.168.0.206:27017/")
+    def retrieve_all_documents(self, mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__"):
+        # Connect to MongoDB (i.e. 192.168.0.206)
+        client = MongoClient(f"mongodb://{mongohost}:{mongoport}/")
 
         # Access the database and collection
-        db = client["adbms-obs-ref-mariadb-11_1_3"]
-        collection = db["sysbench__oltp_read_write__"+self._version]  # Replace "your_collection_name" with the actual collection name
+        db = client[dbname]
+        collection = db[colname+self._version]  # Replace "your_collection_name" with the actual collection name
 
         # Retrieve all documents in the collection
         documents = collection.find()
@@ -162,11 +162,11 @@ class ObsSamplesDF():
 
         return df_filtered.reset_index(drop=True, inplace=False)
 
-    def getSimuData(self, objective_margin=0.3):
-        list_documents, list_documents0 = self.retrieve_all_documents()
+    def getSimuData(self,  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__" ,objective_margin=0.3):
+        list_documents, list_documents0 = self.retrieve_all_documents(mongohost=mongohost, mongoport=mongoport, dbname=dbname, colname=colname)
         df_filtered = self.docs2flat_list(list_documents)
         # Fixes ad some add columns with constants
-        return self.fixColumns(df_filtered)
+        return self.fixColumns(df_filtered, objective_margin=objective_margin, combined_col=True)
 
     def saveToPickle(self, fullname, df):
         df.to_pickle(fullname+'.pickle', compression={'method': 'gzip', 'compresslevel': 1, 'mtime': 1})
