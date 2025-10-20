@@ -54,14 +54,24 @@ do
         best_agent_path="${best_agent_path##*/}"  # on travaille sur le nom du fichier seulement
 
         if [[ "$best_agent_path" =~ ^agent-T([0-9]|[1-9][0-9]|100)S([0-9]|[1-9][0-9]|100)-.*\.pickle$ ]]; then
-            TRIAL="${BASH_REMATCH[1]}"
-            SEED="${BASH_REMATCH[2]}"
-            echo "Using Trial=${TRIAL} and Seed=${SEEDID}"
+            TRIAL_EXPE="${BASH_REMATCH[1]}"
+            SEEDID_EXPE="${BASH_REMATCH[2]}"
+            echo "Using Trial=${TRIAL_EXPE} and Seed=${SEEDID_EXPE}"
             #read -p "Press [Enter] to continue..."
+        else
+            echo "Error, best agent file name ${best_agent_path} not conform to agent-TxxSyy-*.pickle" >> /dev/stderr
+            res=2
+            break
        fi
+       xtra_opts=""
+    else
+        TRIAL_EXPE=${TRIAL}
+        SEEDID_EXPE=${SEEDID}
+        picklefiles_path=${picklefiles_path}_disq
+        xtra_opts="++pickles_path=${picklefiles_path}"
     fi
 
-    cmd="python run_simple_test.py +experiment=${expe} ++trial=${TRIAL} ++seed=${SEEDID} $*"
+    cmd="python run_simple_test.py +experiment=${expe} ++trial=${TRIAL_EXPE} ++seed=${SEEDID_EXPE} ${xtra_opts} $*"
     echo ${cmd}
     ${cmd}
     res=$?

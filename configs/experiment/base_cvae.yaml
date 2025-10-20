@@ -1,0 +1,4 @@
+defaults:
+  - base_orig
+
+datasets_prefix: workloads_cvae  # Workloads selection 

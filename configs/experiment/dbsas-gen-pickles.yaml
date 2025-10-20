@@ -4,6 +4,6 @@ defaults:
   - _self_
 
 
-info: DF DBSAS and ORIF Train, Eval, Test Pickles generation from original and simulated pickles
+info: DF simulated with DBSAS and ORIG Train, Eval, Test Pickles generation from original and simulated pickles
 
 #version_minor: 3

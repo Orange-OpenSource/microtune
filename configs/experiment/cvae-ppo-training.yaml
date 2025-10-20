@@ -1,23 +1,22 @@
 # @package _global_
 defaults:
-  - base_orig
+  - base_cvae
   - override /datasets: traintest-dbsas
-  - override /tuner: dqn
+  - override /tuner: ppo
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
   - override /tuner/env/observations: dbsas
   - _self_
 
-info: Original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+info: CVAE (simulated) dataset for comparaison with DBSAS, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
 
-# From E11_57_dqn_alphabeta_gammaopti_sweepseed
 REW_ALPHA_COEF: 0.2
 REW_BETA_COEF: 0
 
-# Best gamma evaluation is 0.76 (learning_rate=0.00054 batch_size=64 train_freq=128)
-learning_rate: 0.00054
+learning_rate: 0.0001
 batch_size: 64
-train_freq: 128
-gamma: 0.76
+normalize_advantage: false
+n_epochs: 24
+gamma: 0.86
 
 tuner:
   TRAINING_COVERAGE: 14
@@ -25,6 +24,7 @@ tuner:
     policy:
       learning_rate: ${learning_rate}
       batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
       gamma: ${gamma}
-      train_freq: ${train_freq}
 #      use_sde: ${use_sde}

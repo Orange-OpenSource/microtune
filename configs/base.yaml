@@ -4,9 +4,9 @@ defaults:
 #  - override /hydra/sweeper: basic
   - _self_
 
-version: 11  # Config version. MariaDB since version 8. Mixed dataset V9+V10 in version 11
-datasets_prefix: workloads_c098  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
-version_minor: 58
+version: 14  # Config version. First MariaDB's collection of data obtained on GKE.
+datasets_prefix: workloads  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
+version_minor: 0
 
 info: na
 run_info: ${version}_${version_minor}_${hydra:runtime.choices.tuner}-${info}

@@ -1,5 +1,4 @@
 defaults:
-  - base
+  - base_orig
   
-version_minor: 3dbsas
-datasets_prefix: workloads_dbsas  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
+datasets_prefix: workloads_dbsas  # Workloads selection 

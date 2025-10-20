@@ -1,0 +1,2 @@
+_target_: pkg.actions.Actions
+minmax: [-1,6]

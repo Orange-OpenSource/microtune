@@ -1,4 +1,14 @@
 #!/bin/bash
+# Usage: fasttraintest.sh [--optuna] [tuners] [other options for run_agent.py]
+# tuners: comma-separated list of tuners to test (default: linucb_kfoofw)
+# other options: any other options to pass to run_agent.py and run_best_agent_test.py
+# Example: fasttraintest.sh --optuna linucb_kfoofw,neuralucb n_seeds=3
+# Example: fasttraintest.sh linucb_kfoofw n_seeds=3
+# This script runs a fast training and testing of the specified tuners using run_agent.py, run_best_agent.py, and run_best_agent_test.py
+# By default it sets few options for fast training and testing, but you can override them by passing other options: TRAINING_COVERAGE is set to 1. (i.e 1x the dataset as budget)
+# The version_minor is set to a value that should not conflict with other runs (based on the current time).
+# Extra parameters are only applied to run_agent.py.
+# As consequence, the version (major) must not be set in current configuration file, otherwise it will not be applied to run_best_agent.py and run_best_agent_test.py.
 
 OPTUNA=""
 if [ "x$1" == "x--optuna" ]; then
