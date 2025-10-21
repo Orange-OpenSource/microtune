@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base14_optuna
+  - base_optuna
   - override /tuner: a2c
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
   - _self_
@@ -32,7 +32,6 @@ hydra:
 
 
 tuner:
-  TRAINING_COVERAGE: 9
   agent:
     policy:
       learning_rate: ${learning_rate}

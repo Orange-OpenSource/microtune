@@ -1,10 +1,10 @@
 # @package _global_
 defaults:
-  - base_dbsas
-  - override /datasets: traintest-dbsas
+  - basesimu_dbsas
+  - override /datasets: traintest-simu
   - override /tuner: a2c
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
-  - override /tuner/env/observations: dbsas
+  - override /tuner/env/observations: simu
   - _self_
 
 info: DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 

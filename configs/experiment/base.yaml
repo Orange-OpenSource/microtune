@@ -1,7 +1,7 @@
 
-version: 13 # DBSAS experiments
+version: 14 # GKE experiments
+version_minor: 1
 
-#version_experiment: E${version}_${version_minor} #_${hydra:runtime.choices.tuner}
 pickles_dirname: E${version}_${version_minor}_${hydra:runtime.choices.experiment}
 
 verbosity: 0

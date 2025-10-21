@@ -1,4 +1,0 @@
-defaults:
-  - base_orig
-  
-datasets_prefix: workloads_dbsas  # Workloads selection 

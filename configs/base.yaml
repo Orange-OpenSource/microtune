@@ -6,7 +6,7 @@ defaults:
 
 version: 14  # Config version. First MariaDB's collection of data obtained on GKE.
 datasets_prefix: workloads  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
-version_minor: 0
+version_minor: 1
 
 info: na
 run_info: ${version}_${version_minor}_${hydra:runtime.choices.tuner}-${info}
