@@ -1,6 +1,11 @@
 #!/bin/bash
 # This script to launch a simple test on Test dataset, in particular shows in detail the SLA performance 
 # using the last experimentation and the best model.
+# Usage:
+#   ./expesimpletest.sh [--sleep N] [--trialseed T,S] [experiment_list] [extra_options]
+# where:
+#   --sleep N               : wait N seconds before starting
+#   --trialseed T,S        : specify Trial T and Seed S to use for the model selection (default: best model if T<0, whatever S)
 
 
 if [ "x$1" == "x--sleep" ]; then
@@ -16,8 +21,16 @@ shift
 [ -z "${expe_list}" ] && expe_list="linucb_kfoofw"
 expe_list="$(echo ${expe_list} | sed 's/,/ /g')"
 
-typeset -i TRIAL=${1:--1}; shift
-typeset -i SEEDID=${1:-0}; shift
+typeset -i TRIAL=-1
+typeset -i SEEDID=0
+
+if [ "x$1" == "x--trialseed" ]; then
+    shift
+    trialseed="$(echo ${1} | sed 's/,/ /g')"
+    shift
+    TRIAL=$(echo ${trialseed} | cut -d' ' -f 1)
+    SEEDID=$(echo ${trialseed} | cut -d' ' -f 2)
+fi
 
 typeset -i res=0
 

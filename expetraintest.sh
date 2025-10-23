@@ -43,7 +43,7 @@ do
     
     python run_agent${OPTUNA}.py +experiment=${expe} $*
     res=$?
-    [ ${res} -ne 0 ] && echo "Error ${res}. run_agent${OPTUNA}" >> /dev/stderr && continue 
+    [ ${res} -ne 0 ] && echo "Error ${res}. run_agent${OPTUNA} $*" >> /dev/stderr && continue 
 
     #[ ! -d ${picklefiles_path} ] && echo "Error: Unable to access ${picklefiles_path}" >> /dev/stderr && continue
 

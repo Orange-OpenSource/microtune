@@ -4,4 +4,4 @@ defaults:
 n_trials: 80
 
 tuner:
-  TRAINING_COVERAGE: 9
+  TRAINING_COVERAGE: 12

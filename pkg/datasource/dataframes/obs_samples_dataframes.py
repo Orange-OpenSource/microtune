@@ -126,6 +126,28 @@ class ObsSamplesDF():
         
         return df_out
 
+    def additionalColumns(self, df, combine_with_origin=False):
+        df["db_size_mb"] = df["db_size_mb"].astype(int)
+        buf_sizes_list = df["buf_size"].unique().tolist()
+        df["buf_size_min_mb"] = buf_sizes_list[-1]//1024//1024
+        buf_values_count = len(buf_sizes_list)
+        df["buf_values_count"] = buf_values_count
+        df["buf_size_idx"] = df.apply(lambda row: int((row["buf_size"]/buf_sizes_list[0])*buf_values_count)-1, axis=1)
+        df["tables_rows_M"] = df.apply(lambda row: round(row["tables_rows"]/1000000,1), axis=1)
+        df["Rtype"] = df.apply(lambda row: row["randtype"][:2].capitalize(), axis=1)
+        #bidx = df["buf_size_idx"].unique().tolist()
+        #print("BUFS IDX", bidx, len(bidx))
+
+        # get all the workloads
+        columns_to_combine = ["tables", "tables_rows_M", "wl_clients", "Rtype"]
+        if combine_with_origin:
+            columns_to_combine = ["origin"]+columns_to_combine
+        # Create a new column with the combined values as strings
+        df['combined_column'] = df[columns_to_combine].astype(str).agg(' '.join, axis=1)
+        df["combined_column"] = df.apply(lambda row: f'V{row["combined_column"]}', axis=1)
+
+        return df
+
     def fixColumns(self, df_filtered, objective_margin=0.3, combined_col=True, compute_iperf=False):
         df_filtered["db_size_mb"] = df_filtered["db_size_mb"].astype(int)
         buf_sizes_list = df_filtered["buf_size"].unique().tolist()
@@ -143,10 +165,11 @@ class ObsSamplesDF():
             columns_to_combine = ["tables", "tables_rows_M", "wl_clients", "Rtype"]
             # Create a new column with the combined values as strings
             df_filtered['combined_column'] = df_filtered[columns_to_combine].astype(str).agg(' '.join, axis=1)
+            df_filtered["combined_column"] = df_filtered.apply(lambda row: f'V{row["origin"]} {row["combined_column"]}', axis=1)
 
         # Print the DataFrame with the new combined column
         workloads =  df_filtered['combined_column'].unique().tolist()
-        print("ALL workloads type:", workloads)
+        #print("ALL workloads type:", workloads)
 
         # Add performance's min, max columns
         df_filtered["latency_mean_min"] = self.LATENCY_MIN #0.0001  
@@ -222,6 +245,9 @@ class ObsSamplesDF():
         # VERY IMPORTANT: Will help to retrieve previous and next buf values from a current state
         return df1.reset_index(drop=True, inplace=False), df2.reset_index(drop=True, inplace=False)
     
+    def saveFullPickle(self, prefix, df):
+        self.saveToPickle(prefix+"_full_"+self._version, df)
+
     def saveTrainTests(self, name, df_train, df_test):
         self.saveToPickle(name+"_train_"+self._version, df_train)
         self.saveToPickle(name+"_test_"+self._version, df_test)

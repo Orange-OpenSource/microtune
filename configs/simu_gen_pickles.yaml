@@ -7,15 +7,17 @@ defaults:
   - datasets@orig: traintest-simu
   - datasets@dbsas: traintest-simu
   - datasets@cvae: traintest-simu
+  - datasets@tabddpm: traintest-simu
   - _self_
 
-version: 13Sg # In simulation mode, Gaussian randtype only
+version: 13sg # In simulation mode, Gaussian randtype only
 datasets_prefix: workloadssimu  # Workloads selection
 
 # Input datasets files with .pickles extension, for the original and a simulated datasets like DBSAS, CVAE, ... 
 dataset_orig_import_file: original_dataset_gaussian12  # Original, NOT simulated data, with Gaussian randtype only
 dataset_dbsas_import_file: simu_db_fullnetwork_generated_full_dataset_discrete  # DBSAS generated dataset 
 dataset_cvae_import_file: simu_CVAE_generated_full_dataset  # CVAE generated dataset
+dataset_tabddpm_import_file: simu_TABDDPM_generated_full_dataset # TABDDPM generated dataset
 
 # Output pickles files prefixes for original and dbsas datasets
 orig:
@@ -26,3 +28,6 @@ dbsas:
 
 cvae:
   pickles_prefix: ${datasets_prefix}_cvae
+
+tabddpm: !!null
+#LATER  pickles_prefix: ${datasets_prefix}_tabddpm
