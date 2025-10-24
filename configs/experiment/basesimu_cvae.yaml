@@ -1,4 +1,0 @@
-defaults:
-  - basesimu_orig
-
-datasets_prefix: workloadssimu_cvae  # Workloads selection 

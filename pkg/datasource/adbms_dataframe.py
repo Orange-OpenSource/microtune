@@ -77,7 +77,7 @@ class TrainTestDataSets():
                 self.df_eval = pd.read_pickle(self.eval_file)
             self.df_test = pd.read_pickle(self.test_file)
         else:
-            print(f"Force generation of train,eval,test DF from dedicated DF: {self.filesprefix}_train_{self.version}.pickle, {self.filesprefix}_test_{self.version}.pickle...")
+            print(f"Force generation of train,eval,test DF from dedicated DF: {self.train_file}, {self.eval_file}, {self.test_file}...")
             self._loadCompleteDF(testastrain=self.testastrain)
             # Save dedicated DataFrames
             self.df_eval, self.df_test = self.obssamples.spliDF(self.df_test, ratio=self.ratio_eval_test, rnd_seed=self.seed)

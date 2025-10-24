@@ -23,7 +23,8 @@ import hydrauti as hu
 from pkg.graph import GraphPredictionsStatus
 from pkg.gym_env import VSEnv, VSMonitorCallback
 
-# Command: python run_best_agent_test.py +experiment=linucb_kfoofw ++hydra.sweeper.n_trials=1 verbosity=1
+# What will happen if an agent is only able to use STAY arm => what will be its performance ??
+# python run_simple_stay_test.py
 
 # A logger for this file
 log = logging.getLogger(__name__)

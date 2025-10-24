@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+  - base_simu
+
+
+dataset_orig_import_file: import/original_dataset12g  # Original, NOT simulated data, with Uniform randtype only
+
+orig:
+  seed: 43
+
+dataset_dbsas_import_file: import/db_fullnetwork_generated_full_dataset_discrete12sg  # DBSAS simulated data with Uniform randtype only
+dbsas: !!null
+
+dataset_cvae_import_file: import/CVAE_generated_full_dataset12sg  # CVAE simulated data with Uniform
+cvae: !!null
+
+dataset_tabddpm_import_file: !!null #import/xxx  # TABDDPM simulated data with Uniform randtype only
+tabddpm: !!null

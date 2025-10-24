@@ -1,0 +1,17 @@
+# @package _global_
+defaults:
+  - base_simu
+
+version: 13Su # Simu experiments on version 13 datasets with Gaussian randtype  
+version_minor: 0
+
+dataset_orig_import_file: import/original_dataset_uniform12  # Original, NOT simulated data, with Uniform randtype only
+
+#dataset_dbsas_import_file: import/dbsas_dataset_uniform13  # DBSAS simulated data with Uniform randtype only
+dbsas: !!null
+
+#dataset_cvae_import_file: import/cvae_dataset_uniform13  # CVAE simulated data with Uniform
+cvae: !!null
+
+dataset_tabddpm_import_file: !!null #tabddpm_dataset_uniform12  # TABDDPM simulated data with Uniform randtype only
+tabddpm: !!null

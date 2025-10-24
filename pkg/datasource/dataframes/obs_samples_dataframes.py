@@ -188,7 +188,8 @@ class ObsSamplesDF():
 
         return df_filtered.reset_index(drop=True, inplace=False)
 
-    def getSimuData(self,  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__" ,objective_margin=0.3):
+    # Import data from MongoDB (DataRef Obs Samples), fix/add some columns and return the full indexed dataframe
+    def getMongoDataRef(self,  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__" ,objective_margin=0.3):
         list_documents, list_documents0 = self.retrieve_all_documents(mongohost=mongohost, mongoport=mongoport, dbname=dbname, colname=colname)
         df_filtered = self.docs2flat_list(list_documents)
         # Fixes and add some columns with constants
@@ -196,6 +197,7 @@ class ObsSamplesDF():
 
     def saveToPickle(self, fullname, df):
         df.to_pickle(fullname+'.pickle', compression={'method': 'gzip', 'compresslevel': 1, 'mtime': 1})
+        return fullname+'.pickle'
 
 
     def loadFromPickle(self, fullname):
@@ -246,7 +248,7 @@ class ObsSamplesDF():
         return df1.reset_index(drop=True, inplace=False), df2.reset_index(drop=True, inplace=False)
     
     def saveFullPickle(self, prefix, df):
-        self.saveToPickle(prefix+"_full_"+self._version, df)
+        return self.saveToPickle(prefix+"_full_"+self._version, df)
 
     def saveTrainTests(self, name, df_train, df_test):
         self.saveToPickle(name+"_train_"+self._version, df_train)

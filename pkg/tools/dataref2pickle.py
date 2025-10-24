@@ -21,12 +21,10 @@ import argparse
 
 from pkg.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF 
 
-def export(version="14",  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", objective_margin=0.3):
-   picklefiles="./workloads"  
-   obsdf = ObsSamplesDF(version=version)
-   df = obsdf.getSimuData(mongohost=mongohost, mongoport=mongoport, dbname=dbname, objective_margin=objective_margin)
-   output_filename =f'{picklefiles}_full_{version}'
-   obsdf.saveToPickle(output_filename, df)
+def export(version="14",  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", objective_margin=0.3, pickles_prefix="workloads"):
+   obss = ObsSamplesDF(version=version)
+   df = obss.getMongoDataRef(mongohost=mongohost, mongoport=mongoport, dbname=dbname, objective_margin=objective_margin)
+   output_filename = obss.saveFullPickle(pickles_prefix, df)
    print(f"Exported data to {output_filename}.pikcle") 
 
 if __name__ == "__main__":
@@ -36,8 +34,9 @@ if __name__ == "__main__":
    parser.add_argument('--mongoport', type=int, default=27017, help='MongoDB port (default: 27017)')
    parser.add_argument('--dbname', type=str, default="adbms-obs-ref-mariadb-11_1_3", help='MongoDB database name (default: adbms-obs-ref-mariadb-11_1_3)')
    parser.add_argument('--objective_margin', type=float, default=0.3, help='Objective margin defining the "SLA OK" zone in which the STAY ARM is the good one (default: 0.3)')
+   parser.add_argument('--pickles_prefix', type=str, default="workloads", help='Prefix for the output pickle files (default: workloads)')
    args = parser.parse_args()
 
    print(f"Exporting observation samples from MongoDB {args.dbname} (host={args.mongohost}, port={args.mongoport}) to a pickle file loadable by Microtune")
-   export(version=args.version, mongohost=args.mongohost, mongoport=args.mongoport, dbname=args.dbname, objective_margin=args.objective_margin) 
+   export(version=args.version, mongohost=args.mongohost, mongoport=args.mongoport, dbname=args.dbname, objective_margin=args.objective_margin, pickles_prefix=args.pickles_prefix) 
 

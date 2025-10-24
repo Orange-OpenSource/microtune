@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - basesimu_cvae
+  - base_simu_cvae
   - override /datasets: traintest-simu
   - override /tuner: ppo
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta

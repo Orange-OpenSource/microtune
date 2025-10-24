@@ -1,0 +1,32 @@
+# Get conf by running --cfg job --resolve
+
+# python run_simu_xxx.py --cfg job 
+
+defaults:
+  - base  # ouput paths, verbosity, ...
+  - datasets@orig: traintest-simu
+  - datasets@dbsas: traintest-simu
+  - datasets@cvae: traintest-simu
+  - datasets@tabddpm: traintest-simu
+  - _self_
+
+# Input datasets files with .pickles extension. The "Original" one is issued from real observation samples (DataRef), the others are generated/simulated ones 
+# ORIGinal dataset
+dataset_orig_import_file: !!null  # Original, NOT simulated data from real observations
+orig:
+  pickles_prefix: ${datasets_prefix}
+
+# DBSAS generated dataset
+dataset_dbsas_import_file: !!null  # DBSAS generated dataset 
+dbsas:
+  pickles_prefix: ${datasets_prefix}_dbsas
+
+# CVAE generated dataset
+dataset_cvae_import_file: !!null  # CVAE generated dataset
+cvae:
+  pickles_prefix: ${datasets_prefix}_cvae
+
+# TABDDPM generated dataset
+dataset_tabddpm_import_file: !!null # TABDDPM generated dataset
+tabddpm:
+  pickles_prefix: ${datasets_prefix}_tabddpm
