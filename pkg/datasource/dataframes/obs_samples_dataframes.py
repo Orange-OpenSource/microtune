@@ -149,8 +149,12 @@ class ObsSamplesDF():
         return df
 
     def fixColumns(self, df_filtered, objective_margin=0.3, combined_col=True, compute_iperf=False):
+        db_size_mb_lst = df_filtered["db_size_mb"].unique().tolist()
+        #print("DB SIZE MB", db_size_mb_lst, len(db_size_mb_lst))
+        #print(df_filtered[df_filtered["db_size_mb"] == float('nan')]) #db_size_mb_lst[-1]])
         df_filtered["db_size_mb"] = df_filtered["db_size_mb"].astype(int)
         buf_sizes_list = df_filtered["buf_size"].unique().tolist()
+        #print("BUF SIZES", buf_sizes_list, len(buf_sizes_list))
         df_filtered["buf_size_min_mb"] = buf_sizes_list[-1]//1024//1024
         buf_values_count = len(buf_sizes_list)
         df_filtered["buf_values_count"] = buf_values_count

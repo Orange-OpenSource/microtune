@@ -37,8 +37,9 @@ defaults:
 trial: -1  # Trial ID, -1 means best model will be found automatically
 seed: 0
 
-# Ensure to use the same episodes and step
-# Ensure to use the same actions and reward than the Linear or NN models
+# Ensure to use the same episodes and steps anywhere
+# Ensure to use the same actions and reward anywhere
+
 a2c:
   TEST_EPISODES_COUNT: ${tuner.TEST_EPISODES_COUNT}
   TEST_STEPS_PER_EPISODE: ${tuner.TEST_STEPS_PER_EPISODE}

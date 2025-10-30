@@ -11,5 +11,5 @@ n_jobs: 1 # Number of parallel trainings with different seed of a trial
 hydra:
   sweeper:
     params:
-      RND_SEED: range(4242, 4243, step=1)
+      RND_SEED: range(4242, 4252, step=1)
 

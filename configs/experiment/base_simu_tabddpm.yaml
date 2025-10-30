@@ -1,4 +1,4 @@
 defaults:
-  - basesimu_tabddpm
+  - base_simu_tabddpm
 
 datasets_prefix: workloads_tabddpm  # Workloads selection 

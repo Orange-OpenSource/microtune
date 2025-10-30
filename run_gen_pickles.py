@@ -40,10 +40,11 @@ def save_full_dataset(name, import_file, cfg_ds, dforig = None):
 
     # Add some fixes from original dataset if provided
     if dforig is not None:
-        cols2add = ['combined_column', 'tables', 'tables_rows', 'randtype', 'observation.innodb_buffer_pool_size', 'observation.normalized_buf_size']
-        df[cols2add] = dforig[cols2add]
+        #cols2add = ['combined_column', 'tables', 'tables_rows', 'randtype', 'observation.innodb_buffer_pool_size', 'observation.normalized_buf_size']
+#        cols2add = [ "db_size_mb" ]
+#        df[cols2add] = dforig[cols2add]
         log.info(f"DF{name} {pickles_prefix} V:{version} fix columns...")
-        df = obss.fixColumns(df, combined_col=False, compute_iperf=False) # Can't recompute combined_col and iperf here because some columns are missing in SIMU dataset!!!
+        df = obss.fixColumns(df, combined_col=False, compute_iperf=True) 
 
     log.info(f"DF{name} pef_target_level: {df['perf_target_level'].unique().tolist()}")
     log.info(f"DF{name} #col:{len(df.columns.values.tolist())} #lines:{df.shape[0]}")
@@ -110,6 +111,8 @@ def run(cfg: DictConfig) -> float: #Tuple[float, float]:
         PERF_OBJS = dforig['perf_target_level'].unique().tolist()
         log.info(f"DFORIG pef_target_level: {PERF_OBJS}")
         log.info(f"DFORIG #workloads:{len(workloads_orig)} {workloads_orig}")
+        db_size_mb_lst = dforig["db_size_mb"].unique().tolist()
+        print("DFORIG DB SIZE MB", db_size_mb_lst, len(db_size_mb_lst))
     else:
         dforig = None
 
