@@ -80,8 +80,9 @@ class VSEnv(gym.Env):
     def msgStatus(self):
         return f'Ep:{self.cur_episode +1} Steps:{self.total_steps +1}' # CRew:{self._rew_cumul} CReg:{self._reg_cumul}'
 
+    # Return the list with the reward's value for each actions (from less action value to the greatest, i.e. from DOWN to UP)
     def getRewardStates(self):
-        return self.reward.getStates()
+        return self.reward.getRewards4Actions()
 
     def getIDeltaOnAction(self, action):
         cur_state = self.ds.state()
@@ -113,9 +114,7 @@ class VSEnv(gym.Env):
             self.iperf, self.delta_perf, self.perf_target = self.ds.getIPerfIndicators()
             self.latency = self.ds.getLatency()
             self._wl_context = f'{self.workload_name_id} {self.perf_target} {round(self.lat_target, 0)}ms'
-            ## fanfan here
-            # self._idelta_list.append(self.delta_perf)
-            self.reward.setState(self.ds)
+            self.reward.compute(self.ds)
 
         def under_or_violation():
             return "VIOLATION" if action <1 else "UNDER"
@@ -253,7 +252,7 @@ class VSEnv(gym.Env):
         if self.verbose>1:
             msg += self._obs_digest_dsp
         if self.verbose>2:
-            msg += f' REW:{self.reward.getStates()}'
+            msg += f' REW:{self.reward.getRewards4Actions()}'
         msg += f' {desc}'
         return msg
 
@@ -502,9 +501,6 @@ class VSMonitor(gym.Wrapper[ObsType, ActType, ObsType, ActType]):
 
         log.info('WL=WorkLoad type, i.e. "15 1000000 12 uniform 0.99" stands for 15 Tables, 100k rows, 12 clients, uniform access to data and SLA at 10ms (0.99)')
 
-    # def test(self):
-    #     print(self.unwrapped._idelta_list)
-
     def getGraph(self, title):
         #results = dict(sorted(results.items())) #, key=lambda k: k[0].split(maxsplit=1),reverse=False)) # Sort on first field of each line
         #assert len(reward_per_episode) == episodes_max  
@@ -516,20 +512,6 @@ class VSMonitor(gym.Wrapper[ObsType, ActType, ObsType, ActType]):
         self._rew_performance = round(self._reward_per_episode[:total_ep].sum(),3)
     
         partial = '/!\\' if self._partial else '' 
-
-        # self.unwrapped._idelta_list
-        # Initialize the two lists with zeros
-
-        # seperate and pad the lists into ok and violation
-        #less_than_zero_list = [0] * len(self.unwrapped._idelta_list)
-        #greater_or_equal_zero_list = [0] * len(self.unwrapped._idelta_list)
-        
-        # Populate the lists according to the condition
-        #for i, value in enumerate(self.unwrapped._idelta_list):
-        #    if value < 0:
-        #        less_than_zero_list[i] = abs(value)
-        #    else:
-        #        greater_or_equal_zero_list[i] = value
 
         if self.unwrapped._on_terminate >= 0:
             title_x=f"{total_ep+1} Episodes - {(total_ep+1)//2} Workloads - {self.unwrapped.max_steps_per_episode} steps per Workload -  #EpSuccess: {self.unwrapped.terminated_count}"

@@ -272,7 +272,7 @@ class ADBMSBufferCacheStatesLive(ADBMSDataSetEntryContextSelector):
     
     # DUMMY Action function as it is not possible to compute Reward for other buf_inf than 0 (current state). So Regret can not be obtained too!
     # Apply a function to each buffer's action
-    def applyLambda2actions(self, actions: np.array=None,  buffunc=lambda action_idx, real_bufferidx_increment:None):
+    def applyLambda2actions(self, actions: np.array=None,  buffunc=lambda action_idx):
         for idx in range(len(actions)):
             incr = actions[idx] 
             buffunc(idx, incr) 

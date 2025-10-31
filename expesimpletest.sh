@@ -69,7 +69,7 @@ do
         if [[ "$best_agent_path" =~ ^agent-T([0-9]|[1-9][0-9]|100)S([0-9]|[1-9][0-9]|100)-.*\.pickle$ ]]; then
             TRIAL_EXPE="${BASH_REMATCH[1]}"
             SEEDID_EXPE="${BASH_REMATCH[2]}"
-            echo "Using Trial=${TRIAL_EXPE} and Seed=${SEEDID_EXPE}"
+            echo "Using Best Trial=${TRIAL_EXPE} and Seed=${SEEDID_EXPE}"
             #read -p "Press [Enter] to continue..."
         else
             echo "Error, best agent file name ${best_agent_path} not conform to agent-TxxSyy-*.pickle" >> /dev/stderr

@@ -43,19 +43,20 @@ class CtxPolicy(abc.ABC):
     def initWithEnv(self, env: gym.Wrapper):
         if env:
             if type(env.action_space) is gym.spaces.Discrete:
-                assert self._discrete_arms == True, "Mismatch between Environnement's discrete action space and SB3 Policy working in continous action mode!"
-                assert int(env.action_space.start) == 0, f"Env discrete action space must start at 0 and not {env.action_space.start}"
-                assert env.action_space.n == self._k_arms, f"Mismatch between Environnement's discrete action space size n={env.action_space.n} and current Arms count is k_arms={self._k_arms}"
+                assert self._discrete_arms == True, f"{self.shortname}: Mismatch between Environnement's discrete action space and SB3 Policy working in continous action mode!"
+                assert int(env.action_space.start) == 0, f"{self.shortname}: Env discrete action space must start at 0 and not {env.action_space.start}"
+                if env.action_space.n != self._k_arms:
+                    print(f"{self.shortname}: WARNING, Assumed (?) mismatch between Environnement's discrete action space size n={env.action_space.n} and current Policy's k_arms={self._k_arms}")
                 #self._rescale_func = lambda arm: arm + arm_min # Rescale (normalize) a discrete arm index (int, in 0 to K_ARMS-1 interval) into discrete interval [X,Y] (with X > Y)
-                print(f"Will Rescale arms to {env.action_space} [{env.action_space.start}, {env.action_space.n-1}]")
+                print(f"{self.shortname}: Will Rescale arms to dicrete action space: {env.action_space} [{env.action_space.start}, {env.action_space.n-1}]")
             elif type(env.action_space) is gym.spaces.Box:
-                assert self._discrete_arms == False, "Mismatch between Environnement's continous action space (Box) and SB3 Policy working in discrete action mode!"
-                assert env.action_space.low[0] == -1 and env.action_space.high[0] == 1, f"Env continous action space must be -1.,1. (because of the required symmetry, see tips SB3). Actual min={env.action_space.low[0]}, max={env.action_space.high[0]}"
+                assert self._discrete_arms == False, f"{self.shortname}: Mismatch between Environnement's continous action space (Box) and SB3 Policy working in discrete action mode!"
+                assert env.action_space.low[0] == -1 and env.action_space.high[0] == 1, f"{self.shortname}: Env continous action space must be -1.,1. (because of the required symmetry, see tips SB3). Actual min={env.action_space.low[0]}, max={env.action_space.high[0]}"
                 #arm_max = self._k_arms -1
                 #self._rescale_func = lambda arm: np.array([(2 * arm / arm_max) - 1], dtype=float) # Rescale (normalize) a discrete arm index (int, in 0 to K_ARMS-1 interval) into continous -1.,1. interval (float)
-                print(f"Will Rescale arms to {env.action_space} [{env.action_space.low[0]}, {env.action_space.high[0]}]")
+                print(f"{self.shortname}: Will Rescale arms to continous action space: {env.action_space} [{env.action_space.low[0]}, {env.action_space.high[0]}]")
             else:
-                assert False, f'Env action_space type not supported {env.action_space}. Should be Box [-1.,1.] or Discrete()'
+                assert False, f'{self.shortname}: Env action_space type not supported {env.action_space}. Should be Box [-1.,1.] or Discrete()'
             self.env = env
 
     def context(self):

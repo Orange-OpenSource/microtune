@@ -47,7 +47,7 @@ class MonitorSLA(VSMonitorCallback):
         self.buffers_mb.append(env.getBufferSizeMB())
         self.step_in_wl.append(env.cur_step)
 
-@hydra.main(version_base=None, config_path="configs", config_name="simple_agent_test")
+@hydra.main(version_base=None, config_path="configs", config_name="simple_test")
 def run(cfg: DictConfig) -> None:
     #logging.basicConfig(filename=cfg.logfile)
     # Performs only 1 trial
@@ -64,9 +64,15 @@ def run(cfg: DictConfig) -> None:
         datasets.load(test_only=True)
         df_test = datasets.df_test
         stage="TEST"
-    trial = cfg.trial
-    sid = cfg.seed
-    filever=f'{cfg.iterations_name}{trial}S{sid}'
+    trial = int(cfg.trial)
+
+    if trial >= 0:
+        sid = cfg.seed
+        filever=f'{cfg.iterations_name}{trial}S{sid}'
+        dftext='*.pickle'
+    else:
+        filever=f'{cfg.iterations_name}*'
+        dftext='*-best.pickle'
 
     agent = instantiate(cfg.tuner.agent)
     #            tid=trial, sid=sid, seed=RND_SEED, min_max_scaler=minmax_scaler,
@@ -76,14 +82,20 @@ def run(cfg: DictConfig) -> None:
     #            sweeper_params=sweeper_params, sweep_perf=sweep_perf, eval_perf_meter=env_eval.perf_meter, oracle_eval_perf_meter=oracle_perf_meter,
     #            eval_perf_meter_list=[],
     #            config=OmegaConf.to_yaml(cfg, resolve=True))    
-    files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=0, dftext='*.pickle') # Load the pickle specified by its Trial and Seed ID
+    files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=cfg.verbosity, dftext=dftext) # Load the pickle specified by its Trial and Seed ID
 
 #    for ff in files_list:
 #        os.remove(ff)
     log.info(f'Agent Filename: {agent.filename}')
     log.info(f'Agent learning params: {optdict["sweeper_params"]}')
-    assert cfg.trial == optdict["tid"]
-    assert cfg.seed == optdict["sid"]
+    if trial >=0:
+        assert cfg.trial == optdict["tid"]
+        assert cfg.seed == optdict["sid"]
+    else:
+        trial = optdict["tid"]
+        sid = optdict["sid"]
+    filever=f'{cfg.iterations_name}{trial}S{sid}'
+    
     scaler = optdict["min_max_scaler"]
     if scaler:
         print(f'MinMaxScaler:{type(scaler)}')

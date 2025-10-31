@@ -29,7 +29,7 @@ shift
 # IMPORTANT!! Depending on type of experimentations:
 # - either generate pickles Datasets for ORIG and all known SIMU (DBSAS, VCAE and even more later) if not already done
 #   Thus allowing to use exactly the same Test and Eval datasets for ALL experiments
-# - or generate only train_eveal test datasets cache files from an already existing dataset (full) pickle file
+# - or generate only train, eval, test datasets cache files from an already existing dataset (full) pickle file
 python run_gen_pickles.py ${EXPE_GEN_PICKLES} $*
 
 if [ $? -ne 0 ]; then

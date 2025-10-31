@@ -16,7 +16,7 @@ import numpy as np
 from pkg.datasource.dataset import ADBMSDataSetEntryContextSelector
 from pkg.actions import Actions
 
-
+# Note: It is possible to Disable ALPHA and BETA effect by setting them to -1.
 class RewardNA():
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         self.actions = Actions(action_minmax)
@@ -53,10 +53,11 @@ class RewardNA():
     def action2Name(self, action):
         return self.actions.name(int(action))
 
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         pass
     
-    def getStates(self):
+    # Get reward's value for each action (from less action value to the greatest, i.e. from DOWN to UP)
+    def getRewards4Actions(self):
         return self._action_rewards
 
     def get(self, action: int):
@@ -66,8 +67,14 @@ class RewardNA():
 # Implementation for 3 actions. To be upgraded later for more actions.....
 # Possible actions min-max values are N,M where... (TBC)
 class RewardDownStayUp(RewardNA):
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
+    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
         super().__init__(action_minmax, alpha, beta)
+        if strengthened_action:
+            self._down_factor = abs(self.actions.min())
+            self._up_factor = self.actions.max()
+        else:
+            self._down_factor = 1
+            self._up_factor = 1
 
     # Return reward, regret
     def _getRewReg(self, action):
@@ -87,8 +94,8 @@ class RewardDownStayUp(RewardNA):
 
         return under() # Up
 
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
-        assert False, "Implementation Error: Reward.setState() Reward method not implemented."
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
+        assert False, "Implementation Error: Reward.compute() Reward method not implemented."
 
     # Default method to get reward and regret. Must be overriden if a probability has to be computed
     # Action-1 => Decreases buffer
@@ -103,11 +110,11 @@ class RewardDownStayUp(RewardNA):
 #                    parm = 0.0000000001 if parm == 0 else parm
 #                    rew /= parm
         if action < 0:
-            rew *= self._alpha_inv
+            rew *= self._alpha_inv * self._down_factor
         elif action == 0:
             rew *= self._beta
         else:
-            rew *= self._alpha
+            rew *= self._alpha * self._up_factor
 
         return rew, reg, 1 
 
@@ -117,7 +124,7 @@ class ADBMSBufferCacheRewardContinousV2(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             down = stay = up = 0
@@ -148,7 +155,7 @@ class ADBMSBufferCacheRewardContinousV3(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             down = stay = up = 0
@@ -182,7 +189,7 @@ class ADBMSBufferCacheRewardContinousV3E(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         iperf, cur_idelta, threshold = ds.getIPerfIndicators()
 
         def rew(idx, bufincr):
@@ -216,7 +223,7 @@ class ADBMSBufferCacheRewardContinousV4(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def adjusted_sigmoid_lower_part(x, threshold, k = 10):
             # Calculate parameters
             x_0 = threshold
@@ -261,7 +268,7 @@ class ADBMSBufferCacheRewardContinousV5(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             return max(-1, idelta/(1-threshold))
@@ -273,7 +280,7 @@ class ADBMSBufferCacheRewardSigmoid(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def adjusted_sigmoid_lower_part(x, threshold, k = 10):
             # Calculate parameters
             x_0 = threshold
@@ -319,7 +326,7 @@ class ADBMSBufferCacheRewardDiscrete(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             down = stay = up = 0
@@ -352,7 +359,7 @@ class ADBMSBufferCacheRewardCrossed(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             down = stay = up = 0
@@ -384,7 +391,7 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeff(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def adjusted_sigmoid_lower_part(x, threshold, k = 10):
             # Calculate parameters
             x_0 = threshold
@@ -428,7 +435,7 @@ class ADBMSBufferCacheRewardContinousSymetrie(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             down = stay = up = 0
@@ -459,7 +466,7 @@ class ADBMSBufferCacheRewardContinousSymetrieDownCoeff(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             down = stay = up = 0
@@ -490,7 +497,7 @@ class ADBMSBufferCacheRewardContinousSymetrieDownCoeffHybridDiscrete(RewardDownS
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf, idelta, threshold = ds.getIPerfIndicators()
             down = stay = up = 0
@@ -526,7 +533,7 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownS
         if self.move_idelta == 1:
             self.move_idelta = 1.1
             
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
 
 
         def adjusted_sigmoid_higher_part(x, threshold=0.5, k=10):
@@ -544,7 +551,7 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownS
             if idelta > 0:
                 # When iperf is above or at the threshold
                 down =  (adjusted_sigmoid_higher_part(idelta + threshold ,  threshold , 10 )  - 1 + down_coeff) / down_coeff  # Encourage to go down if above threshold
-                stay = 1- adjusted_sigmoid_higher_part(idelta + threshold ,  threshold , 10 ) #(1-dd)**4
+                stay = 1- adjusted_sigmoid_higher_part(idelta + threshold ,  threshold , 10 ) 
                 up   = stay-1
             else:
                 # When iperf is below the threshold
@@ -569,7 +576,7 @@ class ADBMSBufferCacheRewardNormal(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf_cur, idelta_cur, threshold  = ds.getIPerfIndicators()
             iperf_next, idelta_next, threshold = ds.getIPerfIndicatorsWithAction(bufincr) #which is which?
@@ -593,7 +600,7 @@ class ADBMSBufferCacheRewardNormal2(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf_cur, idelta_cur, threshold  = ds.getIPerfIndicators()
             iperf_next, idelta_next, threshold = ds.getIPerfIndicatorsWithAction(bufincr) #which is which?
@@ -623,7 +630,7 @@ class ADBMSBufferCacheRewardNormal3(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
         
-    def setState(self, ds: ADBMSDataSetEntryContextSelector):
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
         def rew(idx, bufincr):
             iperf_cur, idelta_cur, threshold  = ds.getIPerfIndicators()
             iperf_next, idelta_next, threshold = ds.getIPerfIndicatorsWithAction(bufincr) #which is which?

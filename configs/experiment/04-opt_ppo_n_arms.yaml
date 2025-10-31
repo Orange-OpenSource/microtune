@@ -1,8 +1,9 @@
 # @package _global_
 defaults:
   - base_optuna
+  - override /env: discrete_actions
   - override /tuner: ppo
-  - override /tuner/actions: lessthreeplusthree      # The Min and Max action values. Here we have 7 arms: -3 up to +3
+  - override /tuner/actions: lesstenplusten      # The Min and Max action values. Here we have 7 arms: -3 up to +3
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
   - _self_
 
@@ -10,7 +11,7 @@ info: PPO hyper params optim with Optuna + rew=sigmoidhybriddiscretmoveidelta, f
 
 n_seeds: 4
 n_jobs: 4 # Number of parallel trainings with different seed
-n_trials: 20
+n_trials: 120
 hydra_launcher_n_jobs: 4 # Number of trials in parallel with Optuna
 
 REW_ALPHA_COEF: 0.2 

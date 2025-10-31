@@ -1,0 +1,31 @@
+# @package _global_
+defaults:
+  - base_simu_tabddpm
+  - override /datasets: traintest-simu
+  - override /tuner: dqn
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: simu
+  - _self_
+
+info: DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+
+# From E11_57_dqn_alphabeta_gammaopti_sweepseed
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+
+# Best gamma evaluation is 0.76 (learning_rate=0.00054 batch_size=64 train_freq=128)
+learning_rate: 0.00054
+batch_size: 64
+train_freq: 128
+gamma: 0.76
+
+tuner:
+  TRAINING_COVERAGE: 14
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      gamma: ${gamma}
+      train_freq: ${train_freq}
+#      use_sde: ${use_sde}
+

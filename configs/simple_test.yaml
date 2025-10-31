@@ -26,7 +26,7 @@ defaults:
   - _self_
 
 #version_minor: 56_01-opt_linucb_kfoofw_sigmoid_randomtrained
-trial: 1
+trial: -1
 seed: 0
 eval_data: False     # Use EVAL dataset or TEST dataset
 DETERMINISTIC: False  # Flag passed to SB3's predict method. Default is False
