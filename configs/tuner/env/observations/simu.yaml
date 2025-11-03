@@ -1,11 +1,12 @@
 # List of observations used for Simulated data with CVAE, DBSAS, ... 
 # Based on prod_optimal.yaml removing some not relevant for the first case of generation
 
+# Simulated latency removed from feature list:
+#  - sysbench_filtered.latency_mean
 
 elems:
   - wl_clients
   - buf_size
-  - sysbench_filtered.latency_mean
   - db_size_mb
   - observation.cache_used_pages_ratio
   - observation.cache_hit_ratio
