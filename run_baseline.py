@@ -46,6 +46,8 @@ def run(cfg: DictConfig) -> None:
     assert oracle.policy.context() == env_oracle.unwrapped.ds.contextElems(), 'Discrepancy between Oracle policy context and env context...'
     log.info("Run Oracle...")
     oracle.predict(env_oracle, episodes_max=cfg.oracle.TEST_EPISODES_COUNT, verbose=cfg.verbosity)
+    results = env_oracle.perf_meter.getSessionPerformanceMultiObj(pretty=True)
+    log.info(f'Results (USLA,RAM, RAM/step in KB): {results}, ScalarPerf=0.0 by definition for Oracle')
 
     # BASELINE
     agent = instantiate(cfg.tuner.agent)
@@ -74,7 +76,7 @@ def run(cfg: DictConfig) -> None:
     print(f'Saved html Cumulated Regret per WL: {htmlgraph}')
 
     results_kpi = env_test.perf_meter.getSessionPerformanceKPIs( env_oracle.perf_meter)
-    log.info(f'Results KPI on TEST, ScalarPerf, (USLA,RAM,SLAV): {results_kpi}')
+    log.info(f'Results KPI on TEST, (ScalarPerf,USLA,RAM,SLAV): {results_kpi}')
 
     graph_perf = agent.graph_perf
     if graph_perf:
