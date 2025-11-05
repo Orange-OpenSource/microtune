@@ -4,31 +4,42 @@
 # and concatenate specific log files into a single log file for analysis.
 
 version="13sgu"
-version_minor_list="11 12"
+version_minor_desc="11: orig+dbsas+cvae, 12: +orig_with_all_features, 13: +tabddpm"
+version_minor_list="11 12 13" 
 ds_list="orig dbsas cvae tabddpm"
 model_list="ppo a2c dqn"
-
-# Log filename to concatenate in a unque file
-logname="run_all_agents_test"
+expe_name_list="training training-allfeat"
 
 logdir="/tmp/logs$$"
 mkdir -p ${logdir}
 
-for version_minor in ${version_minor_list}
+for expe_name in ${expe_name_list}
 do
-    for ds in ${ds_list}
+    for version_minor in ${version_minor_list}
     do
-        for model in ${model_list}
+        for ds in ${ds_list}
         do
-            cmd="mc cp -r poc/s3selfcare-vstune/E${version}_${version_minor}_${ds}-${model}-training/logs/ ${logdir}/${ds}-${model}/"
-            echo $cmd
-            $cmd
+            for model in ${model_list}
+            do
+                cmd="mc cp -r poc/s3selfcare-vstune/E${version}_${version_minor}_${ds}-${model}-${expe_name}/logs/ ${logdir}/${ds}-${model}/"
+                echo $cmd
+                $cmd
+                echo "Result command: $?"
+                sleep 1 # Throttle to avoid overwhelming the S3 server
+            done
         done
     done
 done
 
+# Log filename to concatenate in a unque file
+logname="run_all_agents_test"
+
 version_minor_list4f=$(echo ${version_minor_list} | tr ' ' '-')
 logfile="E${version}_${version_minor_list4f}_${logname}.log"
+
+echo "Version: ${version}, minor versions: ${version_minor_list}, datasets: ${ds_list}, models: ${model_list}, experiments: ${expe_name_list}" > ${logfile}
+echo Description - ${version_minor_desc} >> ${logfile}
+
 echo "Concatenate all ${logname}.log files into ${logfile}..."
 find ${logdir} -name "${logname}.log" -exec echo {}  \; | xargs cat >> ${logfile}
 echo 'Lines count: '`wc -l ${logfile}`
