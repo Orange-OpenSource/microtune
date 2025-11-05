@@ -28,7 +28,7 @@ do
 done
 
 version_minor_list4f=$(echo ${version_minor_list} | tr ' ' '-')
-logfile="${version}_${version_minor_list4f}_${logname}.log"
+logfile="E${version}_${version_minor_list4f}_${logname}.log"
 echo "Concatenate all ${logname}.log files into ${logfile}..."
 find ${logdir} -name "${logname}.log" -exec echo {}  \; | xargs cat >> ${logfile}
 echo 'Lines count: '`wc -l ${logfile}`

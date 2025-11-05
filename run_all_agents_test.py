@@ -48,6 +48,8 @@ def run(cfg: DictConfig) -> None:
     env_oracle = hu.instantiate_env_wrapper_wa(cfg.oracle.env, to_train=False, dataframe=df_test, perf_meter_args={"name": f'{oracle.policy.shortname}', "stage": "test"})
     assert oracle.policy.context() == env_oracle.unwrapped.ds.contextElems(), 'Discrepancy between Oracle policy context and env context...'
     oracle.predict(env_oracle, episodes_max=cfg.oracle.TEST_EPISODES_COUNT, verbose=cfg.verbosity, label="Test")
+    oracle_perf_meter = env_oracle.perf_meter
+    log.info(f'Baseline {oracle.policy.shortname} TestPerf(ScalarPerf,USLA,RAM,SLAV): ({oracle_perf_meter.getSessionPerformanceKPIs()})')
 
     baseline = instantiate(cfg.baseline.agent)
     env_baseline = hu.instantiate_env_wrapper_wa(cfg.baseline.env, to_train=False, dataframe=df_test, perf_meter_args={"name": f'{baseline.policy.shortname}', "stage": "test"})
@@ -55,6 +57,7 @@ def run(cfg: DictConfig) -> None:
     log.info(f"Test Baseline {baseline.policy.name}...")
     baseline.predict(env_baseline, episodes_max=cfg.baseline.TEST_EPISODES_COUNT, verbose=cfg.verbosity, label="Test")
     test_perf_meter_list.append(env_baseline.perf_meter)
+    log.info(f'Baseline {baseline.policy.name} TestPerf(ScalarPerf,USLA,RAM,SLAV): ({env_baseline.perf_meter.getSessionPerformanceKPIs(oracle_perf_meter)})')
 
     baseline2 = instantiate(cfg.baseline2.agent)
     env_baseline2 = hu.instantiate_env_wrapper_wa(cfg.baseline2.env, to_train=False, dataframe=df_test, perf_meter_args={"name": f'{baseline2.policy.shortname}', "stage": "test"})
@@ -62,6 +65,7 @@ def run(cfg: DictConfig) -> None:
     log.info(f"Test Baseline2 {baseline2.policy.name}...")
     baseline2.predict(env_baseline2, episodes_max=cfg.baseline2.TEST_EPISODES_COUNT, verbose=cfg.verbosity, label="Test")
     test_perf_meter_list.append(env_baseline2.perf_meter)
+    log.info(f'Baseline {baseline2.policy.name} TestPerf(ScalarPerf,USLA,RAM,SLAV): ({env_baseline2.perf_meter.getSessionPerformanceKPIs(oracle_perf_meter)})')
 
     baseline3 = instantiate(cfg.baseline3.agent)
     env_baseline3 = hu.instantiate_env_wrapper_wa(cfg.baseline3.env, to_train=False, dataframe=df_test, perf_meter_args={"name": f'{baseline3.policy.shortname}', "stage": "test"})
@@ -69,6 +73,7 @@ def run(cfg: DictConfig) -> None:
     log.info(f"Test Baseline2 {baseline3.policy.name}...")
     baseline3.predict(env_baseline3, episodes_max=cfg.baseline3.TEST_EPISODES_COUNT, verbose=cfg.verbosity, label="Test")
     test_perf_meter_list.append(env_baseline3.perf_meter)
+    log.info(f'Baseline {baseline3.policy.name} TestPerf(ScalarPerf,USLA,RAM,SLAV): ({env_baseline3.perf_meter.getSessionPerformanceKPIs(oracle_perf_meter)})')
 
     agent = instantiate(cfg.tuner.agent)
     log.info(f'# Trials:{cfg.n_trials}')

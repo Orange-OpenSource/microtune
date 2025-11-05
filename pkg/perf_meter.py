@@ -137,7 +137,10 @@ class PerfMeter():
 
     # Return Scalar_perf, UnderSLA, RAM, SLAViolations
     def getSessionPerformanceKPIs(self, oracle_perf_meter = None):
-        scalar_perf = self.getSessionScalarPerformance(oracle_perf_meter)
+        if oracle_perf_meter is None:
+            scalar_perf = 0.
+        else:
+            scalar_perf = self.getSessionScalarPerformance(oracle_perf_meter)
         return scalar_perf, self.under_sla_tot, self.ram_quantities_tot, sum(self.violations_count_per_ep)
 
     def getSessionPerformanceMultiObjOLD(self, oracle_perf_meter = None):
