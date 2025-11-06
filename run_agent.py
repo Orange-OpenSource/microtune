@@ -158,7 +158,7 @@ def run_agent_by_seed(cfg, trial, sid, df_train, df_eval, label) -> dict:
     out = {}
     RND_SEED = cfg.RND_SEED+sid
 
-    #TRAIN IT ?
+    #TRAIN IT (if it is a trainable agent, not a baseline)?
     if cfg.tuner.env.wrapper:
         env_train = hu.instantiate_env_wrapper_wa(cfg.tuner.env, to_train=True, dataframe=df_train)
         agent = instantiate(cfg.tuner.agent, policy={"seed": RND_SEED}) #, "verbose": cfg.xtraverbosity})
@@ -167,12 +167,13 @@ def run_agent_by_seed(cfg, trial, sid, df_train, df_eval, label) -> dict:
         agent.learn(env_train, cfg.tuner.TRAINING_COVERAGE, verbose=cfg.verbosity)
         minmax_scaler = env_train.unwrapped.ds.min_max_scaler
     else:
+        # Baseline agent, no training
         agent = instantiate(cfg.tuner.agent, policy={"seed": RND_SEED}) #, "verbose": cfg.xtraverbosity})
         minmax_scaler = None
         env_train = None
         log.info(f"No training for {agent.policy.name}")
 
-    # /!\ Evaluate with evaluation DataSet !!!
+    # /!\ Evaluate with evaluation DataSet ???
     log.info(f'Evaluate trained model with sid:{sid} seed:{RND_SEED} Ep count: {cfg.tuner.TEST_EPISODES_COUNT}')
     env_eval = hu.instantiate_env_wrapper_wa(cfg.tuner.env, to_train=False, dataframe=df_eval, with_scaler=minmax_scaler, perf_meter_args={"name": f'{agent.policy.shortname}T{trial}S{sid}', "stage": "eval"})
     agent.predict(env_eval, episodes_max=cfg.tuner.TEST_EPISODES_COUNT, deterministic=cfg.DETERMINISTIC, verbose=cfg.xtraverbosity, label=label)
