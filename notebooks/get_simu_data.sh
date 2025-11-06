@@ -19,13 +19,31 @@ do
     do
         for ds in ${ds_list}
         do
+            sleep 2 # Throttle to avoid overwhelming the S3 server
             for model in ${model_list}
             do
-                cmd="mc cp -r poc/s3selfcare-vstune/E${version}_${version_minor}_${ds}-${model}-${expe_name}/logs/ ${logdir}/${ds}-${model}/"
-                echo $cmd
-                $cmd
-                echo "Result command: $?"
-                sleep 1 # Throttle to avoid overwhelming the S3 server
+                typeset -i count=0
+                typeset -i exit_code=1
+                while [ $exit_code -ne 0 ] && [ $count -lt 3 ]
+                do
+                    cmd="mc cp -q -r poc/s3selfcare-vstune/E${version}_${version_minor}_${ds}-${model}-${expe_name}/logs/ ${logdir}/${ds}-${model}/"
+                    echo $cmd
+                    output=$($cmd 2>&1)
+                    exit_code=$?
+
+                    if [ $exit_code -ne 0 ]; then
+                        # Vérifier le contenu de la sortie pour distinguer les erreurs
+                        if echo "$output" | grep -q "Unable to prepare URL for copying. Object does not exist"; then
+                            echo "Object does not exist. Continue..."
+                            exit_code=0  # Ne pas retenter pour cette erreur
+                        else
+                            echo "$output"
+                            count=$((count + 1))
+                            echo "Retrying (${count})..."
+                            sleep 2
+                        fi
+                    fi                    
+                done
             done
         done
     done
