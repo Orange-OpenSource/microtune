@@ -1,9 +1,9 @@
 # @package _global_
 defaults:
   - base_optuna
-  - override /env: discrete_actions
   - override /tuner: ppo
-  - override /tuner/actions: lesstenplusten      # The Min and Max action values. Here we have 7 arms: -3 up to +3
+  - override /tuner/env: discrete_actions
+  - override /tuner/actions: lesstenplusten      # The Min and Max action values. Here we have 21 arms: -10 up to -1, 0 and then 1 up to 10
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
   - _self_
 

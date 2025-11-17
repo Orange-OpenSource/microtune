@@ -1,7 +1,7 @@
 
 # Datasets version with "<version_number>s" name indicating simulation mode. Meaning a version where datasets are may be not directly issued from real observation samples (DataRef) 
-version: 13sgu # Simu experiments on version 13 datasets with Gaussian + Uniform randtypes
-version_minor: 13
+version: 15sall # Simu experiments on version 15 datasets with all randtypes and V9+V10+V12.1...V12.19 Datasets
+version_minor: 14
 
 pickles_dirname: E${version}_${version_minor}_${hydra:runtime.choices.experiment}
 

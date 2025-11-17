@@ -30,8 +30,8 @@ from pkg.datasource.dataframes.obs_samples_dataframes import ObsSamplesDF
 log = logging.getLogger(__name__)
 #lock = Lock()
 
-
-def save_full_dataset(name, import_file, cfg_ds, dforig = None):
+# set_iperf indicates whether to compute the 'iperf' column or not and then allows computation of DOWN, STAY, UP arms counts
+def save_full_dataset(name, import_file, cfg_ds, set_iperf=True, dforig = None):
     version=cfg_ds.version
     pickles_prefix=cfg_ds.pickles_prefix
 
@@ -39,20 +39,22 @@ def save_full_dataset(name, import_file, cfg_ds, dforig = None):
     df = obss.loadFromPickle(import_file)
 
     # Add some fixes from original dataset if provided
-    if dforig is not None:
-        #cols2add = ['combined_column', 'tables', 'tables_rows', 'randtype', 'observation.innodb_buffer_pool_size', 'observation.normalized_buf_size']
+#    if dforig is not None:
+#       #cols2add = ['combined_column', 'tables', 'tables_rows', 'randtype', 'observation.innodb_buffer_pool_size', 'observation.normalized_buf_size']
 #        cols2add = [ "db_size_mb" ]
 #        df[cols2add] = dforig[cols2add]
-        log.info(f"DF{name} {pickles_prefix} V:{version} fix columns...")
-        df = obss.fixColumns(df, combined_col=False, compute_iperf=True) 
 
-    log.info(f"DF{name} pef_target_level: {df['perf_target_level'].unique().tolist()}")
+    log.info(f"DF{name} {pickles_prefix} V:{version} fix perf...")
+    obss.PERF_OBJS = [ float(cfg_ds.perf_level) ]
+    df = obss.fixColumns(df, combined_col=False, compute_iperf=set_iperf) 
+
+    log.info(f"DF{name} perf_target_level: {df['perf_target_level'].unique().tolist()}")
     log.info(f"DF{name} #col:{len(df.columns.values.tolist())} #lines:{df.shape[0]}")
     workloads = df['combined_column'].unique().tolist()
     log.info(f"DF{name} #workloads:{len(workloads)}")
 
     objgap = df["objective_gap"].unique().tolist()
-    log.info(f"DF{name} objectif_gap: {objgap}")
+    log.info(f"DF{name} objective_gap: {objgap}")
 
     obss.saveFullPickle(pickles_prefix, df)
     log.info(f"DF{name} {pickles_prefix} FULL saved.")
@@ -99,7 +101,7 @@ def prepare_train_eval_test_data(name, cfg_ds, orig_eval_file: str = None, orig_
 def run(cfg: DictConfig) -> float: #Tuple[float, float]:
     # Performs only 1 trial (because trials are not applicable here)
     if not hu.prepare_run(cfg):
-        return np.inf
+        return 0.
 
     log.info(cfg.info)
     log.info(f"Run data preparation version {cfg.version}...")
@@ -132,7 +134,7 @@ def run(cfg: DictConfig) -> float: #Tuple[float, float]:
 
             if cfg_ds is not None:
                 log.info(f'Loading DF{simu["name"]} dataset from {simu["import_file"]} and save full version...')
-                df, workloads = save_full_dataset(simu["name"], simu["import_file"], cfg_ds, dforig)
+                _, workloads = save_full_dataset(simu["name"], simu["import_file"], cfg_ds)
                 assert workloads == workloads_orig, f'Workloads in DF{simu["name"]} dataset differ from original dataset!'
                 prepare_train_eval_test_data(simu["name"], cfg_ds, orig_eval_file, orig_test_file)
             else:

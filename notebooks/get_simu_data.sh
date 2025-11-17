@@ -3,9 +3,9 @@
 # Script to download all logs from S3 for different versions, datasets and models,
 # and concatenate specific log files into a single log file for analysis.
 
-version="13sgu"
-version_minor_desc="11: orig+dbsas+cvae, 12:+tabddpm,+orig_with_all_features"
-version_minor_list="11 12" 
+version="15sgall"
+version_minor_desc="13: orig+dbsas+cvae"
+version_minor_list="13" 
 ds_list="orig dbsas cvae tabddpm"
 model_list="ppo a2c dqn"
 expe_name_list="training training-allfeat"
