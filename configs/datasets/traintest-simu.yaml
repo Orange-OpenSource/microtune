@@ -4,7 +4,7 @@
 _target_: pkg.datasource.adbms_dataframe.TrainTestDataSets
 testastrain: False
 ratio: 80 # even clients for training & odd clients for tests (eval+tests)
-ratio_eval_test: 5
+ratio_eval_test: 2
 version: ${version}
 pickles_path: ./ #${output_path}
 pickles_prefix: ${datasets_prefix}

@@ -3,12 +3,12 @@
 # Script to download all logs from S3 for different versions, datasets and models,
 # and concatenate specific log files into a single log file for analysis.
 
-version="15sgall"
-version_minor_desc="13: orig+dbsas+cvae"
-version_minor_list="13" 
-ds_list="orig dbsas cvae tabddpm"
+version="15sall"
+version_minor_desc="15sall_14: orig+dbsas+cvae"
+version_minor_list="14" 
+ds_list="orig dbsas cvae"
 model_list="ppo a2c dqn"
-expe_name_list="training training-allfeat"
+expe_name_list="training"
 
 logdir="/tmp/logs$$"
 mkdir -p ${logdir}
@@ -53,7 +53,7 @@ done
 logname="run_all_agents_test"
 
 version_minor_list4f=$(echo ${version_minor_list} | tr ' ' '-')
-logfile="E${version}_${version_minor_list4f}_${logname}.log"
+logfile="results/E${version}_${version_minor_list4f}_${logname}.log"
 
 echo "Version: ${version}, minor versions: ${version_minor_list}, datasets: ${ds_list}, models: ${model_list}, experiments: ${expe_name_list}" > ${logfile}
 echo Description - ${version_minor_desc} >> ${logfile}
