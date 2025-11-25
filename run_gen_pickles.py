@@ -135,7 +135,6 @@ def add_stats_results(df, name, priority, stage, results=None):
     log.info(f"DF{name}-{stage} statistics..")
     name = name.replace("ORIG", "0RIG")  # To ensure ORIG is first when sorting later on
     colonnes = ["sysbench_filtered.latency_mean", "perf_target_level", "iperf01", "delta_perf_target01"]
-    # Dictionnaire pour stocker les résultats
 
     for col in colonnes:
         if col in df.columns:
