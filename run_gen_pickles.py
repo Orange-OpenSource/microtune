@@ -32,7 +32,7 @@ log = logging.getLogger(__name__)
 
 # set_iperf indicates whether to compute the 'iperf' column or not and then allows computation of DOWN, STAY, UP arms counts
 # iperf column MUST be computed while the Reward functions use ds.
-def save_full_dataset(name, import_file, cfg_ds, reset_combined_col = False):
+def save_full_dataset(name, import_file, cfg_ds, reset_combined_col = False, results= None):
     version=cfg_ds.version
     pickles_prefix=cfg_ds.pickles_prefix
 
@@ -64,21 +64,21 @@ def save_full_dataset(name, import_file, cfg_ds, reset_combined_col = False):
     log.info(f"Cleaning up {cache_files}...")
     os.system(f'rm -f {cache_files}')
 
-    display_ds_stats(df, name)
+    add_stats_results(df, name, 0, "FULL", results)
 
 
     return df, workloads
 
 
-def prepare_train_eval_test_data(name, cfg_ds, orig_eval_file: str = None, orig_test_file: str = None):
+def prepare_train_eval_test_data(name, cfg_ds, orig_eval_file: str = None, orig_test_file: str = None, results=None):
     dataset_obj = instantiate(cfg_ds)
 
     # Load full dataset file and split into train/eval/test files
     dataset_train_file, dataset_eval_file, dataset_test_file = dataset_obj.load()
     log.info(f"DF{name} Eval,Test file: {(dataset_train_file, dataset_eval_file, dataset_test_file)}")
-    display_ds_stats(dataset_obj.df_train, f"{name}-TRAIN")
-    display_ds_stats(dataset_obj.df_eval, f"{name}-EVAL")
-    display_ds_stats(dataset_obj.df_test, f"{name}-TEST")
+    add_stats_results(dataset_obj.df_train, name, 1, "TRAIN", results)
+    add_stats_results(dataset_obj.df_eval, name, 2, "EVAL", results)
+    add_stats_results(dataset_obj.df_test, name, 3, "TEST", results)
 
     if orig_eval_file is not None or orig_test_file is not None:
         simus_to_fix = [ {'simu_file': dataset_eval_file, 'orig_file': orig_eval_file},
@@ -130,19 +130,19 @@ def display_workloads_occurences(liste):
     
     log.info(f"{len(one_occurence_keys)} workloads profiles with only one observation: {one_occurence_keys}")
 
-import pandas as pd
 
-def display_ds_stats(df, name):
+def add_stats_results(df, name, priority, stage, results=None):
     log.info(f"DF{name} info")
     colonnes = ["sysbench_filtered.latency_mean", "perf_target_level", "iperf01", "delta_perf_target01"]
     # Dictionnaire pour stocker les résultats
-    results = {}
 
     for col in colonnes:
         if col in df.columns:
             entry = {
-                'Dataset': name,
-                'Field': col,
+                'DF': name,
+                'P': priority,
+                'Stage': stage,
+                'Name': col,
                 'Mean': df[col].mean(),
                 'Min': df[col].min(),
                 'Max': df[col].max(),
@@ -152,6 +152,7 @@ def display_ds_stats(df, name):
             entry = {
                 'Dataset': name,
                 'Field': col+'-UNDEFINED',
+                'Stage': stage,
                 'Mean': 'N/A',
                 'Min': 'N/A',
                 'Max': 'N/A',
@@ -159,11 +160,13 @@ def display_ds_stats(df, name):
             }
         results.append(entry)
 
+import pandas as pd
+def display_df_stats(results=None):
     dfresults = pd.DataFrame(results)
-    dfresults = dfresults.sort_values(by=['Field'], ascending=[True])
+    dfresults = dfresults.sort_values(by=['DF', 'P', 'Name'], ascending=[True, True, True])
 
     # Affichage des résultats
-    log.info(dfresults.to_string(index=False))
+    log.info("\n"+dfresults.to_string(index=False))
 
 def display_workloads_differences(liste1, name1, liste2, name2):
     set1 = set(liste1)
@@ -188,20 +191,23 @@ def run(cfg: DictConfig) -> float: #Tuple[float, float]:
 
     log.info(cfg.info)
     log.info(f"Run data preparation version {cfg.version}...")
+
+    stats_res=[]
     
     # Gen ORIG full dataset file ? Else assume a full ORIG dataset pickle file is already present
     if "dataset_orig_import_file" in cfg and cfg.dataset_orig_import_file is not None:
         log.info(f'Loading DFORIG dataset from {cfg.dataset_orig_import_file} and save full version...')
-        dforig, workloads_orig = save_full_dataset("ORIG", cfg.dataset_orig_import_file, cfg.orig, reset_combined_col=True)
+        dforig, workloads_orig = save_full_dataset("ORIG", cfg.dataset_orig_import_file, cfg.orig, reset_combined_col=True, results=stats_res)
         display_workloads_occurences(workloads_orig)
         db_size_mb_lst = dforig["db_size_mb"].unique().tolist()
         print("DFORIG DB SIZE MB", db_size_mb_lst, len(db_size_mb_lst))
-        display_ds_stats(dforig, "ORIG")
     else:
         dforig = None
 
     # Prepare train/eval/test files for original dataset from full dataset file
-    _, orig_eval_file, orig_test_file = prepare_train_eval_test_data("ORIG", cfg.orig)
+    _, orig_eval_file, orig_test_file = prepare_train_eval_test_data("ORIG", cfg.orig, results=stats_res)
+
+    errors_list=[]
 
     if dforig is not None:
         # Gen SIMU full datasets files and ensures same eval/test files as original dataset
@@ -211,25 +217,26 @@ def run(cfg: DictConfig) -> float: #Tuple[float, float]:
             {'import_file': cfg.dataset_tabddpm_import_file, 'cfg_ds': cfg.tabddpm if "tabddpm" in cfg else None, 'name': 'TABDDPM'},
         ]
 
-        errors_list=[]
-
         for simu in list_datasets:
             cfg_ds = simu["cfg_ds"]
 
             if cfg_ds is not None:
                 log.info(f'Loading DF{simu["name"]} dataset from {simu["import_file"]} and save full version...')
-                _, workloads = save_full_dataset(simu["name"], simu["import_file"], cfg_ds, reset_combined_col=True)
+                _, workloads = save_full_dataset(simu["name"], simu["import_file"], cfg_ds, reset_combined_col=True, results=stats_res)
                 if sorted(workloads) != sorted(workloads_orig):
                     errors_list.append(simu["name"])
                     display_workloads_differences(workloads_orig, "ORIG", workloads, simu["name"])
                 elif  workloads != workloads_orig:
                     log.warning(f'Workloads in DF{simu["name"]} dataset match ORIG dataset but ordering differs!!!!')
 
-                prepare_train_eval_test_data(simu["name"], cfg_ds, orig_eval_file, orig_test_file)
+                prepare_train_eval_test_data(simu["name"], cfg_ds, orig_eval_file, orig_test_file, results=stats_res)
             else:
                 log.info(f'Skipping DF{simu["name"]} dataset preparation because not configured.')
 
-        assert len(errors_list) == 0, f'Workloads in DF {errors_list} dataset(s) differ from original dataset!'
+    display_df_stats(stats_res)        
+
+    assert len(errors_list) == 0, f'Workloads in DF {errors_list} dataset(s) differ from original dataset!'
+    
 
 
 if __name__ == "__main__":
