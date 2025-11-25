@@ -132,15 +132,16 @@ def display_workloads_occurences(liste):
 
 
 def add_stats_results(df, name, priority, stage, results=None):
-    log.info(f"DF{name} info")
+    log.info(f"DF{name}-{stage} statistics..")
+    name = name.replace("ORIG", "0RIG")  # To ensure ORIG is first when sorting later on
     colonnes = ["sysbench_filtered.latency_mean", "perf_target_level", "iperf01", "delta_perf_target01"]
     # Dictionnaire pour stocker les résultats
 
     for col in colonnes:
         if col in df.columns:
             entry = {
-                'DF': name,
                 'P': priority,
+                'DF': name,
                 'Stage': stage,
                 'Name': col,
                 'Mean': df[col].mean(),
@@ -150,9 +151,10 @@ def add_stats_results(df, name, priority, stage, results=None):
             }
         else:
             entry = {
-                'Dataset': name,
-                'Field': col+'-UNDEFINED',
+                'P': priority,
+                'DF': name,
                 'Stage': stage,
+                'Name': col+'-UNDEFINED',
                 'Mean': 'N/A',
                 'Min': 'N/A',
                 'Max': 'N/A',
@@ -163,7 +165,7 @@ def add_stats_results(df, name, priority, stage, results=None):
 import pandas as pd
 def display_df_stats(results=None):
     dfresults = pd.DataFrame(results)
-    dfresults = dfresults.sort_values(by=['DF', 'P', 'Name'], ascending=[True, True, True])
+    dfresults = dfresults.sort_values(by=['P', 'DF', 'Name'], ascending=[True, True, True])
 
     # Affichage des résultats
     log.info("\n"+dfresults.to_string(index=False))
