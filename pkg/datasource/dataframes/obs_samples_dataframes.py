@@ -76,9 +76,12 @@ class ObsSamplesDF():
         return df_filtered_drop_0_mem
 
     # Concatenates N times the dataframe with the added column 'perf_target_level' at different values between 0 to 100%
-    def add_perf_target_level(self, df, objective_margin, buf_values_count):
+    def add_perf_target_level(self, df, objective_margin):
         weigths_desc = [[0, 1, "01"], [0.1, 0.9, "19"]] # Weight WPS, Weigth LAT, Weigth name
         workloads =  df['combined_column'].unique().tolist()
+
+        buf_sizes_list = df["buf_size"].unique().tolist()
+        buf_values_count = len(buf_sizes_list)
 
         with pd.option_context("mode.copy_on_write", True):
             df_out = pd.DataFrame()
@@ -126,7 +129,7 @@ class ObsSamplesDF():
         
         return df_out
 
-    def additionalColumns(self, df, combine_with_origin=False):
+    def additionalColumns(self, df, combined_col=True, combine_with_origin=False):
         df["db_size_mb"] = df["db_size_mb"].astype(int)
         buf_sizes_list = df["buf_size"].unique().tolist()
         df["buf_size_min_mb"] = buf_sizes_list[-1]//1024//1024
@@ -135,69 +138,48 @@ class ObsSamplesDF():
         df["buf_size_idx"] = df.apply(lambda row: int((row["buf_size"]/buf_sizes_list[0])*buf_values_count)-1, axis=1)
         df["tables_rows_M"] = df.apply(lambda row: round(row["tables_rows"]/1000000,1), axis=1)
         df["Rtype"] = df.apply(lambda row: row["randtype"][:2].capitalize(), axis=1)
-        #bidx = df["buf_size_idx"].unique().tolist()
-        #print("BUFS IDX", bidx, len(bidx))
 
-        # get all the workloads
-        columns_to_combine = ["tables", "tables_rows_M", "wl_clients", "Rtype"]
-        if combine_with_origin:
-            columns_to_combine = ["origin"]+columns_to_combine
-        # Create a new column with the combined values as strings
-        df['combined_column'] = df[columns_to_combine].astype(str).agg(' '.join, axis=1)
-        df["combined_column"] = df.apply(lambda row: f'V{row["combined_column"]}', axis=1)
+        # Label all the workloads types
+        if combined_col:
+            columns_to_combine = ["tables", "tables_rows_M", "wl_clients", "Rtype"]
+            if combine_with_origin:
+                columns_to_combine = ["origin"]+columns_to_combine
+            # Create a new column with the combined values as strings
+            df['combined_column'] = df[columns_to_combine].astype(str).agg(' '.join, axis=1)
+            df["combined_column"] = df.apply(lambda row: f'V{row["combined_column"]}', axis=1)
 
         return df
 
-    def fixColumns(self, df_filtered, objective_margin=0.3, combined_col=True, compute_iperf=False):
-        db_size_mb_lst = df_filtered["db_size_mb"].unique().tolist()
-        #print("DB SIZE MB", db_size_mb_lst, len(db_size_mb_lst))
-        #print(df_filtered[df_filtered["db_size_mb"] == float('nan')]) #db_size_mb_lst[-1]])
-        df_filtered["db_size_mb"] = df_filtered["db_size_mb"].astype(int)
-        buf_sizes_list = df_filtered["buf_size"].unique().tolist()
-        #print("BUF SIZES", buf_sizes_list, len(buf_sizes_list))
-        df_filtered["buf_size_min_mb"] = buf_sizes_list[-1]//1024//1024
-        buf_values_count = len(buf_sizes_list)
-        df_filtered["buf_values_count"] = buf_values_count
-        df_filtered["buf_size_idx"] = df_filtered.apply(lambda row: int((row["buf_size"]/buf_sizes_list[0])*buf_values_count)-1, axis=1)
-        df_filtered["tables_rows_M"] = df_filtered.apply(lambda row: round(row["tables_rows"]/1000000,1), axis=1)
-        df_filtered["Rtype"] = df_filtered.apply(lambda row: row["randtype"][:2].capitalize(), axis=1)
-        #bidx = df_filtered["buf_size_idx"].unique().tolist()
-        #print("BUFS IDX", bidx, len(bidx))
-
+    def fixColumns(self, df, objective_margin=0.3, combined_col=True):
         if combined_col:
-            # get all the workloads
-            columns_to_combine = ["tables", "tables_rows_M", "wl_clients", "Rtype"]
-            # Create a new column with the combined values as strings
-            df_filtered['combined_column'] = df_filtered[columns_to_combine].astype(str).agg(' '.join, axis=1)
-            df_filtered["combined_column"] = df_filtered.apply(lambda row: f'V{row["origin"]} {row["combined_column"]}', axis=1)
+            # Retrieve version from combined_column if present to assign origin column else keep value in place if 'origin' exists else assign with current version of this class
+            version = df['combined_column'].str.split().str[0]
+            condition = version.str.startswith('V')
+            df['origin'] = np.where(condition, version.str[1:], df.get('origin', self._version))
 
-        # Print the DataFrame with the new combined column
-        workloads =  df_filtered['combined_column'].unique().tolist()
-        #print("ALL workloads type:", workloads)
+        df = self.additionalColumns(df, combined_col=combined_col, combine_with_origin=True)
 
         # Add performance's min, max columns
-        df_filtered["latency_mean_min"] = self.LATENCY_MIN #0.0001  
-        df_filtered["latency_mean_max"] = self.LATENCY_MAX #1000.
-        df_filtered["qps_mean_min"] = self.QPS_MIN #1.
-        df_filtered["qps_mean_max"] = self.QPS_MAX #100000.
-        df_filtered["iperf_set"] = compute_iperf
-        if compute_iperf:
-            df_filtered["iqps"] = df_filtered.apply(lambda row: (row["extra_info.sysbench.statements_mean"]-row["qps_mean_min"])/(row["qps_mean_max"]-row["qps_mean_min"]), axis=1)
-            df_filtered["ilat"] = df_filtered.apply(lambda row: (min(row["sysbench_filtered.latency_mean"], self.LATENCY_MAX)-row["latency_mean_max"])/(row["latency_mean_min"]-row["latency_mean_max"]), axis=1) # ms. /!\ MIN MAX INVERTED to reflect the improvement when the latency decreases
-        else:
-            df_filtered["ilat"] = 0.
-            df_filtered["iqps"] = 0.    
-        
-        df_filtered = self.add_perf_target_level(df_filtered, objective_margin=objective_margin, buf_values_count=buf_values_count)
+        df["latency_mean_min"] = self.LATENCY_MIN #0.0001  
+        df["latency_mean_max"] = self.LATENCY_MAX #1000.
+        df["qps_mean_min"] = self.QPS_MIN #1.
+        df["qps_mean_max"] = self.QPS_MAX #100000.
 
-        return df_filtered.reset_index(drop=True, inplace=False)
+        df["iqps"] = df.apply(lambda row: (row["extra_info.sysbench.statements_mean"]-row["qps_mean_min"])/(row["qps_mean_max"]-row["qps_mean_min"]), axis=1)
+        # Disable capped value of Max latency value
+        #df["ilat"] = df.apply(lambda row: (min(row["sysbench_filtered.latency_mean"], self.LATENCY_MAX)-row["latency_mean_max"])/(row["latency_mean_min"]-row["latency_mean_max"]), axis=1) # ms. /!\ MIN MAX INVERTED to reflect the improvement when the latency decreases
+        df["ilat"] = df.apply(lambda row: (row["sysbench_filtered.latency_mean"]-row["latency_mean_max"])/(row["latency_mean_min"]-row["latency_mean_max"]), axis=1) # ms. /!\ MIN MAX INVERTED to reflect the improvement when the latency decreases
+        
+        df = self.add_perf_target_level(df, objective_margin=objective_margin)
+
+        return df.reset_index(drop=True, inplace=False)
 
     # Import data from MongoDB (DataRef Obs Samples), fix/add some columns and return the full indexed dataframe
     def getMongoDataRef(self,  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__" ,objective_margin=0.3):
         list_documents, list_documents0 = self.retrieve_all_documents(mongohost=mongohost, mongoport=mongoport, dbname=dbname, colname=colname)
         df_filtered = self.docs2flat_list(list_documents)
         # Fixes and add some columns with constants
-        return self.fixColumns(df_filtered, objective_margin=objective_margin, combined_col=True)
+        return self.fixColumns(df_filtered, objective_margin=objective_margin, combined_col=True, combine_with_origin=True)
 
     def saveToPickle(self, fullname, df):
         df.to_pickle(fullname+'.pickle', compression={'method': 'gzip', 'compresslevel': 1, 'mtime': 1})
