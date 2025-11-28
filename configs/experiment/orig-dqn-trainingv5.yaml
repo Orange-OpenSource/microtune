@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base_simu_orig
+  - base_simu
   - override /datasets: traintest-simu
   - override /tuner: dqn
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
@@ -8,6 +8,8 @@ defaults:
   - _self_
 
 info: Original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+
+datasets_prefix: workloads_orig  # Workloads selection
 
 # From E11_57_dqn_alphabeta_gammaopti_sweepseed
 REW_ALPHA_COEF: 0.4 # 0.2 in Microtune

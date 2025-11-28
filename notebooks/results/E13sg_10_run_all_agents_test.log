@@ -1,0 +1,1067 @@
+[2025-11-03 21:22:04,768][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_orig-a2c-training_disq/logs/20251103_212204_run_all_agents_test
+[2025-11-03 21:22:04,770][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_orig-a2c-training_disq/logs
+[2025-11-03 21:22:04,781][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:22:04,979][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:04,980][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:06,231][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:06,231][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:22:06,232][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:07,395][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:07,395][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:22:07,396][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:08,553][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:08,553][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:22:08,554][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:09,583][__main__][INFO] - # Trials:10
+[2025-11-03 21:22:09,839][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T0S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:09,840][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:09,840][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:10,386][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:10,387][__main__][INFO] - Trial: 0 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:10,387][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:16,582][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.38648472721135996, 335, 29445120, 0)
+[2025-11-03 21:22:16,609][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T1S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:16,609][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:16,609][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:17,156][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:17,157][__main__][INFO] - Trial: 1 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:17,158][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:23,417][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.35739771932785264, 335, 28827392, 0)
+[2025-11-03 21:22:23,442][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T2S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:23,442][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:23,442][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:23,991][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:23,992][__main__][INFO] - Trial: 2 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:23,992][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:30,282][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3490079317244871, 335, 28649216, 0)
+[2025-11-03 21:22:30,309][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T3S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:30,309][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:30,309][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:30,850][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:30,851][__main__][INFO] - Trial: 3 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:30,852][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:37,136][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3461450372477639, 335, 28588416, 0)
+[2025-11-03 21:22:37,161][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T4S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:37,161][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:37,161][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:37,707][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:37,708][__main__][INFO] - Trial: 4 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:37,709][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:43,968][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.37455700474939124, 335, 29191808, 0)
+[2025-11-03 21:22:43,995][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T5S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:43,995][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:43,995][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:44,548][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:44,549][__main__][INFO] - Trial: 5 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:44,549][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:50,775][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.38427879167771645, 335, 29398272, 0)
+[2025-11-03 21:22:50,800][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T6S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:50,800][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:50,801][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:51,346][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:51,347][__main__][INFO] - Trial: 6 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:51,347][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:22:57,626][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3353805540152848, 335, 28359808, 0)
+[2025-11-03 21:22:57,653][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T7S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:22:57,653][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=orig-a2c-training']
+[2025-11-03 21:22:57,653][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:22:58,199][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:22:58,200][__main__][INFO] - Trial: 7 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:22:58,201][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:04,450][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.33264422961016415, 335, 28301696, 0)
+[2025-11-03 21:23:04,476][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T8S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:23:04,476][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=orig-a2c-training']
+[2025-11-03 21:23:04,476][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:05,019][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:05,019][__main__][INFO] - Trial: 8 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:23:05,020][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:11,291][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.38942597458955136, 335, 29507584, 0)
+[2025-11-03 21:23:11,319][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-a2c-training_disq/agent-T9S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:23:11,319][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=orig-a2c-training']
+[2025-11-03 21:23:11,319][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:11,870][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:11,870][__main__][INFO] - Trial: 9 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:23:11,871][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:18,152][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3626955808963572, 335, 28939904, 0)
+[2025-11-03 21:23:18,152][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:23:18,152][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:23:18,730][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_orig-a2c-training_disq/agent-Tall-perfmeters_comp-SB3A2C_-1_1D-disq.html
+
+[2025-11-03 21:20:46,703][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_orig-ppo-training_disq/logs/20251103_212046_run_all_agents_test
+[2025-11-03 21:20:46,705][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_orig-ppo-training_disq/logs
+[2025-11-03 21:20:46,716][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:20:46,905][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:20:46,906][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:20:48,146][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:20:48,147][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:20:48,147][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:20:49,309][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:20:49,310][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:20:49,310][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:20:50,469][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:20:50,469][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:20:50,470][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:20:51,484][__main__][INFO] - # Trials:10
+[2025-11-03 21:20:51,747][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T0S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:20:51,748][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=orig-ppo-training']
+[2025-11-03 21:20:51,748][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:20:52,291][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:20:52,292][__main__][INFO] - Trial: 0 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:20:52,292][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:20:57,739][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.32131319462860725, 335, 28061056, 0)
+[2025-11-03 21:20:57,767][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T1S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:20:57,767][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=orig-ppo-training']
+[2025-11-03 21:20:57,767][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:20:58,309][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:20:58,310][__main__][INFO] - Trial: 1 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:20:58,310][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:03,777][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31658188480918054, 335, 27960576, 0)
+[2025-11-03 21:21:03,805][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T2S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:03,805][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:03,806][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:04,351][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:04,352][__main__][INFO] - Trial: 2 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:04,353][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:09,808][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.32743074808939465, 335, 28190976, 0)
+[2025-11-03 21:21:09,838][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T3S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:09,838][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:09,838][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:10,384][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:10,385][__main__][INFO] - Trial: 3 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:10,386][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:15,888][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.29794594855227946, 335, 27564800, 0)
+[2025-11-03 21:21:15,917][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T4S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:15,917][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:15,917][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:16,460][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:16,461][__main__][INFO] - Trial: 4 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:16,462][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:21,909][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.2852045613442947, 335, 27294208, 0)
+[2025-11-03 21:21:21,937][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T5S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:21,938][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:21,938][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:22,477][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:22,478][__main__][INFO] - Trial: 5 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:22,479][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:27,871][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3151835868752863, 335, 27930880, 0)
+[2025-11-03 21:21:27,899][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T6S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:27,899][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:27,899][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:28,442][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:28,444][__main__][INFO] - Trial: 6 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:28,444][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:33,923][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3099520239157164, 335, 27819776, 0)
+[2025-11-03 21:21:33,952][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T7S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:33,952][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:33,952][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:34,496][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:34,497][__main__][INFO] - Trial: 7 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:34,497][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:39,943][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.32174714915981584, 335, 28070272, 0)
+[2025-11-03 21:21:39,971][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T8S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:39,971][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:39,971][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:40,510][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:40,511][__main__][INFO] - Trial: 8 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:40,512][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:45,984][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31326695436244845, 335, 27890176, 0)
+[2025-11-03 21:21:46,013][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-ppo-training_disq/agent-T9S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:21:46,013][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=orig-ppo-training']
+[2025-11-03 21:21:46,013][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:21:46,547][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:21:46,548][__main__][INFO] - Trial: 9 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:21:46,548][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:21:52,050][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.2962041032811784, 335, 27527808, 0)
+[2025-11-03 21:21:52,050][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:21:52,050][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:21:52,616][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_orig-ppo-training_disq/agent-Tall-perfmeters_comp-SB3PPO_-1_1C-disq.html
+
+[2025-11-03 21:23:28,889][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_orig-dqn-training_disq/logs/20251103_212328_run_all_agents_test
+[2025-11-03 21:23:28,891][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_orig-dqn-training_disq/logs
+[2025-11-03 21:23:28,902][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:23:29,097][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:29,098][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:30,350][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:30,350][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:23:30,351][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:31,517][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:31,518][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:23:31,518][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:32,690][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:32,690][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:23:32,691][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:33,703][__main__][INFO] - # Trials:10
+[2025-11-03 21:23:33,964][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T0S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:23:33,965][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=orig-dqn-training']
+[2025-11-03 21:23:33,965][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:34,518][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:34,519][__main__][INFO] - Trial: 0 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:23:34,520][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:38,401][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.29135046937975806, 356, 26093440, 16)
+[2025-11-03 21:23:38,433][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T1S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:23:38,433][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=orig-dqn-training']
+[2025-11-03 21:23:38,433][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:38,989][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:38,990][__main__][INFO] - Trial: 1 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:23:38,990][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:42,806][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.8555076242500701, 550, 25776000, 210)
+[2025-11-03 21:23:42,834][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T2S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:23:42,834][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=orig-dqn-training']
+[2025-11-03 21:23:42,835][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:43,379][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:43,380][__main__][INFO] - Trial: 2 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:23:43,380][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:47,387][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.2642700514160554, 676, 26469248, 336)
+[2025-11-03 21:23:47,414][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T3S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:23:47,415][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=orig-dqn-training']
+[2025-11-03 21:23:47,415][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:47,961][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:47,963][__main__][INFO] - Trial: 3 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:23:47,963][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:51,781][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.0489878892142148, 618, 25574144, 275)
+[2025-11-03 21:23:51,809][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T4S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:23:51,809][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=orig-dqn-training']
+[2025-11-03 21:23:51,809][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:52,359][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:52,360][__main__][INFO] - Trial: 4 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:23:52,360][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:23:56,099][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (2.3337155863441774, 1063, 24647552, 701)
+[2025-11-03 21:23:56,127][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T5S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:23:56,128][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=orig-dqn-training']
+[2025-11-03 21:23:56,128][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:23:56,698][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:23:56,699][__main__][INFO] - Trial: 5 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:23:56,700][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:00,258][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.9131323600901444, 925, 24464000, 574)
+[2025-11-03 21:24:00,286][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T6S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:24:00,286][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=orig-dqn-training']
+[2025-11-03 21:24:00,286][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:00,832][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:00,833][__main__][INFO] - Trial: 6 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:24:00,833][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:04,823][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.1914364506693371, 664, 25683200, 321)
+[2025-11-03 21:24:04,850][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T7S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:24:04,850][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=orig-dqn-training']
+[2025-11-03 21:24:04,851][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:05,401][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:05,402][__main__][INFO] - Trial: 7 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:24:05,403][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:09,363][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31371557195099264, 355, 26631808, 15)
+[2025-11-03 21:24:09,392][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T8S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:24:09,392][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=orig-dqn-training']
+[2025-11-03 21:24:09,392][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:09,941][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:09,942][__main__][INFO] - Trial: 8 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:24:09,942][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:13,992][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3551905243905116, 360, 27195648, 17)
+[2025-11-03 21:24:14,021][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_orig-dqn-training_disq/agent-T9S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:24:14,021][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=orig-dqn-training']
+[2025-11-03 21:24:14,021][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:14,572][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:14,573][__main__][INFO] - Trial: 9 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:24:14,573][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:18,179][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.358495271658775, 744, 24159488, 400)
+[2025-11-03 21:24:18,180][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:24:18,180][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:24:18,749][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_orig-dqn-training_disq/agent-Tall-perfmeters_comp-SB3DQN_-1_1D-disq.html
+
+[2025-11-03 21:24:28,220][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_dbsas-ppo-training_disq/logs/20251103_212428_run_all_agents_test
+[2025-11-03 21:24:28,222][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_dbsas-ppo-training_disq/logs
+[2025-11-03 21:24:28,233][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:24:28,423][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:28,424][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:29,669][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:29,670][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:24:29,670][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:30,848][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:30,848][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:24:30,849][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:31,984][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:31,985][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:24:31,985][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:33,034][__main__][INFO] - # Trials:10
+[2025-11-03 21:24:33,297][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T0S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:24:33,297][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:24:33,297][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:33,852][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:33,853][__main__][INFO] - Trial: 0 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:24:33,854][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:39,320][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31952313218737194, 335, 28023040, 0)
+[2025-11-03 21:24:39,348][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T1S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:24:39,348][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:24:39,348][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:39,898][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:39,899][__main__][INFO] - Trial: 1 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:24:39,900][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:45,341][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3401902167361798, 335, 28461952, 0)
+[2025-11-03 21:24:45,370][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T2S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:24:45,370][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:24:45,370][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:45,916][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:45,917][__main__][INFO] - Trial: 2 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:24:45,917][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:51,347][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31497866390221557, 335, 27926528, 0)
+[2025-11-03 21:24:51,376][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T3S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:24:51,376][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:24:51,376][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:51,929][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:51,930][__main__][INFO] - Trial: 3 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:24:51,930][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:24:57,453][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31602738735263625, 335, 27948800, 0)
+[2025-11-03 21:24:57,482][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T4S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:24:57,482][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:24:57,482][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:24:58,023][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:24:58,024][__main__][INFO] - Trial: 4 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:24:58,024][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:03,512][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3114226476048121, 335, 27851008, 0)
+[2025-11-03 21:25:03,542][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T5S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:25:03,543][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:25:03,543][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:25:04,098][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:04,099][__main__][INFO] - Trial: 5 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:25:04,100][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:09,564][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31913739482629766, 335, 28014848, 0)
+[2025-11-03 21:25:09,592][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T6S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:25:09,592][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:25:09,592][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:25:10,141][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:10,142][__main__][INFO] - Trial: 6 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:25:10,142][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:15,632][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3158043829407652, 335, 27944064, 0)
+[2025-11-03 21:25:15,662][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T7S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:25:15,662][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:25:15,662][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:25:16,205][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:16,206][__main__][INFO] - Trial: 7 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:25:16,207][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:21,641][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.31578630150196485, 335, 27943680, 0)
+[2025-11-03 21:25:21,670][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T8S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:25:21,670][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:25:21,670][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:25:22,215][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:22,216][__main__][INFO] - Trial: 8 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:25:22,217][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:27,669][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.2971865281226645, 335, 27548672, 0)
+[2025-11-03 21:25:27,699][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-T9S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:25:27,699][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=dbsas-ppo-training']
+[2025-11-03 21:25:27,699][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:25:28,249][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:28,250][__main__][INFO] - Trial: 9 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:25:28,251][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:33,731][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.29310012295378385, 335, 27461888, 0)
+[2025-11-03 21:25:33,731][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:25:33,732][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:25:34,303][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_dbsas-ppo-training_disq/agent-Tall-perfmeters_comp-SB3PPO_-1_1C-disq.html
+
+[2025-11-03 21:25:47,454][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_dbsas-a2c-training_disq/logs/20251103_212547_run_all_agents_test
+[2025-11-03 21:25:47,456][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_dbsas-a2c-training_disq/logs
+[2025-11-03 21:25:47,467][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:25:47,661][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:47,662][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:48,922][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:48,922][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:25:48,923][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:50,084][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:50,085][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:25:50,085][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:51,247][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:51,247][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:25:51,248][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:52,271][__main__][INFO] - # Trials:10
+[2025-11-03 21:25:52,535][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T0S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:25:52,535][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:25:52,535][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:25:53,093][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:53,094][__main__][INFO] - Trial: 0 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:25:53,095][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:25:59,141][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.7207999156559353, 450, 29254656, 86)
+[2025-11-03 21:25:59,169][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T1S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:25:59,169][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:25:59,169][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:25:59,733][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:25:59,734][__main__][INFO] - Trial: 1 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:25:59,735][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:05,907][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.4152040791725934, 335, 30055040, 0)
+[2025-11-03 21:26:05,933][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T2S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:05,933][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:05,933][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:06,490][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:06,491][__main__][INFO] - Trial: 2 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:06,492][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:12,664][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3926236365605613, 337, 29448704, 1)
+[2025-11-03 21:26:12,692][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T3S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:12,692][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:12,692][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:13,258][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:13,259][__main__][INFO] - Trial: 3 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:13,260][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:19,399][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.39712264037223655, 335, 29671040, 0)
+[2025-11-03 21:26:19,424][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T4S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:19,424][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:19,424][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:19,980][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:19,981][__main__][INFO] - Trial: 4 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:19,981][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:26,087][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3848694520118614, 335, 29410816, 0)
+[2025-11-03 21:26:26,114][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T5S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:26,114][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:26,114][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:26,672][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:26,673][__main__][INFO] - Trial: 5 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:26,674][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:32,772][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.4061934955037489, 335, 29863680, 0)
+[2025-11-03 21:26:32,797][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T6S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:32,797][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:32,797][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:33,354][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:33,354][__main__][INFO] - Trial: 6 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:33,355][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:39,461][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.4239422538216605, 349, 29353088, 10)
+[2025-11-03 21:26:39,487][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T7S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:39,487][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:39,487][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:40,042][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:40,043][__main__][INFO] - Trial: 7 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:40,043][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:46,110][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.39549531088020445, 335, 29636480, 0)
+[2025-11-03 21:26:46,135][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T8S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:46,135][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:46,135][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:46,692][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:46,693][__main__][INFO] - Trial: 8 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:46,693][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:52,789][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.40214928035873576, 335, 29777792, 0)
+[2025-11-03 21:26:52,816][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-T9S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:26:52,816][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=dbsas-a2c-training']
+[2025-11-03 21:26:52,816][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:26:53,373][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:26:53,374][__main__][INFO] - Trial: 9 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:26:53,374][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:26:59,459][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.4023300947467393, 335, 29781632, 0)
+[2025-11-03 21:26:59,460][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:26:59,460][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:27:00,029][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_dbsas-a2c-training_disq/agent-Tall-perfmeters_comp-SB3A2C_-1_1D-disq.html
+
+[2025-11-03 21:27:14,427][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_dbsas-dqn-training_disq/logs/20251103_212714_run_all_agents_test
+[2025-11-03 21:27:14,429][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_dbsas-dqn-training_disq/logs
+[2025-11-03 21:27:14,441][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:27:14,638][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:14,639][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:15,862][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:15,862][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:27:15,863][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:17,021][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:17,021][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:27:17,022][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:18,165][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:18,165][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:27:18,165][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:19,178][__main__][INFO] - # Trials:10
+[2025-11-03 21:27:19,438][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T0S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:19,438][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:19,438][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:19,996][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:19,996][__main__][INFO] - Trial: 0 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:19,997][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:23,608][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (5.080206581787655, 2001, 23511168, 1348)
+[2025-11-03 21:27:23,639][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T1S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:23,639][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:23,639][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:24,199][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:24,200][__main__][INFO] - Trial: 1 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:24,201][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:27,800][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (5.851619377257256, 2254, 23854976, 1900)
+[2025-11-03 21:27:27,827][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T2S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:27,827][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:27,827][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:28,376][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:28,377][__main__][INFO] - Trial: 2 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:28,377][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:32,205][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (2.530770021010452, 1120, 25218944, 778)
+[2025-11-03 21:27:32,232][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T3S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:32,232][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:32,232][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:32,783][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:32,784][__main__][INFO] - Trial: 3 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:32,785][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:36,508][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (4.253561305792934, 1704, 24783744, 1354)
+[2025-11-03 21:27:36,536][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T4S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:36,536][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:36,536][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:37,093][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:37,094][__main__][INFO] - Trial: 4 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:37,095][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:40,825][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (3.113463331381857, 1323, 24724608, 942)
+[2025-11-03 21:27:40,852][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T5S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:40,852][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:40,852][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:41,401][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:41,402][__main__][INFO] - Trial: 5 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:41,403][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:44,894][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (6.41436617990114, 2448, 23507584, 2084)
+[2025-11-03 21:27:44,921][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T6S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:44,921][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:44,921][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:45,469][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:45,470][__main__][INFO] - Trial: 6 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:45,470][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:49,080][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (2.272882105780555, 1040, 24813696, 689)
+[2025-11-03 21:27:49,107][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T7S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:49,107][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:49,107][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:49,657][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:49,658][__main__][INFO] - Trial: 7 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:49,659][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:53,363][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (3.4155010645559543, 1422, 24862976, 1058)
+[2025-11-03 21:27:53,390][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T8S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:53,390][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:53,390][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:53,939][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:53,940][__main__][INFO] - Trial: 8 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:53,940][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:27:57,886][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.33840871824008767, 366, 26458880, 23)
+[2025-11-03 21:27:57,913][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-T9S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:27:57,913][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=dbsas-dqn-training']
+[2025-11-03 21:27:57,913][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:27:58,465][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:27:58,466][__main__][INFO] - Trial: 9 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:27:58,467][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:02,197][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (3.365687366345783, 1404, 24946176, 1054)
+[2025-11-03 21:28:02,197][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:28:02,198][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:28:02,768][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_dbsas-dqn-training_disq/agent-Tall-perfmeters_comp-SB3DQN_-1_1D-disq.html
+
+[2025-11-03 21:28:12,616][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_cvae-ppo-training_disq/logs/20251103_212812_run_all_agents_test
+[2025-11-03 21:28:12,618][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_cvae-ppo-training_disq/logs
+[2025-11-03 21:28:12,629][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:28:12,824][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:12,825][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:14,081][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:14,082][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:28:14,082][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:15,250][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:15,250][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:28:15,251][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:16,411][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:16,411][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:28:16,412][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:17,435][__main__][INFO] - # Trials:10
+[2025-11-03 21:28:17,696][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T0S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:17,696][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:17,696][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:18,248][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:18,249][__main__][INFO] - Trial: 0 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:18,250][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:23,344][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (5.996883623541925, 2146, 33786624, 1326)
+[2025-11-03 21:28:23,371][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T1S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:23,371][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:23,371][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:23,923][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:23,924][__main__][INFO] - Trial: 1 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:23,925][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:29,009][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (6.746262503629781, 2363, 35944704, 1434)
+[2025-11-03 21:28:29,037][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T2S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:29,037][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:29,037][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:29,597][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:29,598][__main__][INFO] - Trial: 2 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:29,598][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:34,635][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (6.350175380960623, 2204, 37612672, 1358)
+[2025-11-03 21:28:34,665][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T3S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:34,665][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:34,665][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:35,220][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:35,221][__main__][INFO] - Trial: 3 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:35,222][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:40,269][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (7.54240541788274, 2587, 38652160, 1651)
+[2025-11-03 21:28:40,298][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T4S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:40,298][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:40,298][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:40,883][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:40,884][__main__][INFO] - Trial: 4 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:40,885][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:46,171][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (2.7221726836777322, 1086, 31439232, 481)
+[2025-11-03 21:28:46,200][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T5S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:46,200][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:46,200][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:46,760][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:46,761][__main__][INFO] - Trial: 5 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:46,762][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:51,783][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (8.157642277534434, 2836, 35932800, 1708)
+[2025-11-03 21:28:51,810][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T6S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:51,811][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:51,811][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:52,362][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:52,363][__main__][INFO] - Trial: 6 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:52,364][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:28:57,385][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (7.95151535051184, 2778, 35232128, 1628)
+[2025-11-03 21:28:57,415][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T7S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:28:57,415][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=cvae-ppo-training']
+[2025-11-03 21:28:57,415][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:28:57,971][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:28:57,972][__main__][INFO] - Trial: 7 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:28:57,972][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:03,095][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (6.102260611645598, 2145, 36087936, 1294)
+[2025-11-03 21:29:03,123][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T8S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:29:03,123][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=cvae-ppo-training']
+[2025-11-03 21:29:03,123][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:29:03,680][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:03,681][__main__][INFO] - Trial: 8 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:29:03,681][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:08,811][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (6.019360111374467, 2121, 35848832, 1244)
+[2025-11-03 21:29:08,840][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-T9S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:29:08,840][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=cvae-ppo-training']
+[2025-11-03 21:29:08,840][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:29:09,390][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:09,391][__main__][INFO] - Trial: 9 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:29:09,392][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:14,259][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (7.879935738026759, 2630, 43094400, 1561)
+[2025-11-03 21:29:14,260][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:29:14,260][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:29:14,810][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_cvae-ppo-training_disq/agent-Tall-perfmeters_comp-SB3PPO_-1_1C-disq.html
+
+[2025-11-03 21:30:45,807][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_cvae-dqn-training_disq/logs/20251103_213045_run_all_agents_test
+[2025-11-03 21:30:45,809][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_cvae-dqn-training_disq/logs
+[2025-11-03 21:30:45,820][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:30:46,008][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:46,009][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:47,237][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:47,237][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:30:47,238][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:48,383][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:48,384][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:30:48,384][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:49,524][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:49,524][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:30:49,525][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:50,531][__main__][INFO] - # Trials:10
+[2025-11-03 21:30:50,798][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T0S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:30:50,798][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=cvae-dqn-training']
+[2025-11-03 21:30:50,798][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:51,349][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:51,349][__main__][INFO] - Trial: 0 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:30:51,350][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:54,759][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (5.390437833494597, 1866, 38657920, 1514)
+[2025-11-03 21:30:54,789][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T1S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:30:54,789][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=cvae-dqn-training']
+[2025-11-03 21:30:54,789][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:55,337][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:55,338][__main__][INFO] - Trial: 1 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:30:55,339][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:58,758][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (10.03761477215768, 3449, 36997248, 2269)
+[2025-11-03 21:30:58,784][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T2S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:30:58,784][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=cvae-dqn-training']
+[2025-11-03 21:30:58,785][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:59,331][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:59,332][__main__][INFO] - Trial: 2 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:30:59,333][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:03,042][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (7.52419519605857, 2674, 32750080, 1778)
+[2025-11-03 21:31:03,070][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T3S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:31:03,070][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=cvae-dqn-training']
+[2025-11-03 21:31:03,070][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:03,624][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:03,625][__main__][INFO] - Trial: 3 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:31:03,625][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:07,176][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (7.632534859394774, 2664, 35684864, 1838)
+[2025-11-03 21:31:07,203][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T4S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:31:07,203][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=cvae-dqn-training']
+[2025-11-03 21:31:07,203][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:07,749][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:07,750][__main__][INFO] - Trial: 4 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:31:07,751][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:11,222][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.6836487659822827, 590, 40827648, 188)
+[2025-11-03 21:31:11,250][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T5S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:31:11,250][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=cvae-dqn-training']
+[2025-11-03 21:31:11,250][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:11,798][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:11,799][__main__][INFO] - Trial: 5 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:31:11,800][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:15,388][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.8863855401744383, 672, 39934848, 243)
+[2025-11-03 21:31:15,414][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T6S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:31:15,414][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=cvae-dqn-training']
+[2025-11-03 21:31:15,414][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:15,959][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:15,960][__main__][INFO] - Trial: 6 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:31:15,960][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:19,564][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (3.6826047383085054, 1296, 38523264, 754)
+[2025-11-03 21:31:19,591][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T7S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:31:19,591][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=cvae-dqn-training']
+[2025-11-03 21:31:19,591][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:20,139][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:20,140][__main__][INFO] - Trial: 7 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:31:20,141][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:23,496][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (8.387303573504017, 2893, 37196672, 2497)
+[2025-11-03 21:31:23,523][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T8S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:31:23,523][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=cvae-dqn-training']
+[2025-11-03 21:31:23,523][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:24,071][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:24,072][__main__][INFO] - Trial: 8 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:31:24,072][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:27,647][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.9707292091340591, 370, 39634048, 27)
+[2025-11-03 21:31:27,675][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-T9S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:31:27,675][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=cvae-dqn-training']
+[2025-11-03 21:31:27,675][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:28,218][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:28,219][__main__][INFO] - Trial: 9 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:31:28,220][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:31,764][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (4.7647973097697705, 1657, 38620544, 871)
+[2025-11-03 21:31:31,764][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:31:31,764][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:31:32,323][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_cvae-dqn-training_disq/agent-Tall-perfmeters_comp-SB3DQN_-1_1D-disq.html
+
+[2025-11-03 21:29:24,064][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_cvae-a2c-training_disq/logs/20251103_212923_run_all_agents_test
+[2025-11-03 21:29:24,066][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_cvae-a2c-training_disq/logs
+[2025-11-03 21:29:24,077][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:29:24,278][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:24,279][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:25,500][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:25,500][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:29:25,501][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:26,642][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:26,643][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:29:26,643][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:27,778][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:27,778][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:29:27,779][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:28,785][__main__][INFO] - # Trials:10
+[2025-11-03 21:29:29,042][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T0S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:29:29,042][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=cvae-a2c-training']
+[2025-11-03 21:29:29,042][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:29:29,599][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:29,600][__main__][INFO] - Trial: 0 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:29:29,601][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:35,628][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.21482713964592046, 347, 25038848, 12)
+[2025-11-03 21:29:35,656][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T1S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:29:35,656][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=cvae-a2c-training']
+[2025-11-03 21:29:35,656][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:29:36,208][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:36,209][__main__][INFO] - Trial: 1 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:29:36,210][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:42,278][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.21215822932158082, 344, 25172352, 9)
+[2025-11-03 21:29:42,304][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T2S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:29:42,304][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=cvae-a2c-training']
+[2025-11-03 21:29:42,304][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:29:42,859][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:42,860][__main__][INFO] - Trial: 2 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:29:42,860][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:48,914][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.22444921778436347, 345, 25369984, 8)
+[2025-11-03 21:29:48,939][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T3S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:29:48,940][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=cvae-a2c-training']
+[2025-11-03 21:29:48,940][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:29:49,499][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:49,499][__main__][INFO] - Trial: 3 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:29:49,500][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:29:55,588][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.18940031873708438, 337, 25132800, 2)
+[2025-11-03 21:29:55,613][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T4S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:29:55,613][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=cvae-a2c-training']
+[2025-11-03 21:29:55,613][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:29:56,162][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:29:56,163][__main__][INFO] - Trial: 4 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:29:56,163][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:02,289][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.20821104223572223, 337, 25532288, 2)
+[2025-11-03 21:30:02,316][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T5S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:30:02,316][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=cvae-a2c-training']
+[2025-11-03 21:30:02,316][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:02,873][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:02,874][__main__][INFO] - Trial: 5 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:30:02,875][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:08,949][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.18182255865492808, 336, 25035264, 1)
+[2025-11-03 21:30:08,974][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T6S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:30:08,974][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=cvae-a2c-training']
+[2025-11-03 21:30:08,974][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:09,524][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:09,525][__main__][INFO] - Trial: 6 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:30:09,526][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:15,626][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.19977906460848918, 337, 25353216, 2)
+[2025-11-03 21:30:15,654][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T7S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:30:15,655][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=cvae-a2c-training']
+[2025-11-03 21:30:15,655][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:16,207][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:16,207][__main__][INFO] - Trial: 7 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:30:16,208][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:22,311][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.25535635187451444, 356, 25329024, 20)
+[2025-11-03 21:30:22,338][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T8S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:30:22,338][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=cvae-a2c-training']
+[2025-11-03 21:30:22,338][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:22,893][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:22,894][__main__][INFO] - Trial: 8 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:30:22,894][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:28,977][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.21624954616488187, 347, 25069056, 12)
+[2025-11-03 21:30:29,005][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-T9S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:30:29,005][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=cvae-a2c-training']
+[2025-11-03 21:30:29,005][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:30:29,557][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:30:29,558][__main__][INFO] - Trial: 9 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:30:29,559][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:30:35,626][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.20281347187733553, 335, 25544448, 0)
+[2025-11-03 21:30:35,626][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:30:35,626][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:30:36,196][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_cvae-a2c-training_disq/agent-Tall-perfmeters_comp-SB3A2C_-1_1D-disq.html
+
+[2025-11-03 21:32:56,160][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_tabddpm-a2c-training_disq/logs/20251103_213256_run_all_agents_test
+[2025-11-03 21:32:56,162][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_tabddpm-a2c-training_disq/logs
+[2025-11-03 21:32:56,173][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:32:56,370][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:56,371][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:57,628][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:57,628][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:32:57,629][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:58,815][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:58,816][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:32:58,817][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:59,991][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:59,991][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:32:59,992][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:01,000][__main__][INFO] - # Trials:10
+[2025-11-03 21:33:01,255][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T0S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:01,255][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:01,255][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:01,821][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:01,822][__main__][INFO] - Trial: 0 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:01,822][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:07,944][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.24879174608406412, 348, 25696768, 10)
+[2025-11-03 21:33:07,969][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T1S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:07,969][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:07,969][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:08,527][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:08,528][__main__][INFO] - Trial: 1 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:08,529][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:14,639][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3886545898248097, 405, 25053568, 63)
+[2025-11-03 21:33:14,663][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T2S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:14,663][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:14,663][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:15,221][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:15,222][__main__][INFO] - Trial: 2 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:15,223][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:21,353][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.0190954027087256, 623, 24622336, 195)
+[2025-11-03 21:33:21,378][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T3S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:21,379][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:21,379][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:21,943][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:21,944][__main__][INFO] - Trial: 3 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:21,944][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:28,024][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.0068532251349631, 615, 24869504, 263)
+[2025-11-03 21:33:28,049][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T4S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:28,049][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:28,049][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:28,614][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:28,614][__main__][INFO] - Trial: 4 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:28,615][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:34,737][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.26330020262006343, 345, 26195072, 8)
+[2025-11-03 21:33:34,761][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T5S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:34,761][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:34,761][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:35,325][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:35,326][__main__][INFO] - Trial: 5 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:35,326][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:41,450][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (2.162790989722186, 1011, 24314112, 474)
+[2025-11-03 21:33:41,475][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T6S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:41,475][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:41,475][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:42,040][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:42,041][__main__][INFO] - Trial: 6 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:42,041][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:48,166][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.7400101579903946, 521, 25161600, 139)
+[2025-11-03 21:33:48,191][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T7S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:48,191][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:48,191][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:48,757][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:48,757][__main__][INFO] - Trial: 7 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:48,758][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:33:54,919][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.2782419480024598, 360, 25561472, 23)
+[2025-11-03 21:33:54,944][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T8S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:33:54,944][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:33:54,944][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:33:55,504][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:33:55,505][__main__][INFO] - Trial: 8 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:33:55,506][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:01,723][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.35171115180384394, 370, 26487808, 28)
+[2025-11-03 21:34:01,748][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-T9S0-SB3A2C_-1_1D.pickle
+[2025-11-03 21:34:01,748][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=tabddpm-a2c-training']
+[2025-11-03 21:34:01,748][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:02,306][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:02,307][__main__][INFO] - Trial: 9 TestAgent: SB3A2C_-1_1D ...
+[2025-11-03 21:34:02,308][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:08,440][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.5630776120122645, 466, 24890752, 109)
+[2025-11-03 21:34:08,441][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:34:08,441][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:34:09,010][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_tabddpm-a2c-training_disq/agent-Tall-perfmeters_comp-SB3A2C_-1_1D-disq.html
+
+[2025-11-03 21:34:20,231][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_tabddpm-dqn-training_disq/logs/20251103_213420_run_all_agents_test
+[2025-11-03 21:34:20,233][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_tabddpm-dqn-training_disq/logs
+[2025-11-03 21:34:20,244][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:34:20,433][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:20,434][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:21,648][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:21,648][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:34:21,649][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:22,779][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:22,779][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:34:22,780][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:23,899][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:23,899][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:34:23,899][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:24,875][__main__][INFO] - # Trials:10
+[2025-11-03 21:34:25,131][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T0S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:25,131][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:25,131][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:25,681][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:25,682][__main__][INFO] - Trial: 0 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:25,683][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:29,421][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.0519341382242335, 356, 42246144, 16)
+[2025-11-03 21:34:29,453][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T1S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:29,453][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:29,453][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:30,011][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:30,012][__main__][INFO] - Trial: 1 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:30,013][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:33,704][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.8369781975630178, 350, 38061440, 12)
+[2025-11-03 21:34:33,730][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T2S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:33,731][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:33,731][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:34,270][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:34,271][__main__][INFO] - Trial: 2 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:34,271][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:37,917][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.9927376665696324, 696, 40672000, 357)
+[2025-11-03 21:34:37,943][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T3S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:37,944][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:37,944][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:38,490][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:38,491][__main__][INFO] - Trial: 3 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:38,491][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:41,820][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.9051813127520382, 361, 38812544, 21)
+[2025-11-03 21:34:41,847][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T4S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:41,847][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:41,847][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:42,391][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:42,392][__main__][INFO] - Trial: 4 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:42,392][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:45,693][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.012669961026853, 365, 40841728, 19)
+[2025-11-03 21:34:45,720][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T5S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:45,720][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:45,721][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:46,271][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:46,272][__main__][INFO] - Trial: 5 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:46,272][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:49,996][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.9086475155743259, 354, 39329920, 14)
+[2025-11-03 21:34:50,024][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T6S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:50,024][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:50,024][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:50,567][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:50,567][__main__][INFO] - Trial: 6 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:50,568][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:53,978][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.9272335974362859, 353, 39788032, 11)
+[2025-11-03 21:34:54,005][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T7S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:54,005][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:54,005][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:54,554][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:54,555][__main__][INFO] - Trial: 7 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:54,555][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:34:57,966][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.7968036873900946, 646, 39680640, 306)
+[2025-11-03 21:34:57,994][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T8S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:34:57,994][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:34:57,994][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:34:58,538][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:34:58,539][__main__][INFO] - Trial: 8 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:34:58,539][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:35:01,864][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.317755918927506, 360, 47637888, 17)
+[2025-11-03 21:35:01,891][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-T9S0-SB3DQN_-1_1D.pickle
+[2025-11-03 21:35:01,892][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=tabddpm-dqn-training']
+[2025-11-03 21:35:01,892][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:35:02,436][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:35:02,437][__main__][INFO] - Trial: 9 TestAgent: SB3DQN_-1_1D ...
+[2025-11-03 21:35:02,438][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:35:05,962][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.0378963928159295, 352, 42201600, 13)
+[2025-11-03 21:35:05,962][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:35:05,963][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:35:06,534][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_tabddpm-dqn-training_disq/agent-Tall-perfmeters_comp-SB3DQN_-1_1D-disq.html
+
+[2025-11-03 21:31:43,199][hydrauti][INFO] - Hydra Output directory (logs): /app/outputs/E13sg_10_tabddpm-ppo-training_disq/logs/20251103_213143_run_all_agents_test
+[2025-11-03 21:31:43,201][hydrauti][INFO] - Root logs dir for all tasks: ./outputs/E13sg_10_tabddpm-ppo-training_disq/logs
+[2025-11-03 21:31:43,212][__main__][INFO] - Test (normaly once) Oracle to establish performance baseline on Test dataset...
+[2025-11-03 21:31:43,404][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:43,405][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:44,629][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:44,629][__main__][INFO] - Test Baseline TH0.85BufFillingRate_-1_1D...
+[2025-11-03 21:31:44,629][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:45,759][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:45,760][__main__][INFO] - Test Baseline2 Basic_-1_1D...
+[2025-11-03 21:31:45,760][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:46,890][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:46,891][__main__][INFO] - Test Baseline2 TH0.96CacheHitRatio_-1_1D...
+[2025-11-03 21:31:46,891][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:47,890][__main__][INFO] - # Trials:10
+[2025-11-03 21:31:48,148][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T0S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:31:48,148][__main__][INFO] - AgentLearningParams: ['RND_SEED=4242', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:31:48,148][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:48,689][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:48,690][__main__][INFO] - Trial: 0 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:31:48,691][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:53,787][__main__][INFO] - Trial: 0 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.22077161505570342, 337, 25799040, 2)
+[2025-11-03 21:31:53,815][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T1S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:31:53,815][__main__][INFO] - AgentLearningParams: ['RND_SEED=4243', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:31:53,815][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:31:54,360][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:31:54,361][__main__][INFO] - Trial: 1 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:31:54,361][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:31:59,525][__main__][INFO] - Trial: 1 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.24014561585380553, 335, 26337280, 0)
+[2025-11-03 21:31:59,554][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T2S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:31:59,554][__main__][INFO] - AgentLearningParams: ['RND_SEED=4244', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:31:59,555][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:00,096][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:00,097][__main__][INFO] - Trial: 2 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:00,097][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:05,287][__main__][INFO] - Trial: 2 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.24120036645049303, 335, 26359680, 0)
+[2025-11-03 21:32:05,314][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T3S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:32:05,315][__main__][INFO] - AgentLearningParams: ['RND_SEED=4245', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:32:05,315][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:05,861][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:05,862][__main__][INFO] - Trial: 3 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:05,863][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:10,983][__main__][INFO] - Trial: 3 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.3450256252669486, 336, 28501248, 1)
+[2025-11-03 21:32:11,011][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T4S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:32:11,011][__main__][INFO] - AgentLearningParams: ['RND_SEED=4246', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:32:11,011][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:11,543][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:11,544][__main__][INFO] - Trial: 4 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:11,545][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:16,673][__main__][INFO] - Trial: 4 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.5227490767671323, 436, 25936128, 93)
+[2025-11-03 21:32:16,701][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T5S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:32:16,701][__main__][INFO] - AgentLearningParams: ['RND_SEED=4247', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:32:16,701][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:17,239][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:17,240][__main__][INFO] - Trial: 5 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:17,240][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:22,338][__main__][INFO] - Trial: 5 TestPerf(ScalarPerf,USLA,RAM,SLAV): (1.4865352292996312, 773, 25040256, 398)
+[2025-11-03 21:32:22,367][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T6S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:32:22,367][__main__][INFO] - AgentLearningParams: ['RND_SEED=4248', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:32:22,368][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:22,907][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:22,908][__main__][INFO] - Trial: 6 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:22,909][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:27,927][__main__][INFO] - Trial: 6 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.6554069259287113, 381, 32240128, 45)
+[2025-11-03 21:32:27,956][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T7S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:32:27,956][__main__][INFO] - AgentLearningParams: ['RND_SEED=4249', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:32:27,956][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:28,492][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:28,493][__main__][INFO] - Trial: 7 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:28,493][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:33,649][__main__][INFO] - Trial: 7 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.42038424046982237, 403, 25854208, 55)
+[2025-11-03 21:32:33,678][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T8S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:32:33,678][__main__][INFO] - AgentLearningParams: ['RND_SEED=4250', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:32:33,678][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:34,222][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:34,223][__main__][INFO] - Trial: 8 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:34,223][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:39,364][__main__][INFO] - Trial: 8 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.23935985589543063, 341, 25940224, 6)
+[2025-11-03 21:32:39,393][__main__][INFO] - AgentFilename: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-T9S0-SB3PPO_-1_1C.pickle
+[2025-11-03 21:32:39,393][__main__][INFO] - AgentLearningParams: ['RND_SEED=4251', '+experiment=tabddpm-ppo-training']
+[2025-11-03 21:32:39,393][__main__][INFO] - MinMaxScaler:<class 'sklearn.preprocessing._data.MinMaxScaler'>
+[2025-11-03 21:32:39,934][pkg.gym_env][INFO] - Sample_states len: 2688 #Workloads:42
+[2025-11-03 21:32:39,935][__main__][INFO] - Trial: 9 TestAgent: SB3PPO_-1_1C ...
+[2025-11-03 21:32:39,936][pkg.gym_env][INFO] - Starting 84 episodes of 128 steps Print every 0 Ep. (to change: config.verbosity on train, config.xtraverbosity on predict)
+[2025-11-03 21:32:45,055][__main__][INFO] - Trial: 9 TestPerf(ScalarPerf,USLA,RAM,SLAV): (0.33868596696835984, 366, 26464768, 25)
+[2025-11-03 21:32:45,055][__main__][INFO] - Graph all TEST perf meters...
+[2025-11-03 21:32:45,055][__main__][INFO] - LengthPerfMeterlist: 13
+[2025-11-03 21:32:45,613][__main__][INFO] - Saved html Perf Meters in Test: ./outputs/E13sg_10_tabddpm-ppo-training_disq/agent-Tall-perfmeters_comp-SB3PPO_-1_1C-disq.html

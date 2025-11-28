@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base_simu_orig
+  - base_simu
   - override /datasets: traintest-simu
   - override /tuner: ppo
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
@@ -11,6 +11,8 @@ version: 13u # Uniform randtype only
 dataset_orig_import_file: simu_original_dataset_uniform  # Uniform randtype only
 
 info: Original (live) dataset with Uniform randtype workloads, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+
+datasets_prefix: workloads_orig  # Workloads selection
 
 REW_ALPHA_COEF: 0.2
 REW_BETA_COEF: 0

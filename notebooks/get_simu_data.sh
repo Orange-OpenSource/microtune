@@ -4,8 +4,8 @@
 # and concatenate specific log files into a single log file for analysis.
 
 version="15sall"
-version_minor_desc="15sall_14: orig+dbsas+cvae+tabddpm"
-version_minor_list="14" 
+version_minor_desc="15sall_15: orig+dbsas+cvae+tabddpm"
+version_minor_list="15" 
 ds_list="orig dbsas cvae tabddpm"
 model_list="ppo a2c dqn"
 expe_name_list="training"

@@ -41,7 +41,15 @@ def save_full_dataset(name, import_file, cfg_ds, reset_combined_col = False, res
 
     log.info(f"DF{name} {pickles_prefix} {version} fix perf...")
     obss.PERF_OBJS = [ float(cfg_ds.perf_level) ]
-    #df['wl_clients'] = df['wl_clients'].round().astype(int)   # HACK HACK HACK! for CVAE
+
+    ptl_list = df["perf_target_level"].unique()
+    if len(ptl_list) > 1:
+        log.warning(f"DF{name}: Multiple perf_target_level present in dataset: {ptl_list}. Will recompute to {cfg_ds.perf_level} as per configuration.")
+        df = df[df['perf_target_level'] == float(ptl_list[0])] # Choose the first one, will be recomputed anyway...
+
+    df['tables'] = df['tables'].round().astype(int)   # HACK HACK HACK! for TABDDPM datasets where wl_clients is float instead of int
+    df['wl_clients'] = df['wl_clients'].round().astype(int)   # HACK HACK HACK! for CVAE and TABDDPM datasets where wl_clients is float instead of int
+
     df = obss.fixColumns(df, combined_col=reset_combined_col) 
 
     log.info(f"DF{name} perf_target_level: {df['perf_target_level'].unique().tolist()}")
@@ -134,7 +142,7 @@ def display_workloads_occurences(liste):
 def add_stats_results(df, name, priority, stage, results=None):
     log.info(f"DF{name}-{stage} statistics..")
     name = name.replace("ORIG", "0RIG")  # To ensure ORIG is first when sorting later on
-    colonnes = ["sysbench_filtered.latency_mean", "perf_target_level", "iperf01", "delta_perf_target01"]
+    colonnes = ["sysbench_filtered.latency_mean", "perf_target_level", "iperf01", "delta_perf_target01", "latency_mean_min", "latency_mean_max"]
 
     for col in colonnes:
         if col in df.columns:
@@ -164,7 +172,7 @@ def add_stats_results(df, name, priority, stage, results=None):
 import pandas as pd
 def display_df_stats(results=None):
     dfresults = pd.DataFrame(results)
-    dfresults = dfresults.sort_values(by=['P', 'DF', 'Name'], ascending=[True, True, True])
+    dfresults = dfresults.sort_values(by=['Name', 'DF', 'P'], ascending=[True, True, True])
 
     # Affichage des résultats
     log.info("\n"+dfresults.to_string(index=False))
@@ -177,9 +185,9 @@ def display_workloads_differences(liste1, name1, liste2, name2):
     only_in_2 = set2 - set1
 
     if only_in_1:
-        log.warning(f'Workloads present in ORIG dataset but missing in DF{name1} : {only_in_1} LEN={len(only_in_1)}')
+        log.warning(f'Workloads present in {name1} dataset but missing in DF{name2} : {only_in_1} LEN={len(only_in_1)}')
     if only_in_2:
-        log.warning(f'Workloads present in DF{name2} dataset but missing in ORIG dataset: {only_in_2} LEN={len(only_in_2)}')
+        log.warning(f'Workloads present in {name2} dataset but missing in {name1} dataset: {only_in_2} LEN={len(only_in_2)}')
 
     return only_in_1, only_in_2
 
@@ -224,7 +232,9 @@ def run(cfg: DictConfig) -> float: #Tuple[float, float]:
             if cfg_ds is not None:
                 log.info(f'Loading DF{simu["name"]} dataset from {simu["import_file"]} and save full version...')
                 _, workloads = save_full_dataset(simu["name"], simu["import_file"], cfg_ds, reset_combined_col=True, results=stats_res)
-                if sorted(workloads) != sorted(workloads_orig):
+                s_workloads = sorted(workloads)
+                s_workloads_orig = sorted(workloads_orig)
+                if s_workloads != s_workloads_orig:
                     errors_list.append(simu["name"])
                     display_workloads_differences(workloads_orig, "ORIG", workloads, simu["name"])
                 elif  workloads != workloads_orig:

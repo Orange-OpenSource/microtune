@@ -1,0 +1,14 @@
+# Datasets version with "<version_number>s" name indicating simulation mode. Meaning a version where datasets are may be not directly issued from real observation samples (DataRef) 
+version: 16 # Legacy experiments on version 11 datasets i.e. v9+v10
+version_minor: 1
+
+pickles_dirname: E${version}_${version_minor}_${hydra:runtime.choices.experiment}
+
+verbosity: 0
+xtraverbosity: 0
+
+datasets_prefix: workloads_legacy
+
+#orig:
+#  pickles_prefix: ${datasets_prefix}_legacy
+

@@ -193,7 +193,7 @@ class ADBMSDataFrameEntrySelector(ADBMSDataSetEntryContextSelector):
 
         super().__init__(group_list=group_list, entries_per_group=len(e_list), seed=seed, context_elems=context_elems, normalize=normalize, with_scaler=with_scaler)
 
-        assert self._total_entries_count == len(self._df), f"Error, Discrepancy in data set. {self._groups_count} group(s) of {group_id_field} with {self._entries_count} entries {entry_id_field} per group do not match dataset length {len(df)}"
+        assert self._total_entries_count == len(self._df), f"Error, Discrepancy in data set. {len(group_list)} group(s) of {group_id_field} with {self._entries_count} entries {entry_id_field} per group do not match dataset length {len(df)}"
 
     @lru_cache(maxsize=64) # typed=False
     def _cached_entry(self, idx):
@@ -219,6 +219,7 @@ class ADBMSDataFrameEntrySelector(ADBMSDataSetEntryContextSelector):
         self._reinit(context_elems, with_scaler)
         
         vectors = np.array([[float(row[x]) for x in self._context_elems] for index, row in self._df.iterrows()])
+
         assert len(vectors) == self._total_entries_count, f"Samples of OBS and dataframe length mismatched! #Vectors={len(vectors)} / total_entries_count={self._total_entries_count}"
 
         if normalize:

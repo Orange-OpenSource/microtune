@@ -1,0 +1,20 @@
+# @package _global_
+defaults:
+  - base_legacy
+
+
+dataset_orig_import_file: import/workloads_c098_full_11  # Original, NOT simulated data, with Uniform randtype only
+
+orig:
+  ratio: 0 # even clients for training & odd clients for tests (eval+tests)
+  ratio_eval_test: 50
+#  seed: 42
+
+dataset_dbsas_import_file: !!null
+dbsas: !!null
+
+dataset_cvae_import_file: !!null
+cvae: !!null
+
+dataset_tabddpm_import_file: !!null #import/xxx  # TABDDPM simulated data with Uniform randtype only
+tabddpm: !!null

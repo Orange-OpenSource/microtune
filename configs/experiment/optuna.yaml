@@ -1,5 +1,3 @@
-defaults:
-  - base
 
 n_trials: 80
 
