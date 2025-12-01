@@ -550,8 +550,9 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownS
             down_coeff = 0.9
             if idelta > 0:
                 # When iperf is above or at the threshold
-                down =  (adjusted_sigmoid_higher_part(idelta + threshold ,  threshold , 10 )  - 1 + down_coeff) / down_coeff  # Encourage to go down if above threshold
-                stay = 1- adjusted_sigmoid_higher_part(idelta + threshold ,  threshold , 10 ) 
+                sigmo = adjusted_sigmoid_higher_part(idelta + threshold ,  threshold , 10 )
+                down =  (sigmo  - 1 + down_coeff) / down_coeff  # Encourage to go down if above threshold
+                stay = 1- sigmo 
                 up   = stay-1
             else:
                 # When iperf is below the threshold
@@ -561,9 +562,9 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownS
             if bufincr == 0:
                 self._action_rewards[idx]=stay
             elif bufincr < 0:
-                self._action_rewards[idx]=down
+                self._action_rewards[idx]=down * (-bufincr)
             else:
-                self._action_rewards[idx]=up
+                self._action_rewards[idx]=up * bufincr
         
         ds.applyLambda2actions(self.actions.vals(), rew)
 

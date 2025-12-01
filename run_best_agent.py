@@ -111,7 +111,7 @@ def run(cfg: DictConfig) -> None:
         log.info(f"BEST FILE {bestfilename}")
         #os.system(f'cp "{remaining_best_agent.filename}"  "{bestfilename}"')
         agent = instantiate(cfg.tuner.agent)
-        files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=f'{cfg.iterations_name}{best_trial}*', verbose=cfg.xtraverbosity)
+        files_list, optdict = agent.load(filepath=cfg.pickles_path, filever=f'{cfg.iterations_name}{best_trial}S*', verbose=cfg.xtraverbosity)
         best_files_list = []
         print(f"Move HTML files {files_list} with -best extension...")
         for htmlfile in files_list:
