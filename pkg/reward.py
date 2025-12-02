@@ -652,4 +652,14 @@ class ADBMSBufferCacheRewardNormal3(RewardDownStayUp):
                 reward += 3
 
             self._action_rewards[idx]=reward
-        
+
+
+class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
+    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
+        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
+
+    def reset(self, ds: ADBMSDataSetEntryContextSelector):
+        pass
+
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
+        pass

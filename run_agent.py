@@ -71,8 +71,8 @@ def save_best_and_close(cfg, sweeper_params, trial, agent_results=[], datasets=N
             res["env_train"].close()
             res["env_eval"].close()
 
-    sid = best_res["sid"]
-    RND_SEED = best_res["RND_SEED"]
+    sid = best_res["sid"] # Seed index of the best result. 0..n_seeds-1. We have n_seeds per sweeper trial 
+    RND_SEED = best_res["RND_SEED"] # Actual random seed used in best result
     agent = best_res["agent"]
     env_train = best_res["env_train"]
     env_eval = best_res["env_eval"]

@@ -113,11 +113,11 @@ class ObsSamplesDF():
                             arm0_count += arm1_count -self.MAX_STAY_PER_WORKLOAD
                             arm1_count = self.MAX_STAY_PER_WORKLOAD
                         
-                        idx0 = wldf.index[wldf['combined_column'] == wl][0] # Dummy selection on column but necessary...
-                        idxp = wldf.index[wldf["delta_perf_target"+wname] <0].min()
+                        idx0 = wldf.index[wldf['combined_column'] == wl][0] # Dummy selection on column 'combined_column', but necessary...
+                        idxp = wldf.index[wldf["delta_perf_target"+wname] <0].min() # Use min() in case where there are multiple tipping points, choose the one with the higher buffer value
                         # No tipping point (always OVER)? Take last index (smallest buffer size) 
                         if idxp is np.NaN:
-                            idxp=idx0 + buf_values_count -1
+                            idxp=idx0 + buf_values_count
                         df.loc[df['combined_column'] == wl, 'sla_tipping'+wname] = int(idxp-idx0)
 
 

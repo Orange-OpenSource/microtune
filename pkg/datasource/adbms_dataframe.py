@@ -278,6 +278,9 @@ class ADBMSBufferCacheStates(ADBMSDataFrameEntrySelector):
     def getLatencyGapTarget(self):
         return self.lat_gap, self._latgap_ms, self.lat_target    
 
+    def getPolicyOptimalPerfInficators(self):
+        state = self.state()
+        return state["OP_USLA"], state["OP_CRAM"]
 
 
 ##
