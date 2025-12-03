@@ -18,7 +18,7 @@ from pkg.actions import Actions
 
 # Note: It is possible to Disable ALPHA and BETA effect by setting them to -1.
 class RewardNA():
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
+    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
         self.actions = Actions(action_minmax)
         self._action_rewards = np.zeros(self.actions.count(), dtype=float)     # All Current action's values => reward
         self.renameFromType()
@@ -37,6 +37,16 @@ class RewardNA():
         self._alpha_inv = alpha_inv
         self._beta = beta
 
+        # When strengthened_action is True, the effect of UP/DOWN actions is strenghtened (i.e. multiplied by 2)
+        self._strengthened_action = strengthened_action
+        if strengthened_action:
+            self._down_factor = abs(self.actions.min())
+            self._up_factor = self.actions.max()
+        else:
+            self._down_factor = 1
+            self._up_factor = 1
+
+
     def renameFromType(self, obj=None, origin=''):
         if obj is None:
             obj = self
@@ -53,6 +63,8 @@ class RewardNA():
     def action2Name(self, action):
         return self.actions.name(int(action))
 
+    def reset(self, ds: ADBMSDataSetEntryContextSelector):
+        pass
     def compute(self, ds: ADBMSDataSetEntryContextSelector):
         pass
     
@@ -68,13 +80,7 @@ class RewardNA():
 # Possible actions min-max values are N,M where... (TBC)
 class RewardDownStayUp(RewardNA):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
-        super().__init__(action_minmax, alpha, beta)
-        if strengthened_action:
-            self._down_factor = abs(self.actions.min())
-            self._up_factor = self.actions.max()
-        else:
-            self._down_factor = 1
-            self._up_factor = 1
+        super().__init__(action_minmax, alpha, beta, strengthened_action=strengthened_action)
 
     # Return reward, regret
     def _getRewReg(self, action):
@@ -527,7 +533,7 @@ class ADBMSBufferCacheRewardContinousSymetrieDownCoeffHybridDiscrete(RewardDownS
 ### adjustable idelta decale
 class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, move_idelta=0):
-        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)   
+        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta, e)   
         self.move_idelta = move_idelta
         # to avoid divsision by 0 error, and when move_idelta > 1, the effect is the same for all
         if self.move_idelta == 1:
@@ -568,10 +574,20 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownS
         
         ds.applyLambda2actions(self.actions.vals(), rew)
 
+class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
+    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
+        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
 
-## new reward 
+    def reset(self, ds: ADBMSDataSetEntryContextSelector):
+        pass
 
-# getIPerfIndicatorsWithAction(self, Action)
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
+        pass
+
+
+
+## new reward NOT COMPLETELY IMPLEMENTED => DUMMIES
+# getIPerfIndicatorsWithAction(self, Action) shold be implemented in the ds ?
 
 class ADBMSBufferCacheRewardNormal(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
@@ -653,13 +669,3 @@ class ADBMSBufferCacheRewardNormal3(RewardDownStayUp):
 
             self._action_rewards[idx]=reward
 
-
-class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
-        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
-
-    def reset(self, ds: ADBMSDataSetEntryContextSelector):
-        pass
-
-    def compute(self, ds: ADBMSDataSetEntryContextSelector):
-        pass

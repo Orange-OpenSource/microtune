@@ -92,7 +92,7 @@ class VSEnv(gym.Env):
         return cur_state["delta_perf_target01"], act_state["delta_perf_target01"]
 
 
-    def _init_env(self):
+    def reinit(self):
         self.cur_episode = self.cur_step = -1
         self.total_steps = 0
         self.bufsize_t0 = 0
@@ -102,36 +102,18 @@ class VSEnv(gym.Env):
         self._reg_cumul = 0     # Cumulative Regret per episode
         self._obs_digest = 0
         self._obs_digest_dsp = 'NA'
-        #add idelta list
         self._idelta_list = []
 
-    # Called at each state change (i.e. either a workload or buffer size change)
-    # Use unscaled action in [action_min, action_max] interval, where action_min is typically negative for a DOWN action, and positiv for a UP action. STAY action is 0.
-    def _new_state(self, action=1, real_action=1):
-        if real_action != 0:
-            self.workload_name_id = self.ds.getWorkloadNameId()
-            self.lat_gap, self._latgap_ms, self.lat_target = self.ds.getLatencyGapTarget()
-            self.iperf, self.delta_perf, self.perf_target = self.ds.getIPerfIndicators()
-            self.latency = self.ds.getLatency()
-            self._wl_context = f'{self.workload_name_id} {self.perf_target} {round(self.lat_target, 0)}ms'
-            self.reward.compute(self.ds)
-
-        def under_or_violation():
-            return "VIOLATION" if action <1 else "UNDER"
-
-        self.sla = self.reward.actionMax2Lambda(under=under_or_violation)
-
-    def reinit(self):
-        self._init_env()
-        self._new_state(0)
+        self.reward.compute(self.ds)
+        self._new_state(0, init=True)
         self._obs_digest_update()
         self._logmsg(msgfun=self._msg_init)
-
 
     def _reset_state(self):
         self.ds.reset(self.cur_episode) # Select new workload group from dataset selector, according to the selector type
         self.ds.next()                  # Select next entry state in current workload group from dataset selector, according to the selector type
-        self._new_state(0)
+        self.reward.compute(self.ds)
+        self._new_state(0, init=True)
         self._obs_digest_update()
         self._on_terminate_count = 0
 
@@ -143,10 +125,26 @@ class VSEnv(gym.Env):
         assert self.ds.entry_idx == (self.ds.getStatesCountPerWorkload() -1 - state["buf_size_idx"]), f'Incoherence {self.ds.entry_idx} != {(self.ds.getStatesCountPerWorkload() -1 - state["buf_size_idx"])}'
         assert self.ds.globalIndex() >=0, f"Error: GIDX:{self.ds.globalIndex()}"
 
+    # Called at each state change (i.e. either a workload or buffer size change)
+    # Use unscaled action in [action_min, action_max] interval, where action_min is typically negative for a DOWN action, and positiv for a UP action. STAY action is 0.
+    def _new_state(self, action=1, init=False):
+        if action != 0 or init:
+            self.workload_name_id = self.ds.getWorkloadNameId()
+            self.lat_gap, self._latgap_ms, self.lat_target = self.ds.getLatencyGapTarget()
+            self.iperf, self.delta_perf, self.perf_target = self.ds.getIPerfIndicators()
+            self.latency = self.ds.getLatency()
+            self._wl_context = f'{self.workload_name_id} {self.perf_target} {round(self.lat_target, 0)}ms'
+
+        def under_or_violation():
+            return "VIOLATION" if action <1 else "UNDER"
+
+        self.sla = self.reward.actionMax2Lambda(under=under_or_violation)
+
     # Use unscaled action in [action_min, action_max] interval, where action_min is typically negative for a DOWN action, and positiv for a UP action. STAY action is 0.
     def _next_state(self, action):
         real_action = self.ds.move(action) # Move in current workload group
-        self._new_state(action, real_action)
+        self.reward.compute(self.ds)
+        self._new_state(action)
         self._obs_digest_update()
     
         return self.ds.context(), real_action
