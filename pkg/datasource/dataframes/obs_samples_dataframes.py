@@ -75,21 +75,26 @@ class ObsSamplesDF():
 
         return df_filtered_drop_0_mem
 
-    # Add new columns ["OP_USLA", "OP_CRAM", "OP_OB_CRAM", "OP_OB_USLA"]
-    def _add_optimal_policy_colums(self, df, workload, buf_sizes_list):
+    # Add new columns ["OP_BUDGET01", "OP_USLA01", "OP_CRAM01", "OP_OB_USLA01", "OP_OB_CRAM01"] to a performance based on 0% QPS objective and 100% Latency objective
+    # Add new columns ["OP_BUDGET19", "OP_USLA19", "OP_CRAM19", "OP_OB_USLA19", "OP_OB_CRAM19"] to a performance based on 10% QPS objective and 90% Latency objective
+    def _add_optimal_policy_colums(self, df, buf_sizes_list, weigth_name="01"):
         buf_sizes_list_len = len(buf_sizes_list)
         buf_mb = np.array(buf_sizes_list, int)//1024//1024
 
-        def compute_OP_CRAM(sla_tipping: int, buf_size_idx: int):
+        def compute_OP_BUDGET(sla_tipping: int, buf_size_idx: int):
             sla_tipping = max(1, sla_tipping)  # Ensure at least 1, sla_tipping is set to 0 when there is no tipping point because RAM max is never enough to reach the SLA
             buf_idx = buf_sizes_list_len - buf_size_idx
-            idx1 = min(sla_tipping, buf_idx) -1
-            idx2 = max(sla_tipping, buf_idx)
+            start = min(sla_tipping, buf_idx) -1
+            end = max(sla_tipping, buf_idx)
+            res = end - start -1
+            return res, start, end
+
+        def compute_OP_CRAM(start: int, end: int):
             #print(f"compute_OP_CRAM: sla_tipping={sla_tipping}, buf_size_idx={buf_size_idx} => buf_idx={buf_idx}, idx1={idx1}, idx2={idx2}")
-            if idx2 == (idx1+1):
-                cram = buf_mb[idx1] *2  # Case of STAY arm, thus cumulate RAM at T-1 + RAM at T
+            if end == (start+1):
+                cram = buf_mb[start] *2  # Case of STAY arm, thus cumulate RAM at T-1 + RAM at T
             else:
-                cram = buf_mb[idx1:idx2].sum()
+                cram = buf_mb[start:end].sum()
             return cram
 
         def compute_OP_USLA(sla_tipping: int, buf_size_idx: int):
@@ -106,29 +111,22 @@ class ObsSamplesDF():
             return usla4overbudget
 
         def computeOptimalPolicyPerformance(row, columns):
-            sla_tipping = int(row["sla_tipping01"])
+            sla_tipping = int(row["sla_tipping"+weigth_name])
             buf_size_idx = int(row["buf_size_idx"])
 
+            op_budget, start, end = compute_OP_BUDGET(sla_tipping, buf_size_idx)
             op_usla = compute_OP_USLA(sla_tipping, buf_size_idx)
-            op_cram = compute_OP_CRAM(sla_tipping, buf_size_idx)
+            op_cram = compute_OP_CRAM(start, end)
             cram4overbudget = compute_OP_OVER_BUDGET_CRAM(sla_tipping)
             usla4overbudget = compute_OP_OVER_BUDGET_USLA(sla_tipping)
+            res = (op_budget, op_usla, op_cram, usla4overbudget, cram4overbudget)
+            assert len(columns) == len(res), f"computeOptimalPolicyPerformance: columns len {len(columns)} != res len {len(res)}"
             
-            return pd.Series((op_usla, op_cram, cram4overbudget, usla4overbudget), index=columns)
+            return pd.Series(res, index=columns)
 
-        #new_columns = ["OP_USLA", "OP_CRAM", "OP_OB_CRAM", "OP_OB_USLA"]
-        #df.loc[df["combined_column"]==workload, new_columns] = df.apply(lambda row: computeOptimalPolicyPerformance(row, new_columns), axis=1) #, result_type='expand' )
-
-        print(f"Adding Optimal Policy Performance columns for workload:{workload} with {buf_sizes_list_len} buffer sizes...")
-        #df.loc[df["combined_column"]==workload, "OP_USLA"] = df.apply(lambda row: compute_OP_USLA(int(row["buf_size_idx"]), int(row["sla_tipping01"])), axis=1) 
-        #df.loc[df["combined_column"]==workload, "OP_CRAM"] = df.apply(lambda row: compute_OP_CRAM(int(row["sla_tipping01"]), int(row["buf_size_idx"])), axis=1) 
-        #df.loc[df["combined_column"]==workload, "OP_OB_CRAM"] = df.apply(lambda row: compute_OP_OVER_BUDGET_CRAM(int(row["sla_tipping01"])), axis=1)
-        #df.loc[df["combined_column"]==workload, "OP_OB_USLA"] = df.apply(lambda row: compute_OP_OVER_BUDGET_USLA(int(row["sla_tipping01"])), axis=1)
-
-        df["OP_USLA"] = df.apply(lambda row: compute_OP_USLA(int(row["buf_size_idx"]), int(row["sla_tipping01"])), axis=1) 
-        df["OP_CRAM"] = df.apply(lambda row: compute_OP_CRAM(int(row["sla_tipping01"]), int(row["buf_size_idx"])), axis=1) 
-        df["OP_OB_CRAM"] = df.apply(lambda row: compute_OP_OVER_BUDGET_CRAM(int(row["sla_tipping01"])), axis=1)
-        df["OP_OB_USLA"] = df.apply(lambda row: compute_OP_OVER_BUDGET_USLA(int(row["sla_tipping01"])), axis=1)
+        new_columns = ["OP_BUDGET"+weigth_name, "OP_USLA"+weigth_name, "OP_CRAM"+weigth_name, "OP_OB_USLA"+weigth_name, "OP_OB_CRAM"+weigth_name]
+        print(f"Adding Optimal Policy Performance columns {new_columns} for ALL workloads with {buf_sizes_list_len} buffer sizes...")
+        df[new_columns] = df.apply(lambda row: computeOptimalPolicyPerformance(row, new_columns), axis=1) #, result_type='expand' )
 
 
     # Concatenates N times the dataframe with the added column 'perf_target_level' at different values between 0 to 100%
@@ -176,13 +174,17 @@ class ObsSamplesDF():
                         if idxp is np.NaN:
                             idxp=idx0 + buf_values_count
                         df.loc[df['combined_column'] == wl, 'sla_tipping'+wname] = int(idxp-idx0)
+                        #wldf['sla_tipping'+wname] = int(idxp-idx0)
 
+                        wldf['ARM0_'+wname] = arm0_count
+                        wldf['ARM1_'+wname] = arm1_count
+                        wldf['ARM2_'+wname] = arm2_count
+                        # Slower version without copy_on_write mode
+                        #df.loc[df['combined_column'] == wl, 'ARM0_'+wname] = arm0_count
+                        #df.loc[df['combined_column'] == wl, 'ARM1_'+wname] = arm1_count
+                        #df.loc[df['combined_column'] == wl, 'ARM2_'+wname] = arm2_count
 
-                        df.loc[df['combined_column'] == wl, 'ARM0_'+wname] = arm0_count
-                        df.loc[df['combined_column'] == wl, 'ARM1_'+wname] = arm1_count
-                        df.loc[df['combined_column'] == wl, 'ARM2_'+wname] = arm2_count
-
-                self._add_optimal_policy_colums(df, "ALL", buf_sizes_list)
+                    self._add_optimal_policy_colums(df, buf_sizes_list, wname) # Apply to all workloads
                 
                 df_out = pd.concat([df_out, df.copy()], ignore_index=True)
         

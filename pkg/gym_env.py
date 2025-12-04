@@ -45,6 +45,7 @@ class VSEnv(gym.Env):
     # The dataframe comes with a perfomance objective. For example, if it is at 0.99 with a gap of 4% (0.04) that means SLA is OK if perf indicator is between 0.99 and 0.99*(1+0.04).
     # qpslat_w: The weight of QPS (queries/s) and latency. "19" stands for 0.1 for QPS and 0.9 for Latency. "01" stands for 0% QPS, 100% latency.
     #           Admited values "01", "19"
+    # on_terminate: if >=0 return a terminated step if regret==0 and action==STAY. The reward receive a bonus of +on_terminate when the step is terminated. If -1, do not manage the terminated state.
     # slaprotect: If True, try to reduce SLA VIOLATIONs by choosing, at step time, the UP direction whatever the arm choosen by the policy
     # Note that the performance Objective Gap in percent defining the admitted gap around the performance objective (a value in 0.5, 0.9, 0.95, 0.98, 0.99, 0.995, 0.999) is picked up from the dataset. 
     def __init__(self, state_selector: ADBMSDataSetEntryContextSelector, reward: RewardDownStayUp = None, notify_react=False, max_steps_per_episode=64, on_terminate=-1, verbose=0):    
@@ -104,15 +105,13 @@ class VSEnv(gym.Env):
         self._obs_digest_dsp = 'NA'
         self._idelta_list = []
 
-        self.reward.compute(self.ds)
-        self._new_state(0, init=True)
-        self._obs_digest_update()
+        self._reset_state()
         self._logmsg(msgfun=self._msg_init)
 
     def _reset_state(self):
         self.ds.reset(self.cur_episode) # Select new workload group from dataset selector, according to the selector type
         self.ds.next()                  # Select next entry state in current workload group from dataset selector, according to the selector type
-        self.reward.compute(self.ds)
+        self.reward.reset(self.ds)
         self._new_state(0, init=True)
         self._obs_digest_update()
         self._on_terminate_count = 0
@@ -128,6 +127,8 @@ class VSEnv(gym.Env):
     # Called at each state change (i.e. either a workload or buffer size change)
     # Use unscaled action in [action_min, action_max] interval, where action_min is typically negative for a DOWN action, and positiv for a UP action. STAY action is 0.
     def _new_state(self, action=1, init=False):
+        self.reward.compute(self.ds)
+
         if action != 0 or init:
             self.workload_name_id = self.ds.getWorkloadNameId()
             self.lat_gap, self._latgap_ms, self.lat_target = self.ds.getLatencyGapTarget()
@@ -143,7 +144,6 @@ class VSEnv(gym.Env):
     # Use unscaled action in [action_min, action_max] interval, where action_min is typically negative for a DOWN action, and positiv for a UP action. STAY action is 0.
     def _next_state(self, action):
         real_action = self.ds.move(action) # Move in current workload group
-        self.reward.compute(self.ds)
         self._new_state(action)
         self._obs_digest_update()
     
@@ -242,11 +242,14 @@ class VSEnv(gym.Env):
         iperf, idelta, threshold = self.unwrapped.ds.getIPerfIndicators()  # Return IPERF, IDELTAPERF, IPERFTARGET
         state = self.unwrapped.ds.state()        
         lat = state.get("sysbench_filtered.latency_mean")
+        sla_tipping = state.get("sla_tipping"+self.unwrapped.ds.getQPSLatWeigths())
         lat = "NA" if lat is None else round(lat, 2)
 
         msg = f'S{str(self.unwrapped.cur_step).ljust(2)} Buf:{str(cur_buf_size).ljust(6)}MB Arm-{str(arm_name).ljust(3)}'
-        msg += f'Rew:{str(round(rew,3)).ljust(6)} RegCumul:{str(round(self._reg_cumul,3)).ljust(7)} IRegCumul:{str(round(self._ireg_cumul,3)).ljust(7)}'
-        msg += f' SLA-{self.sla.ljust(10)} IPERF{self.unwrapped.ds.getQPSLatWeigths()}/OBJ:{round(iperf,3)}/{threshold} IDELTA:{round(idelta,3)} LAT:{lat}ms'.ljust(66)
+#        msg += f'Rew:{str(round(rew,3)).ljust(6)} RegCumul:{str(round(self._reg_cumul,3)).ljust(7)} IRegCumul:{str(round(self._ireg_cumul,3)).ljust(7)}'
+#        msg += f' SLA-{self.sla.ljust(10)} IPERF{self.unwrapped.ds.getQPSLatWeigths()}/OBJ:{round(iperf,3)}/{threshold} IDELTA:{round(idelta,3)} LAT:{lat}ms'.ljust(66)
+        msg += f'Rew:{str(round(rew,3)).ljust(6)} RegCumul:{str(round(self._reg_cumul,3)).ljust(7)}'
+        msg += f' SLA-{self.sla.ljust(10)} SLATipping:{str(round(sla_tipping,3)).ljust(7)} LAT:{lat}ms'.ljust(66)
         if self.verbose>1:
             msg += self._obs_digest_dsp
         if self.verbose>2:
@@ -291,6 +294,7 @@ class VSEnv(gym.Env):
                 self._on_terminate_count += 1
                 rew += (self._on_terminate_count/(self._on_terminate+1)) #self._on_terminate
                 if self._on_terminate_count >= self._on_terminate:
+                    print(f'INFO!!!!!: Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
                     terminated=True
                     self.terminated_count += 1
 

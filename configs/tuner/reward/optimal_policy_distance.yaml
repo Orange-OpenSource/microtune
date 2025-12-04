@@ -1,15 +1,13 @@
 learn:
-  _target_: pkg.reward.ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta
+  _target_: pkg.reward.ADBMSBufferCacheRewardDistanceToOptimalPolicy
   action_minmax: ${...actions.minmax}
-  move_idelta: 0
   alpha: ${REW_ALPHA_COEF}
   beta: ${REW_BETA_COEF}
   strengthened_action: ${REW_ARMS_STRENGTH_OPTION}
 
 test:
-  _target_: pkg.reward.ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta
+  _target_: pkg.reward.ADBMSBufferCacheRewardDistanceToOptimalPolicy
   action_minmax: ${...actions.minmax}
-  move_idelta: 0
   alpha: ${REW_ALPHA_COEF}
   beta: ${REW_BETA_COEF}
   strengthened_action: ${REW_ARMS_STRENGTH_OPTION}

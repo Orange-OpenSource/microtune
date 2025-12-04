@@ -271,16 +271,21 @@ class ADBMSBufferCacheStates(ADBMSDataFrameEntrySelector):
         return (est["iperf"+self._qpslat_w], est["delta_perf_target"+self._qpslat_w], self._iperf_target)
 
     def getLatency(self, filtered=True):
-        state = self.state()
-        return state["sysbench_filtered.latency_mean"]
-    
+        est = self.state()
+        return est["sysbench_filtered.latency_mean"]
+
+    def getBufferSizeMB(self):
+        est = self.state()
+        return est["buf_size"]//1024//1024  # Return Buffer size in MB
+        
     # Return Latency gap, Latency gap in ms (str), latency target (threshold)
     def getLatencyGapTarget(self):
         return self.lat_gap, self._latgap_ms, self.lat_target    
 
-    def getPolicyOptimalPerfInficators(self):
-        state = self.state()
-        return state["OP_USLA"], state["OP_CRAM"]
+    # Based on ["OP_BUDGET01", "OP_USLA01", "OP_CRAM01", "OP_OB_USLA01", "OP_OB_CRAM01"]
+    def getPolicyOptimalPerf01Inficators(self):
+        est = self.state()
+        return est["OP_BUDGET01"], est["OP_USLA01"], est["OP_CRAM01"], est["OP_OB_USLA01"], est["OP_OB_CRAM01"]
 
 
 ##

@@ -65,8 +65,9 @@ RND_SEED: 4242
 n_seeds: 2
 IPERF_LEVEL: 0.98    # 0.98=20ms [0.9   0.95  0.965 0.98  0.99  0.995 0.997]
 DETERMINISTIC: False # Use Deterministic option in model.predict() function ?
-REW_ALPHA_COEF: -1
-REW_BETA_COEF: -1
+REW_ALPHA_COEF: -1   # -1 means no use of alpha coef in the reward computation
+REW_BETA_COEF: -1    # -1 means no use of beta coef in the reward computation. BETA applying on STAY arm, while ALPHA applies on UP and (1-ALPHA) on DOWN arm
+REW_ARMS_STRENGTH_OPTION: False # Default is False. A reward option to use ARMs UP & DOWN index as a coeficient in the rewarding computation
 
 
 

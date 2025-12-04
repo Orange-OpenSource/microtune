@@ -17,7 +17,7 @@ hydra_launcher_n_jobs: 3 # Number of trials in parallel with Optuna
 
 REW_ALPHA_COEF: 0.2 
 REW_BETA_COEF: 0
-REW_ARMS_STRENGTH_OPTION: False # Forgot to activate it :-() => Expe n°6
+REW_ARMS_STRENGTH_OPTION: True
 
 # learning_rate=0.0003, n_steps=2048, batch_size=64, n_epochs=10, gamma=0.99, gae_lambda=0.95, clip_range=0.2, clip_range_vf=None, normalize_advantage=True, 
 # ent_coef=0.0, vf_coef=0.5, max_grad_norm=0.5, use_sde=False, sde_sample_freq=-1, rollout_buffer_class=None, rollout_buffer_kwargs=None, 

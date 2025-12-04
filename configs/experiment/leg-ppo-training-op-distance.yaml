@@ -1,0 +1,36 @@
+# @package _global_
+defaults:
+  - base_legacy
+  - override /tuner: ppo
+  - override /tuner/reward: optimal_policy_distance
+  - _self_
+
+info: Legacy dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+
+datasets_prefix: workloads_orig  # Workloads selection
+
+REW_ALPHA_COEF: -1 
+REW_BETA_COEF: -1
+REW_ARMS_STRENGTH_OPTION: False
+wrapper:
+  env:
+    on_terminate: 3 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
+
+# In V7 - New optimal hyper-parameters (with Optuna trained on Datasetv15sall)
+learning_rate: 0.0006
+batch_size: 256
+normalize_advantage: true
+n_epochs: 24
+gamma: 0.96
+use_sde: false
+
+tuner:
+  TRAINING_COVERAGE: 14
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+      use_sde: ${use_sde}

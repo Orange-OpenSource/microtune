@@ -16,7 +16,8 @@ import numpy as np
 from pkg.datasource.dataset import ADBMSDataSetEntryContextSelector
 from pkg.actions import Actions
 
-# Note: It is possible to Disable ALPHA and BETA effect by setting them to -1.
+# Note: It is possible to Disable ALPHA and BETA effect by setting them to -1. BETA apply to reward on ARM STAY. ALPHA apply to both UP with ALPHA factor and DOWN with (1-ALPHA) factor.
+# strengthened_action: A reward option to use ARMs UP & DOWN index as a (booster) coeficient in the rewarding computation. Do not apply to ARM STAY, as its index is always 0
 class RewardNA():
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
         self.actions = Actions(action_minmax)
@@ -65,6 +66,7 @@ class RewardNA():
 
     def reset(self, ds: ADBMSDataSetEntryContextSelector):
         pass
+
     def compute(self, ds: ADBMSDataSetEntryContextSelector):
         pass
     
@@ -532,8 +534,8 @@ class ADBMSBufferCacheRewardContinousSymetrieDownCoeffHybridDiscrete(RewardDownS
         
 ### adjustable idelta decale
 class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownStayUp):
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, move_idelta=0):
-        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta, e)   
+    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, move_idelta=0, strengthened_action=False):
+        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta, strengthened_action=strengthened_action)   
         self.move_idelta = move_idelta
         # to avoid divsision by 0 error, and when move_idelta > 1, the effect is the same for all
         if self.move_idelta == 1:
@@ -575,14 +577,53 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownS
         ds.applyLambda2actions(self.actions.vals(), rew)
 
 class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
-        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
+    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
+        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta, strengthened_action=strengthened_action)
+        self._op_usla = 0
+        self._op_cram = 0
+        self._op_ob_usla = 0 # Over budget USLA
+        self._op_ob_cram = 0 # Over budget CRAM
+        self._used_budget = 0
+        self._usla = 0
+        self._cram = 0
+
+    def _get_cur_perf(self, cur_usla, cur_cram):
+        return ((cur_usla - self._op_usla) ** 2 + (cur_cram - self._op_cram) ** 2) ** 0.5
 
     def reset(self, ds: ADBMSDataSetEntryContextSelector):
-        pass
+        self._op_budget, self._op_usla, self._op_cram, self._op_ob_usla, self._op_ob_cram = ds.getPolicyOptimalPerf01Inficators()
+        #print(f'Reset RewardDistanceToOptimalPolicy: OpBudget:{self._op_budget} OpUSLA:{self._op_usla} OpCRAM:{self._op_cram} OpOBUSLA:{self._op_ob_usla} OpOBCRAM:{self._op_ob_cram}')
+        self._used_budget = 0
+        self._usla = 0
+        self._cram = 0
 
+    # Compute reward for each possible actions at the current state, BEFORE applying any actionany action applied
     def compute(self, ds: ADBMSDataSetEntryContextSelector):
-        pass
+        #self._used_budget += 1
+        #if self._used_budget >= self._op_budget:
+        #    self._op_usla += self._op_ob_usla
+        #    self._op_cram += self._op_ob_cram
+
+        self._cram += ds.getBufferSizeMB()
+        _, idelta, _ = ds.getIPerfIndicators()
+        if idelta < 0:
+            self._usla += 1
+
+        dt_1 = self._get_cur_perf(self._usla, self._cram)
+        #print(f'Compute current perf: USLA:{self._usla} CRAM:{self._cram} DT1:{dt_1}')
+
+        # Do not update current usla and cram here, as no action has been applied yet. Just compute the reward for each possible action
+        def rew(idx, bufincr):
+            _, idelta, _ = ds.getIPerfIndicators()
+            if idelta < 0:
+                dt = self._get_cur_perf(self._usla+1, self._cram + ds.getBufferSizeMB())
+            else:
+                dt = self._get_cur_perf(self._usla, self._cram + ds.getBufferSizeMB())
+            self._action_rewards[idx] = dt_1 - dt
+            #print(f'Compute next rewards: BUF: {ds.getBufferSizeMB()}MB Action:{bufincr} Reward:{self._action_rewards[idx]} DT1:{dt_1} DT:{dt}')
+
+        # Apply the reward computation for each possible action. self.actions_vals provides all possible actions. 
+        ds.applyLambda2actions(self.actions.vals(), rew)
 
 
 
