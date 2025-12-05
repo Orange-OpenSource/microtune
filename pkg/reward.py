@@ -588,7 +588,11 @@ class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
         # Do not update current usla and cram here, as no action has been applied yet. Just compute the reward for each possible action
         def rew(idx, bufincr):
             dt = ds.getDistanceToPolicyOptimal()
-            self._action_rewards[idx] = dt_1 - dt
+            rew = dt_1 - dt
+            # Enforce SLA VIOLATION penalty on DOWN action
+            if bufincr < 0 and dt < 0:
+                rew -= 1
+            self._action_rewards[idx] = rew
             #print(f'Compute distance to PO: DT:{dt} Rew:{self._action_rewards[idx]}')
 
         # Apply the reward computation for each possible action. self.actions_vals provides all possible actions. 

@@ -1,0 +1,49 @@
+# @package _global_
+defaults:
+  - base_simu
+  - override /datasets: traintest-simu
+  - override /tuner: ppo
+  - override /tuner/reward: optimal_policy_distance
+  - override /tuner/env/observations: simu
+  - _self_
+
+info: Original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + OptimalPolicy Distance reward 
+
+datasets_prefix: workloads_orig  # Workloads selection
+
+# Adapted reward coefficients for Optimal Policy Distance reward ?
+REW_ALPHA_COEF: -1 
+REW_BETA_COEF: -1
+REW_ARMS_STRENGTH_OPTION: False # Do not emphasize arm's strength in the reward computation
+wrapper:
+  env:
+    on_terminate: 3 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
+
+learning_rate: 0.0001
+batch_size: 64
+normalize_advantage: false
+n_epochs: 24
+gamma: 0.86
+use_sde: false
+
+tuner:
+  TRAINING_COVERAGE: 8
+  TRAINING_STEPS_PER_EPISODE: 65
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+      use_sde: ${use_sde}
+
+n_jobs: 1
+hydra:
+  sweeper:
+    params:
+      RND_SEED: range(4242, 4243, step=1)
+#      REW_ALPHA_COEF: range(0.6, 0.9, step=0.1)
+#      REW_BETA_COEF: choice(0, 0.1)
+#  launcher:
+#    n_jobs: 1 # Max jobs in //
