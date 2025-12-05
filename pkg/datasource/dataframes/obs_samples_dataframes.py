@@ -75,9 +75,9 @@ class ObsSamplesDF():
 
         return df_filtered_drop_0_mem
 
-    # Add new columns ["OP_BUDGET01", "OP_USLA01", "OP_CRAM01", "OP_OB_USLA01", "OP_OB_CRAM01"] to a performance based on 0% QPS objective and 100% Latency objective
-    # Add new columns ["OP_BUDGET19", "OP_USLA19", "OP_CRAM19", "OP_OB_USLA19", "OP_OB_CRAM19"] to a performance based on 10% QPS objective and 90% Latency objective
-    def _add_optimal_policy_colums(self, df, buf_sizes_list, weigth_name="01"):
+    # By default, Add new columns ["OP_BUDGET01", "OP_USLA01", "OP_CRAM01", "OP_OB_USLA01", "OP_OB_CRAM01"] to a performance based on 0% QPS objective and 100% Latency objective
+    # With weigths_name="19" Add new columns ["OP_BUDGET19", "OP_USLA19", "OP_CRAM19", "OP_OB_USLA19", "OP_OB_CRAM19"] to a performance based on 10% QPS objective and 90% Latency objective
+    def _add_optimal_policy_colums(self, df, buf_sizes_list, weigths_name="01"):
         buf_sizes_list_len = len(buf_sizes_list)
         buf_mb = np.array(buf_sizes_list, int)//1024//1024
 
@@ -111,7 +111,7 @@ class ObsSamplesDF():
             return usla4overbudget
 
         def computeOptimalPolicyPerformance(row, columns):
-            sla_tipping = int(row["sla_tipping"+weigth_name])
+            sla_tipping = int(row["sla_tipping"+weigths_name])
             buf_size_idx = int(row["buf_size_idx"])
 
             op_budget, start, end = compute_OP_BUDGET(sla_tipping, buf_size_idx)
@@ -124,14 +124,14 @@ class ObsSamplesDF():
             
             return pd.Series(res, index=columns)
 
-        new_columns = ["OP_BUDGET"+weigth_name, "OP_USLA"+weigth_name, "OP_CRAM"+weigth_name, "OP_OB_USLA"+weigth_name, "OP_OB_CRAM"+weigth_name]
+        new_columns = ["OP_BUDGET"+weigths_name, "OP_USLA"+weigths_name, "OP_CRAM"+weigths_name, "OP_OB_USLA"+weigths_name, "OP_OB_CRAM"+weigths_name]
         print(f"Adding Optimal Policy Performance columns {new_columns} for ALL workloads with {buf_sizes_list_len} buffer sizes...")
         df[new_columns] = df.apply(lambda row: computeOptimalPolicyPerformance(row, new_columns), axis=1) #, result_type='expand' )
 
 
     # Concatenates N times the dataframe with the added column 'perf_target_level' at different values between 0 to 100%
-    def add_perf_target_level(self, df, objective_margin):
-        weigths_desc = [[0, 1, "01"], [0.1, 0.9, "19"]] # Weight WPS, Weigth LAT, Weigth name
+    # Weigth Desc is [Weight QPS, Weigth LAT, Weigth name]. Examples: [0, 1, "01"], or [0.1, 0.9, "19"]
+    def add_perf_target_level(self, df, objective_margin, weigths_desc=[0, 1, "01"]):
         workloads =  df['combined_column'].unique().tolist()
 
         buf_sizes_list = df["buf_size"].unique().tolist()
@@ -148,43 +148,42 @@ class ObsSamplesDF():
 
                 df["latency_threshold"] = df.apply(lambda row: (1.-row["perf_target_level"])*(row["latency_mean_max"] - row["latency_mean_min"]), axis=1)
 
-                for weigth in weigths_desc:
-                    wqps = weigth[0]
-                    wlat = weigth[1]
-                    wname = weigth[2]
+                weigth_qps = weigths_desc[0]
+                weigth_lat = weigths_desc[1]
+                weigths = weigths_desc[2]
 
-                    df["iperf"+wname] = df.apply(lambda row: (row["iqps"]*wqps+row["ilat"]*wlat), axis=1)
-                    df["delta_perf_target"+wname] = df.apply(lambda row: (row["iperf"+wname] - row["perf_target_level"]), axis=1)
+                df["iperf"+weigths] = df.apply(lambda row: (row["iqps"]*weigth_qps+row["ilat"]*weigth_lat), axis=1)
+                df["delta_perf_target"+weigths] = df.apply(lambda row: (row["iperf"+weigths] - row["perf_target_level"]), axis=1)
 
-                    for wl in workloads:
-                        wldf = df[df['combined_column'] == wl]
-                        arm0_count = wldf[wldf["delta_perf_target"+wname] > objective_gap]["buf_size"].count()     # Down
-                        arm1_count = wldf[(wldf["delta_perf_target"+wname] >= 0.) & (wldf["delta_perf_target"+wname] <= objective_gap)]["buf_size"].count()     # Stay
-                        arm2_count = wldf[wldf["delta_perf_target"+wname] < 0.]["buf_size"].count()     # Up
-                        if arm0_count> 0 and arm1_count == 0 and arm2_count >= 0:
-                            arm1_count = 1  # Stay
-                            arm0_count -= 1 # Down
-                        elif arm1_count > self.MAX_STAY_PER_WORKLOAD:
-                            arm0_count += arm1_count -self.MAX_STAY_PER_WORKLOAD
-                            arm1_count = self.MAX_STAY_PER_WORKLOAD
-                        
-                        idx0 = wldf.index[wldf['combined_column'] == wl][0] # Dummy selection on column 'combined_column', but necessary...
-                        idxp = wldf.index[wldf["delta_perf_target"+wname] <0].min() # Use min() in case where there are multiple tipping points, choose the one with the higher buffer value
-                        # No tipping point (always OVER)? Take last index (smallest buffer size) 
-                        if idxp is np.NaN:
-                            idxp=idx0 + buf_values_count
-                        df.loc[df['combined_column'] == wl, 'sla_tipping'+wname] = int(idxp-idx0)
-                        #wldf['sla_tipping'+wname] = int(idxp-idx0)
+                for wl in workloads:
+                    wldf = df[df['combined_column'] == wl]
+                    arm0_count = wldf[wldf["delta_perf_target"+weigths] > objective_gap]["buf_size"].count()     # Down
+                    arm1_count = wldf[(wldf["delta_perf_target"+weigths] >= 0.) & (wldf["delta_perf_target"+weigths] <= objective_gap)]["buf_size"].count()     # Stay
+                    arm2_count = wldf[wldf["delta_perf_target"+weigths] < 0.]["buf_size"].count()     # Up
+                    if arm0_count> 0 and arm1_count == 0 and arm2_count >= 0:
+                        arm1_count = 1  # Stay
+                        arm0_count -= 1 # Down
+                    elif arm1_count > self.MAX_STAY_PER_WORKLOAD:
+                        arm0_count += arm1_count -self.MAX_STAY_PER_WORKLOAD
+                        arm1_count = self.MAX_STAY_PER_WORKLOAD
+                    
+                    idx0 = wldf.index[wldf['combined_column'] == wl][0] # Dummy selection on column 'combined_column', but necessary...
+                    idxp = wldf.index[wldf["delta_perf_target"+weigths] <0].min() # Use min() in case where there are multiple tipping points, choose the one with the higher buffer value
+                    # No tipping point (always OVER)? Take last index (smallest buffer size) 
+                    if idxp is np.NaN:
+                        idxp=idx0 + buf_values_count
+                    df.loc[df['combined_column'] == wl, 'sla_tipping'+weigths] = int(idxp-idx0)
+                    #wldf['sla_tipping'+weigths] = int(idxp-idx0)
 
-                        wldf['ARM0_'+wname] = arm0_count
-                        wldf['ARM1_'+wname] = arm1_count
-                        wldf['ARM2_'+wname] = arm2_count
-                        # Slower version without copy_on_write mode
-                        #df.loc[df['combined_column'] == wl, 'ARM0_'+wname] = arm0_count
-                        #df.loc[df['combined_column'] == wl, 'ARM1_'+wname] = arm1_count
-                        #df.loc[df['combined_column'] == wl, 'ARM2_'+wname] = arm2_count
+                    #wldf['ARM0_'+weigths] = arm0_count
+                    #wldf['ARM1_'+weigths] = arm1_count
+                    #wldf['ARM2_'+weigths] = arm2_count
+                    # Slower version without copy_on_write mode
+                    df.loc[df['combined_column'] == wl, 'ARM0_'+weigths] = arm0_count
+                    df.loc[df['combined_column'] == wl, 'ARM1_'+weigths] = arm1_count
+                    df.loc[df['combined_column'] == wl, 'ARM2_'+weigths] = arm2_count
 
-                    self._add_optimal_policy_colums(df, buf_sizes_list, wname) # Apply to all workloads
+                self._add_optimal_policy_colums(df, buf_sizes_list, weigths) # Apply to all workloads
                 
                 df_out = pd.concat([df_out, df.copy()], ignore_index=True)
         

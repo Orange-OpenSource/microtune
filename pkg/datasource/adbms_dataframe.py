@@ -237,6 +237,7 @@ class ADBMSDataFrameEntrySelector(ADBMSDataSetEntryContextSelector):
 #   - move(increment) - Change to a new current entry in the current group from a relative increment to the current position (index) 
 # By default, at the instanciation, the current default is the first entry in the dataset (index=0)
 # The reset(), move() and next() methods can ve overriden by a sub-class in order to implement a specific behaviour
+# qpslat_w (i.e QPS and Latency Weigths) is "01" or "19" and determine how the SLA target is computed. "01" is the default performance objective based on 0% based on QPS and 100% based on Latency. "19" is 10% based on QPS and 90% based on Latency.
 class ADBMSBufferCacheStates(ADBMSDataFrameEntrySelector):
     def __init__(self, df: DataFrame, group_id_field="", entry_id_field="", qpslat_w="01", seed=1, context_elems=None, normalize=False, with_scaler:MinMaxScaler=None):
         super().__init__(df, group_id_field, entry_id_field, seed, context_elems=context_elems, normalize=normalize, with_scaler=with_scaler)
@@ -283,10 +284,14 @@ class ADBMSBufferCacheStates(ADBMSDataFrameEntrySelector):
         return self.lat_gap, self._latgap_ms, self.lat_target    
 
     # Based on ["OP_BUDGET01", "OP_USLA01", "OP_CRAM01", "OP_OB_USLA01", "OP_OB_CRAM01"]
-    def getPolicyOptimalPerf01Inficators(self):
+    def getPolicyOptimalPerfIndicators(self):
         est = self.state()
-        return est["OP_BUDGET01"], est["OP_USLA01"], est["OP_CRAM01"], est["OP_OB_USLA01"], est["OP_OB_CRAM01"]
+        return est["OP_BUDGET"+self._qpslat_w], est["OP_USLA"+self._qpslat_w], est["OP_CRAM"+self._qpslat_w], est["OP_OB_USLA"+self._qpslat_w], est["OP_OB_CRAM"+self._qpslat_w]
 
+    # Return current Distance to Policy Optimal = OP_BUDGET + OP_USLA
+    def getDistanceToPolicyOptimal(self):
+        est = self.state()
+        return est["OP_BUDGET"+self._qpslat_w] + est["OP_USLA"+self._qpslat_w]
 
 ##
 # Specific implementation of selectors for ADBMS dataset from ObsSamples referential

@@ -14,7 +14,7 @@ defaults:
 # ORIGinal dataset
 dataset_orig_import_file: !!null  # Original, NOT simulated data from real observations
 orig:
-  pickles_prefix: ${datasets_prefix}
+  pickles_prefix: ${datasets_prefix}_orig
 
 # DBSAS generated dataset
 dataset_dbsas_import_file: !!null  # DBSAS generated dataset 

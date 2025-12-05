@@ -1,6 +1,7 @@
 # @package _global_
 defaults:
-  - base_optuna
+  - base
+  - optuna
   - override /tuner: ppo
   - override /tuner/actions: lessthreeplusthree      # The Min and Max action values. Here we have 7 arms: -3 up to +3
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta

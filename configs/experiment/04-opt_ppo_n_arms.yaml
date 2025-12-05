@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base_legacy
+  - base
   - optuna
   - override /tuner: ppo
   - override /tuner/env: continous_actions #discrete_actions
@@ -9,6 +9,9 @@ defaults:
   - _self_
 
 info: PPO hyper params optim with Optuna + rew=sigmoidhybriddiscretmoveidelta, fixed ALPHA=0.2 and BETA=0 + more arms (-10,+10)
+
+version: 16
+datasets_prefix: workloads_legacy
 
 n_seeds: 4
 n_jobs: 4 # Number of parallel trainings with different seed

@@ -242,14 +242,14 @@ class VSEnv(gym.Env):
         iperf, idelta, threshold = self.unwrapped.ds.getIPerfIndicators()  # Return IPERF, IDELTAPERF, IPERFTARGET
         state = self.unwrapped.ds.state()        
         lat = state.get("sysbench_filtered.latency_mean")
-        sla_tipping = state.get("sla_tipping"+self.unwrapped.ds.getQPSLatWeigths())
+        optimal_buf = state.get("OP_OB_CRAM"+self.unwrapped.ds.getQPSLatWeigths())
         lat = "NA" if lat is None else round(lat, 2)
 
         msg = f'S{str(self.unwrapped.cur_step).ljust(2)} Buf:{str(cur_buf_size).ljust(6)}MB Arm-{str(arm_name).ljust(3)}'
 #        msg += f'Rew:{str(round(rew,3)).ljust(6)} RegCumul:{str(round(self._reg_cumul,3)).ljust(7)} IRegCumul:{str(round(self._ireg_cumul,3)).ljust(7)}'
 #        msg += f' SLA-{self.sla.ljust(10)} IPERF{self.unwrapped.ds.getQPSLatWeigths()}/OBJ:{round(iperf,3)}/{threshold} IDELTA:{round(idelta,3)} LAT:{lat}ms'.ljust(66)
         msg += f'Rew:{str(round(rew,3)).ljust(6)} RegCumul:{str(round(self._reg_cumul,3)).ljust(7)}'
-        msg += f' SLA-{self.sla.ljust(10)} SLATipping:{str(round(sla_tipping,3)).ljust(7)} LAT:{lat}ms'.ljust(66)
+        msg += f' SLA-{self.sla.ljust(10)} OptimalBuf:{str(round(optimal_buf,3)).ljust(5)}MB LAT:{lat}ms'.ljust(66)
         if self.verbose>1:
             msg += self._obs_digest_dsp
         if self.verbose>2:
@@ -294,7 +294,7 @@ class VSEnv(gym.Env):
                 self._on_terminate_count += 1
                 rew += (self._on_terminate_count/(self._on_terminate+1)) #self._on_terminate
                 if self._on_terminate_count >= self._on_terminate:
-                    print(f'INFO!!!!!: Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
+                    self._logmsg(0, f'INFO!!!!!: Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
                     terminated=True
                     self.terminated_count += 1
 

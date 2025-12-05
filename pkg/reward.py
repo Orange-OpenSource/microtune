@@ -579,6 +579,24 @@ class ADBMSBufferCacheRewardSigmoidHybridDiscreteDownCoeffMoveIdelta(RewardDownS
 class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta, strengthened_action=strengthened_action)
+
+    # Compute reward for each possible actions at the current state, BEFORE applying any actionany action applied
+    def compute(self, ds: ADBMSDataSetEntryContextSelector):
+        dt_1 = ds.getDistanceToPolicyOptimal()
+        #print(f'Compute distance to PO: DT1:{dt_1}')
+
+        # Do not update current usla and cram here, as no action has been applied yet. Just compute the reward for each possible action
+        def rew(idx, bufincr):
+            dt = ds.getDistanceToPolicyOptimal()
+            self._action_rewards[idx] = dt_1 - dt
+            #print(f'Compute distance to PO: DT:{dt} Rew:{self._action_rewards[idx]}')
+
+        # Apply the reward computation for each possible action. self.actions_vals provides all possible actions. 
+        ds.applyLambda2actions(self.actions.vals(), rew)
+
+class ADBMSBufferCacheRewardDistanceToOptimalPolicyBAK(RewardDownStayUp):
+    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
+        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta, strengthened_action=strengthened_action)
         self._op_usla = 0
         self._op_cram = 0
         self._op_ob_usla = 0 # Over budget USLA
