@@ -589,9 +589,9 @@ class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
         def rew(idx, bufincr):
             dt = ds.getDistanceToPolicyOptimal()
             rew = dt_1 - dt
-            # Enforce SLA VIOLATION penalty on DOWN action
-            if bufincr < 0 and dt < 0:
-                rew -= 1
+            # Enforce penalty on DOWN action
+            #if bufincr < 0 and rew < 0:
+            #    rew += bufincr
             self._action_rewards[idx] = rew
             #print(f'Compute distance to PO: DT:{dt} Rew:{self._action_rewards[idx]}')
 

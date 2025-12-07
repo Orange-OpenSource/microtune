@@ -45,6 +45,7 @@ do
         cmd="mc cp -r ${s3_storage}/${picklefiles_disq_dir}/agent ${picklefiles_disq_path}/"
         echo "Retrieves models: ${cmd}"
         ${cmd}
+        sleep 30
     fi
 
     n_trials=$(ls -1 ${picklefiles_disq_path}/agent*.pickle | wc -l)
@@ -67,6 +68,7 @@ do
     ${cmd}    
     res=$?
     [ ${res} -ne 0 ] && echo "Error ${res}. expetestdisqualified" >> /dev/stderr
+
 done
 
 for ff in ${tmpcfglist}

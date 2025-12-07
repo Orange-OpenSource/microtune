@@ -5,10 +5,10 @@ defaults:
 
 dataset_orig_import_file: import/workloads_c098_full_11  # Original, NOT simulated data, with Uniform randtype only
 
-#datasets_prefix: workloads_legacy
+datasets_prefix: workloads_legacy
 
 orig:
-  pickles_prefix: ${datasets_prefix}_legacy
+  pickles_prefix: ${datasets_prefix}
   ratio: 0 # even clients for training & odd clients for tests (eval+tests)
   ratio_eval_test: 50
 #  seed: 42

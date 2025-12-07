@@ -2,10 +2,11 @@
 defaults:
   - base_simu
   - override /tuner: ppo
+  - override /tuner/env/state_selector@tuner.env.state_selector_train: df_fullrandom #df_randombuffer #df_fullsequential
   - override /tuner/reward: optimal_policy_distance
   - _self_
 
-info: Legacy dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+info: Legacy dataset, and fixed hyper-parameters + OptimalDistance reward + basic sweep on ALPHA BETA 
 
 version: 16
 datasets_prefix: workloads_legacy
@@ -35,3 +36,10 @@ tuner:
       n_epochs: ${n_epochs}
       gamma: ${gamma}
       use_sde: ${use_sde}
+
+hydra:
+  sweeper:
+    params:
+      RND_SEED: range(4242, 4244, step=1)
+      REW_ALPHA_COEF: range(0., 1, step=0.1)
+      REW_BETA_COEF: range(0., 1, step=0.1)

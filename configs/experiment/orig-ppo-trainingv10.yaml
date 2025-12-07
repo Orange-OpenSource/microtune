@@ -27,7 +27,7 @@ gamma: 0.86
 use_sde: false
 
 tuner:
-  TRAINING_COVERAGE: 8
+  TRAINING_COVERAGE: 12
   TRAINING_STEPS_PER_EPISODE: 65
   agent:
     policy:
@@ -43,6 +43,6 @@ hydra:
     params:
       RND_SEED: range(4242, 4244, step=1)
       REW_ALPHA_COEF: range(0.4, 1, step=0.1)
-      REW_BETA_COEF: range(0.2, 1, 0.2)
+      REW_BETA_COEF: range(0.2, 1, step=0.2)
 #  launcher:
 #    n_jobs: 1 # Max jobs in //

@@ -59,8 +59,8 @@ fi
 
 # Train and test experiments
 ./expetraintest.sh ${OPTUNA} ${expe_list} $*
-./expetestdisqualified.sh ${expe_list} $*
 ./expesimpletest.sh ${expe_list} $*
+./expetestdisqualified.sh ${expe_list} $*
 
 exit $?
 

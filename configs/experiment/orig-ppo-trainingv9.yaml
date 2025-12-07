@@ -43,7 +43,5 @@ hydra:
   sweeper:
     params:
       RND_SEED: range(4242, 4243, step=1)
-#      REW_ALPHA_COEF: range(0.6, 0.9, step=0.1)
-#      REW_BETA_COEF: choice(0, 0.1)
 #  launcher:
 #    n_jobs: 1 # Max jobs in //
