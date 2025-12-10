@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base_simu
+  - _base
 
 
 # Simu experiments on version 15 datasets with all randtypes and V9+V10+V12.1...V12.19 Datasets

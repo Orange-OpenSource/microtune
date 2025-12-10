@@ -1,6 +1,6 @@
 
-version: 16 # GKE experiments
-version_minor: 2
+version: 16 
+version_minor: 20
 
 pickles_dirname: E${version}_${version_minor}_${hydra:runtime.choices.experiment}
 

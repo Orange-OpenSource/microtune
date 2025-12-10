@@ -1,7 +1,7 @@
 # @package _global_
 defaults:
-  - base_simu
-
+  - _base
+  
 version: 13Su # Simu experiments on version 13 datasets with Gaussian randtype  
 version_minor: 0
 

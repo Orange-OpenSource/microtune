@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base_simu
+  - _base
 
 
 dataset_orig_import_file: import/original_dataset12g  # Original, NOT simulated data, with Uniform randtype only

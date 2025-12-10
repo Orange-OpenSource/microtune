@@ -1,7 +1,7 @@
 # @package _global_
 defaults:
-  - base
-  - optuna
+  - _base
+  - _sweep_optuna
   - override /tuner: ppo
   - override /tuner/env: continous_actions #discrete_actions
   - override /tuner/actions: lesstenplusten      # The Min and Max action values. Here we have 21 arms: -10 up to -1, 0 and then 1 up to 10

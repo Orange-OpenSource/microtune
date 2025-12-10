@@ -26,13 +26,18 @@ Then according to the configuration, it splits the `...full_XX.pickle` for the 3
 
 ## Dataset experiments
 
-- `config/experiment/dataset_legacy.yaml`
+- `config/experiment/dataset_legacy.yaml`, imports data used for Microtune's paper and prepare datasets
+- `config/experiment/dataset_legacyless63.yaml`, imports data `workloads_legacyless63.pickle` and prepare dataset
+- `config/experiment/dataset_simu_all.yaml`, import v15 dataset and simulated one. Prepare all of them for Orange internal experimentations.
 
 
 ## List of possible Dataset files to import
 
-Some files are private to Orange, but the one used in Microtune's paper is delivered as a release in this Git public repo. 
+Some files are private to Orange, but the one used in Microtune's paper is delivered as a Release in this Git public repo. 
 
 We describe here only the public datasets.
 
-- `workloads_c098_full_11.pickle`, all data
+- `workloads_c098_full_11.pickle`, all data v11 used in Microtune's paper and experiments E11. Source: Git Release
+- `workloads_full_15.pickle`, v15 is v11 data + additional workloads observations collected on Flexible Engine like v11. Source: please ask
+- `workloads_legacyless63.pickle`, v15 data while removing many workloads observations where SLA tipping point have a buffer index >= 63 (over 256MB). Source: please ask
+- Misc simulated data. Source: Orange S3, not available externally.

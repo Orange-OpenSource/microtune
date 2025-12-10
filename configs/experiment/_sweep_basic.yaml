@@ -1,0 +1,10 @@
+
+n_seeds: 1   # Nb seeds per trials
+n_jobs: 1 # Number of parallel trainings with different seed of a trial
+
+# Trial Sweeper over random seeds
+# RND_SEED is used by models for exploration and so on....
+hydra:
+  sweeper:
+    params:
+      RND_SEED: range(4242, 4252, step=1)

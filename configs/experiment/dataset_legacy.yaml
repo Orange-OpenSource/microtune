@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - base
+  - _base
 
 
 dataset_orig_import_file: import/workloads_c098_full_11  # Original, NOT simulated data, with Uniform randtype only
