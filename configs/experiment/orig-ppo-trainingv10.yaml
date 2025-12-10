@@ -15,9 +15,6 @@ datasets_prefix: workloads_orig  # Workloads selection
 REW_ALPHA_COEF: -1 
 REW_BETA_COEF: -1
 REW_ARMS_STRENGTH_OPTION: False # Do not emphasize arm's strength in the reward computation
-wrapper:
-  env:
-    on_terminate: 3 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
 
 learning_rate: 0.0001
 batch_size: 64
@@ -27,8 +24,12 @@ gamma: 0.86
 use_sde: false
 
 tuner:
-  TRAINING_COVERAGE: 12
+  TRAINING_COVERAGE: 10
   TRAINING_STEPS_PER_EPISODE: 65
+  env:
+    wrapper:
+      env:
+        on_terminate: 3 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
   agent:
     policy:
       learning_rate: ${learning_rate}
@@ -41,7 +42,7 @@ tuner:
 hydra:
   sweeper:
     params:
-      RND_SEED: range(4242, 4244, step=1)
+      RND_SEED: range(4242, 4254, step=1)
       REW_ALPHA_COEF: range(0.4, 1, step=0.1)
       REW_BETA_COEF: range(0.2, 1, step=0.2)
 #  launcher:

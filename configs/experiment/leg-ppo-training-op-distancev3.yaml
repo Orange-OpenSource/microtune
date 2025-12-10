@@ -6,17 +6,17 @@ defaults:
   - override /tuner/reward: optimal_policy_distance
   - _self_
 
-info: Legacy dataset, and fixed hyper-parameters + OptimalDistance reward + basic sweep on ALPHA BETA 
+info: Legacy dataset and removed some samples having sla_tipping01>=63, and fixed hyper-parameters + OptimalPolicyDistance reward, Truncated condition on real_action != action  
 
 version: 16
-datasets_prefix: workloads_legacy
+version_minor: 18
+datasets_prefix: workloads_legacyless63
 
-REW_ALPHA_COEF: -1 
-REW_BETA_COEF: -1
+REW_ALPHA_COEF: -1 # ALPHA coef on UP, (1-ALPHA) on DOWN 
+REW_BETA_COEF: -1 # BETA coef on STAY
 REW_ARMS_STRENGTH_OPTION: False
-wrapper:
-  env:
-    on_terminate: 3 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
+#n_seeds: 3  # Nb seeds per trials
+#n_jobs: 1 # Number of parallel trainings with different seed
 
 # In V7 - New optimal hyper-parameters (with Optuna trained on Datasetv15sall)
 learning_rate: 0.0006
@@ -28,6 +28,10 @@ use_sde: false
 
 tuner:
   TRAINING_COVERAGE: 12
+  env:
+    wrapper:
+      env:
+        on_terminate: -1 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
   agent:
     policy:
       learning_rate: ${learning_rate}
@@ -40,6 +44,4 @@ tuner:
 hydra:
   sweeper:
     params:
-      RND_SEED: range(4242, 4245, step=1)
-      REW_ALPHA_COEF: range(0., 1, step=0.2)
-      REW_BETA_COEF: range(0., 1, step=0.2)
+      RND_SEED: range(4242, 4248, step=1)

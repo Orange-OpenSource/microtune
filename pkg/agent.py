@@ -63,8 +63,15 @@ class VSAgent():
                 newobs, rew, terminated, truncated, info = env.step(action)
 
                 # Use reward information for the chosen arm to update
-                if update: # and not protect ?
-                    self.policy.update(action, rew, obs, newobs)
+                if update:
+                    if not truncated and not react:
+                        self.policy.update(action, rew, obs, newobs)
+                else:
+                    # In "Test" case (no update), the only reason to truncate is when we reach the end of Episode....
+                    eoep_reason = info.get("eoep_reason", action)
+                    if truncated and not eoep_reason:
+                        truncated = False
+                        
                 
                 obs = newobs
 

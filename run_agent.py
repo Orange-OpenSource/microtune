@@ -174,7 +174,7 @@ def run_agent_by_seed(cfg, trial, sid, df_train, df_eval, label) -> dict:
         log.info(f"No training for {agent.policy.name}")
 
     # /!\ Evaluate with evaluation DataSet ???
-    log.info(f'Evaluate trained model with sid:{sid} seed:{RND_SEED} Ep count: {cfg.tuner.TEST_EPISODES_COUNT}')
+    log.info(f'Evaluate trained model Trial:{trial} with sid:{sid} seed:{RND_SEED} Ep count: {cfg.tuner.TEST_EPISODES_COUNT}')
     env_eval = hu.instantiate_env_wrapper_wa(cfg.tuner.env, to_train=False, dataframe=df_eval, with_scaler=minmax_scaler, perf_meter_args={"name": f'{agent.policy.shortname}T{trial}S{sid}', "stage": "eval"})
     agent.predict(env_eval, episodes_max=cfg.tuner.TEST_EPISODES_COUNT, deterministic=cfg.DETERMINISTIC, verbose=cfg.xtraverbosity, label=label)
 

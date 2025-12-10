@@ -117,11 +117,12 @@ class RewardDownStayUp(RewardNA):
         rew, reg = self._getRewReg(action)
 #                    parm = 0.0000000001 if parm == 0 else parm
 #                    rew /= parm
-        if action < 0:
+
+        if action < 0: # DOWN
             rew *= self._alpha_inv * self._down_factor
-        elif action == 0:
+        elif action == 0: # STAY
             rew *= self._beta
-        else:
+        else: # UP
             rew *= self._alpha * self._up_factor
 
         return rew, reg, 1 
@@ -598,6 +599,9 @@ class ADBMSBufferCacheRewardDistanceToOptimalPolicy(RewardDownStayUp):
         # Apply the reward computation for each possible action. self.actions_vals provides all possible actions. 
         ds.applyLambda2actions(self.actions.vals(), rew)
 
+
+
+# OLD OLD OLD
 class ADBMSBufferCacheRewardDistanceToOptimalPolicyBAK(RewardDownStayUp):
     def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1, strengthened_action=False):
         super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta, strengthened_action=strengthened_action)
@@ -646,89 +650,4 @@ class ADBMSBufferCacheRewardDistanceToOptimalPolicyBAK(RewardDownStayUp):
 
         # Apply the reward computation for each possible action. self.actions_vals provides all possible actions. 
         ds.applyLambda2actions(self.actions.vals(), rew)
-
-
-
-## new reward NOT COMPLETELY IMPLEMENTED => DUMMIES
-# getIPerfIndicatorsWithAction(self, Action) shold be implemented in the ds ?
-
-class ADBMSBufferCacheRewardNormal(RewardDownStayUp):
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
-        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
-        
-    def compute(self, ds: ADBMSDataSetEntryContextSelector):
-        def rew(idx, bufincr):
-            iperf_cur, idelta_cur, threshold  = ds.getIPerfIndicators()
-            iperf_next, idelta_next, threshold = ds.getIPerfIndicatorsWithAction(bufincr) #which is which?
-            reward = 0
-            if bufincr > 0 :
-                reward -= 1
-            if bufincr < 0 :
-                reward += 1
-            if idelta_next < 0 and  idelta_cur < 0 and idelta_next > idelta_cur :
-                reward += 2
-            if idelta_next < 0 and  idelta_cur < 0 and idelta_next < idelta_cur :
-                reward -= 10
-            if idelta_cur == idelta_next and 0 < idelta_next and idelta_next < threshold:
-                reward += 3
-
-            self._action_rewards[idx]=reward
-        
-
-
-class ADBMSBufferCacheRewardNormal2(RewardDownStayUp):
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
-        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
-        
-    def compute(self, ds: ADBMSDataSetEntryContextSelector):
-        def rew(idx, bufincr):
-            iperf_cur, idelta_cur, threshold  = ds.getIPerfIndicators()
-            iperf_next, idelta_next, threshold = ds.getIPerfIndicatorsWithAction(bufincr) #which is which?
-            reward = 0
-            if bufincr > 0 :
-                reward -= 1
-            if bufincr < 0 :
-                reward += 3
-            if idelta_next < 0 and  idelta_cur < 0 and idelta_next > idelta_cur :
-                reward += 4
-            if idelta_next < 0 and  idelta_cur < 0 and idelta_next < idelta_cur :
-                reward -= 10
-            if idelta_cur == idelta_next and 0 < idelta_next and idelta_next < threshold:
-                reward += 3
-
-            self._action_rewards[idx]=reward
-        
-# exp2 constats: 1. not many violations, which is good, still too much under sla, and overallocation
-# to deal with too much under sla: more reward for increase? 
-# to deal with over allocation: more reward for decrease
-# contradictoire!! 
-# what about intorducing a tolerance
-# needs to make the training sequence longer, ask Patrick
-
-
-class ADBMSBufferCacheRewardNormal3(RewardDownStayUp):
-    def __init__(self, action_minmax=(-1,1), alpha=-1, beta=-1):
-        super().__init__(action_minmax=action_minmax, alpha=alpha, beta=beta)            
-        
-    def compute(self, ds: ADBMSDataSetEntryContextSelector):
-        def rew(idx, bufincr):
-            iperf_cur, idelta_cur, threshold  = ds.getIPerfIndicators()
-            iperf_next, idelta_next, threshold = ds.getIPerfIndicatorsWithAction(bufincr) #which is which?
-            reward = 0
-            if bufincr > 0 :
-                reward -= 1
-            if bufincr < 0 :
-                reward += 3
-            if idelta_next >= 0 and  idelta_cur < 0 :
-                reward += 10
-            if idelta_next < 0 and  idelta_cur >= 0 :
-                reward -= 20
-            if idelta_next < 0 and  idelta_cur < 0 and idelta_next > idelta_cur :
-                reward += 4
-            if idelta_next < 0 and  idelta_cur < 0 and idelta_next < idelta_cur :
-                reward -= 10
-            if idelta_cur == idelta_next and 0 <= idelta_next and idelta_next < threshold:
-                reward += 3
-
-            self._action_rewards[idx]=reward
 

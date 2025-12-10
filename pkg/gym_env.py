@@ -160,7 +160,7 @@ class VSEnv(gym.Env):
 
             self._obs_digest_dsp = f'{name}:{new_digest}'
 
-    def _info(self, regret=0, pact=1, terminated=False, truncated=False):
+    def _info(self, regret=0, pact=1, terminated=False, truncated=False, eoep_reason=False):
         cur_buf_size_mb = self.getBufferSizeMB()
         return {
             "react": 1 if self._notify_react and self.sla == "VIOLATION" else 0,
@@ -172,7 +172,8 @@ class VSEnv(gym.Env):
             "delta_perf": self.delta_perf,
             "buf_size_mb": cur_buf_size_mb,
             "mem_gain": self._bufsize_dba - cur_buf_size_mb,
-            "TimeLimit.truncated": truncated and not terminated,
+            "TimeLimit.truncated": truncated and eoep_reason,
+            "eoep_reason": eoep_reason, # End of Episode reason, i.e. max steps reached, normaly acts as truncated. However episode can be truncated for other reasons
         }
     
     def _msg_init(self, *args):
@@ -285,21 +286,23 @@ class VSEnv(gym.Env):
 
         self._ireg_cumul += abs(self.delta_perf) # Cumulative IPERF Regret per episode
 
-        truncated = True if self.cur_step+1 >= self.max_steps_per_episode else False
         terminated = False
+        eoep_reason = True if self.cur_step+1 >= self.max_steps_per_episode else False
+        truncated = True if eoep_reason or action != real_action else False
+
         # Manage Episode termination ?
         if self._on_terminate >= 0:
             # On count condition, Stop the episode, if STAY action is done without any regret!
             if action == 0 and regret == 0:
                 self._on_terminate_count += 1
                 rew += self._on_terminate_count #(self._on_terminate_count/(self._on_terminate+1)) #self._on_terminate
-                self._logmsg(0, f'INFO!!!!!: Prepare to Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
+                self._logmsg(0, f'TERMINATE!: Prepare to Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
                 if self._on_terminate_count >= self._on_terminate:
-                    self._logmsg(0, f'INFO!!!!!: Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
+                    self._logmsg(0, f'TERMINATE!: Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
                     terminated=True
                     self.terminated_count += 1
 
-        return obs, rew, terminated, truncated, self._info(regret=regret, pact=pact, terminated=terminated, truncated=truncated) #obs, reward, terminated, truncated, info
+        return obs, rew, terminated, truncated, self._info(regret=regret, pact=pact, terminated=terminated, truncated=truncated, eoep_reason=eoep_reason) #obs, reward, terminated, truncated, info
 
     def render(self):
         if self.render_mode == "human":
