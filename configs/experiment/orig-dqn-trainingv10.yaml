@@ -3,28 +3,27 @@ defaults:
   - _base
   - _sweep_basic
 #  - override /datasets: traintest-simu
-  - override /tuner: ppo
+  - override /tuner: dqn
   - override /tuner/reward: optimal_policy_distance
 #  - override /tuner/env/observations: simu
   - _self_
 
-info: TABDDPM (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
+info: Original (live) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
 
 # Workloads selection
 datasets:
-  pickles_prefix: ${datasets_prefix}_tabddpm
+  pickles_prefix: ${datasets_prefix}_orig
 
 # Adapted reward coefficients for Optimal Policy Distance reward ?
 REW_ALPHA_COEF: 0.09 
 REW_BETA_COEF: 0.6
 REW_ARMS_STRENGTH_OPTION: False # Do not emphasize arm's strength in the reward computation
 
-learning_rate: 0.0004
-batch_size: 128
-normalize_advantage: false
-n_epochs: 3
-gamma: 0.94
-use_sde: false
+# Best gamma evaluation is 0.76 (learning_rate=0.00054 batch_size=64 train_freq=128)
+learning_rate: 0.00054
+batch_size: 64
+train_freq: 128
+gamma: 0.76
 
 tuner:
   TRAINING_COVERAGE: 6
@@ -33,7 +32,6 @@ tuner:
     policy:
       learning_rate: ${learning_rate}
       batch_size: ${batch_size}
-      normalize_advantage: ${normalize_advantage}
-      n_epochs: ${n_epochs}
       gamma: ${gamma}
-      use_sde: ${use_sde}
+      train_freq: ${train_freq}
+#      use_sde: ${use_sde}

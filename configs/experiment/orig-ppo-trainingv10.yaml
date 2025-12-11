@@ -10,7 +10,9 @@ defaults:
 
 info: Original (live) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
 
-datasets_prefix: workloads_orig  # Workloads selection
+# Workloads selection
+datasets:
+  pickles_prefix: ${datasets_prefix}_orig
 
 # Adapted reward coefficients for Optimal Policy Distance reward ?
 REW_ALPHA_COEF: 0.09 

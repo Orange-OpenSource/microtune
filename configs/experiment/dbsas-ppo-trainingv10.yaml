@@ -10,7 +10,9 @@ defaults:
 
 info: DBSAS (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
 
-datasets_prefix: workloads_dbsas  # Workloads selection
+# Workloads selection
+datasets:
+  pickles_prefix: ${datasets_prefix}_dbsas
 
 # Adapted reward coefficients for Optimal Policy Distance reward ?
 REW_ALPHA_COEF: 0.09 
