@@ -9,6 +9,7 @@ NORMALIZE_OBS: False
 TEST_USE_SLA_PROTECT: False   # Must be like that (False)
 TEST_EPISODES_COUNT: -2    # If <0, abs(EPISODES_COUNT) is a multiple of workloads count 
 TEST_STEPS_PER_EPISODE: -2 # If val<0, abs(val) will be a multiple of buffer values count
+DEBUG_MODE: False             # Show context/observations passed to the policy, ...
 
 # Base config for all baselines
 agent:

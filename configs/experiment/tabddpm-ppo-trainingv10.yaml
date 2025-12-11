@@ -8,9 +8,9 @@ defaults:
 #  - override /tuner/env/observations: simu
   - _self_
 
-info: Original (live) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
+info: TABDDPM (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
 
-datasets_prefix: workloads_orig  # Workloads selection
+datasets_prefix: workloads_tabddpm  # Workloads selection
 
 # Adapted reward coefficients for Optimal Policy Distance reward ?
 REW_ALPHA_COEF: 0.09 
@@ -35,4 +35,3 @@ tuner:
       n_epochs: ${n_epochs}
       gamma: ${gamma}
       use_sde: ${use_sde}
-

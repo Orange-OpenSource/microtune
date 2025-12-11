@@ -3,7 +3,7 @@ defaults:
   - _base
 
 
-dataset_orig_import_file: import/workloads_legacyless63  # Original legacy (on FE) workloads, NOT simulated data, with all randtypes while removing some samples with sla_tipping01 >=63
+dataset_orig_import_file: import/workloads_feless63_15  # Original legacy (on FE) workloads, NOT simulated data, with all randtypes while removing some samples with sla_tipping01 >=63
 
 datasets_prefix: workloads_legacyless63
 

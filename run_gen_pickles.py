@@ -32,7 +32,7 @@ log = logging.getLogger(__name__)
 
 # set_iperf indicates whether to compute the 'iperf' column or not and then allows computation of DOWN, STAY, UP arms counts
 # iperf column MUST be computed while the Reward functions use ds.
-def save_full_dataset(name, import_file, cfg_ds, reset_combined_col = False, results= None):
+def save_full_dataset(name, import_file, cfg_ds, reset_combined_col = False, results= None, objective_margin=0.1):
     version=cfg_ds.version
     pickles_prefix=cfg_ds.pickles_prefix
 
@@ -50,7 +50,7 @@ def save_full_dataset(name, import_file, cfg_ds, reset_combined_col = False, res
     df['tables'] = df['tables'].round().astype(int)   # HACK HACK HACK! for TABDDPM datasets where wl_clients is float instead of int
     df['wl_clients'] = df['wl_clients'].round().astype(int)   # HACK HACK HACK! for CVAE and TABDDPM datasets where wl_clients is float instead of int
 
-    df = obss.fixColumns(df, combined_col=reset_combined_col) 
+    df = obss.fixColumns(df, objective_margin=objective_margin, combined_col=reset_combined_col) 
 
     log.info(f"DF{name} perf_target_level: {df['perf_target_level'].unique().tolist()}")
     log.info(f"DF{name} #col:{len(df.columns.values.tolist())} #lines:{df.shape[0]}")
@@ -206,7 +206,7 @@ def run(cfg: DictConfig) -> float: #Tuple[float, float]:
     # Gen ORIG full dataset file ? Else assume a full ORIG dataset pickle file is already present
     if "dataset_orig_import_file" in cfg and cfg.dataset_orig_import_file is not None:
         log.info(f'Loading DFORIG dataset from {cfg.dataset_orig_import_file} and save full version...')
-        dforig, workloads_orig = save_full_dataset("ORIG", cfg.dataset_orig_import_file, cfg.orig, reset_combined_col=True, results=stats_res)
+        dforig, workloads_orig = save_full_dataset("ORIG", cfg.dataset_orig_import_file, cfg.orig, reset_combined_col=True, results=stats_res, objective_margin=cfg.objective_margin)
         display_workloads_occurences(workloads_orig)
         db_size_mb_lst = dforig["db_size_mb"].unique().tolist()
         print("DFORIG DB SIZE MB", db_size_mb_lst, len(db_size_mb_lst))
@@ -229,9 +229,9 @@ def run(cfg: DictConfig) -> float: #Tuple[float, float]:
         for simu in list_datasets:
             cfg_ds = simu["cfg_ds"]
 
-            if cfg_ds is not None:
+            if cfg_ds is not None and simu["import_file"]:
                 log.info(f'Loading DF{simu["name"]} dataset from {simu["import_file"]} and save full version...')
-                _, workloads = save_full_dataset(simu["name"], simu["import_file"], cfg_ds, reset_combined_col=True, results=stats_res)
+                _, workloads = save_full_dataset(simu["name"], simu["import_file"], cfg_ds, reset_combined_col=True, results=stats_res, objective_margin=cfg.objective_margin)
                 s_workloads = sorted(workloads)
                 s_workloads_orig = sorted(workloads_orig)
                 if s_workloads != s_workloads_orig:

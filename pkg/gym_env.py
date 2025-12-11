@@ -295,12 +295,11 @@ class VSEnv(gym.Env):
             # On count condition, Stop the episode, if STAY action is done without any regret!
             if action == 0 and regret == 0:
                 self._on_terminate_count += 1
-                rew += self._on_terminate_count #(self._on_terminate_count/(self._on_terminate+1)) #self._on_terminate
+                rew += self._on_terminate_count*2 #(self._on_terminate_count/(self._on_terminate+1)) #self._on_terminate
                 self._logmsg(0, f'TERMINATE!: Prepare to Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
                 if self._on_terminate_count >= self._on_terminate:
                     self._logmsg(0, f'TERMINATE!: Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
                     terminated=True
-                    self.terminated_count += 1
 
         return obs, rew, terminated, truncated, self._info(regret=regret, pact=pact, terminated=terminated, truncated=truncated, eoep_reason=eoep_reason) #obs, reward, terminated, truncated, info
 

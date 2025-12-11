@@ -58,6 +58,7 @@ class BasicPolicy(CtxPolicy):
             print(f"ContextDict:{cd}")
 
         latency_perf_range = context[4]-context[3] # LATMAX - LATMIN
+#        if context[0] <= context[1] - 0.0020000000000000018*latency_perf_range : # SLA OVER CUR_LAT <= TRESHOLD - OBJGAP*(LATMAX-LATMIN) 
         if context[0] <= context[1] - context[2]*latency_perf_range : # SLA OVER CUR_LAT <= TRESHOLD - OBJGAP*(LATMAX-LATMIN) 
             #Down arm
             return self.getDownArmIndex(boost=0)

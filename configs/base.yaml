@@ -1,10 +1,10 @@
 
 defaults:
 #  - datasets: traintest-full
-#  - override /hydra/sweeper: basic
+  - override /hydra/sweeper: basic
   - _self_
 
-version: 14  # Config version. First MariaDB's collection of data obtained on GKE.
+version: 15  # Config version. First MariaDB's collection of data obtained on GKE.
 datasets_prefix: workloads  # Workloads selection to be closed to monotonic ones (iperf=0.98 is not crossed twice)
 version_minor: 1
 
@@ -53,7 +53,14 @@ hydra:
 #          - seed
 
 hydra_launcher_n_jobs: 1 # Unused when hydra launcher is basic (or joblib?)
-verbosity: 0
+# verbosity:
+# >0: During Training: Env will display more infor at each episode
+# >1: During Training: Env will display more info at each step
+# >2: Policies will display the context/observations received on Arm selection function call
+verbosity: 0            # Set verbosity >1 and 
+# xtraverbosity:
+# >0: During Test/Eval: Env will display more infor at each episode
+# >1: During Test/Eval: Env will display more info at each step
 xtraverbosity: 0
 
 graph_renderer: None #browser  # "plotly_mimetype+notebook": Ex: png, jpg, svg, vscode or None
