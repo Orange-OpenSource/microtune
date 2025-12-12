@@ -1,0 +1,33 @@
+# @package _global_
+defaults:
+  - _base
+  - _sweep_basic
+  - override /datasets: traintest-simu
+  - override /tuner: ppo
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: simu
+  - _self_
+
+info: DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+
+datasets_prefix: workloads_tabddpm  # Workloads selection
+
+REW_ALPHA_COEF: 0.2
+REW_BETA_COEF: 0
+
+learning_rate: 0.0001
+batch_size: 64
+normalize_advantage: false
+n_epochs: 24
+gamma: 0.86
+
+tuner:
+  TRAINING_COVERAGE: 14
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+#      use_sde: ${use_sde}

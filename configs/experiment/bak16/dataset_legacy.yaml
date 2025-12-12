@@ -1,0 +1,20 @@
+# @package _global_
+defaults:
+  - _base
+  - override /datasets@orig: traintest-full     # BE CAREFULL to Use same selector in dataset's experimentations....
+
+
+datasets_prefix: workloads_legacy # BE CAREFULL to Use same prefix in dataset's experimentations....
+
+dataset_orig_import_file: import/workloads_fe_11  # Original, NOT simulated data, with Uniform randtype only
+#orig:
+#  seed: 42
+
+dataset_dbsas_import_file: !!null
+dbsas: !!null
+
+dataset_cvae_import_file: !!null
+cvae: !!null
+
+dataset_tabddpm_import_file: !!null #import/xxx  # TABDDPM simulated data with Uniform randtype only
+tabddpm: !!null

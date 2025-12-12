@@ -2,21 +2,28 @@
 defaults:
   - _base
   - _sweep_basic
-  - override /datasets: traintest-simu
+  - override /datasets: traintest-full  # BE CAREFULL to choose it accordingly to the one choosen in dataset_xxx experiment
   - override /tuner: a2c
-  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
-  - override /tuner/env/observations: simu
+  - override /tuner/reward: optimal_policy_distance
+#  - override /tuner/env/observations: simu
   - _self_
 
-info: Original (live) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+datasets_prefix: workloads_simu15 # BE CAREFULL to Use same prefix in corresponding dataset_xxx experimentation....
 
-datasets_prefix: workloads_orig  # Workloads selection
+info: Original (live) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
 
-REW_ALPHA_COEF: 0.2
-REW_BETA_COEF: 0
+# Workloads selection
+datasets:
+  pickles_prefix: ${datasets_prefix}_orig
+
+# Adapted reward coefficients for Optimal Policy Distance reward ?
+REW_ALPHA_COEF: 0.09 
+REW_BETA_COEF: 0.6
+REW_ARMS_STRENGTH_OPTION: False # Do not emphasize arm's strength in the reward computation
 
 tuner:
-  TRAINING_COVERAGE: 14
+  TRAINING_COVERAGE: 6
+  TRAINING_STEPS_PER_EPISODE: 65
   agent:
     policy:
       learning_rate: 0.0001

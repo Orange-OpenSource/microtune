@@ -1,0 +1,5 @@
+
+n_trials: 80
+
+tuner:
+  TRAINING_COVERAGE: 12

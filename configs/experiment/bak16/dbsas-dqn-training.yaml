@@ -2,18 +2,15 @@
 defaults:
   - _base
   - _sweep_basic
-  - override /datasets: traintest-full  # BE CAREFULL to choose it accordingly to the one choosen in dataset_xxx experiment
+  - override /datasets: traintest-simu
   - override /tuner: dqn
-  - override /tuner/reward: optimal_policy_distance
-#  - override /tuner/env/observations: simu
+  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
+  - override /tuner/env/observations: simu
   - _self_
 
-# Workloads selection
-datasets_prefix: workloads_simu15 # BE CAREFULL to Use same prefix in corresponding dataset_xxx experimentation....
-datasets:
-  pickles_prefix: ${datasets_prefix}_cvae
+info: DBSAS (simulated) dataset, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
 
-info: CVAE (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds 
+datasets_prefix: workloads_dbsas  # Workloads selection
 
 # From E11_57_dqn_alphabeta_gammaopti_sweepseed
 REW_ALPHA_COEF: 0.2

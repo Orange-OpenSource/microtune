@@ -1,0 +1,48 @@
+# @package _global_
+defaults:
+  - _base
+  - _sweep_basic
+  - override /tuner: ppo
+  - override /tuner/env/state_selector@tuner.env.state_selector_train: df_fullrandom #df_randombuffer #df_fullsequential
+  - override /tuner/reward: optimal_policy_distance
+  - _self_
+
+info: Legacy dataset and removed some samples having sla_tipping01>=63, and fixed hyper-parameters + OptimalPolicyDistance reward, Truncated condition on real_action != action  
+
+version: 16
+version_minor: 18
+datasets_prefix: workloads_legacyless63
+
+REW_ALPHA_COEF: -1 # ALPHA coef on UP, (1-ALPHA) on DOWN 
+REW_BETA_COEF: -1 # BETA coef on STAY
+REW_ARMS_STRENGTH_OPTION: False
+#n_seeds: 3  # Nb seeds per trials
+#n_jobs: 1 # Number of parallel trainings with different seed
+
+# In V7 - New optimal hyper-parameters (with Optuna trained on Datasetv15sall)
+learning_rate: 0.0006
+batch_size: 256
+normalize_advantage: true
+n_epochs: 24
+gamma: 0.96
+use_sde: false
+
+tuner:
+  TRAINING_COVERAGE: 12
+  env:
+    wrapper:
+      env:
+        on_terminate: -1 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+      use_sde: ${use_sde}
+
+hydra:
+  sweeper:
+    params:
+      RND_SEED: range(4242, 4248, step=1)

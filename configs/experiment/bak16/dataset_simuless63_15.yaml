@@ -1,0 +1,24 @@
+# @package _global_
+defaults:
+  - _base
+
+
+dataset_orig_import_file: import/workloads_feless63_15  # Original legacy (on FE) workloads, NOT simulated data, with all randtypes while removing some samples with sla_tipping01 >=63
+
+datasets_prefix: workloads_legacyless63
+
+orig:
+  pickles_prefix: ${datasets_prefix}
+  ratio: 80 # 80% Train, 20% Eval+Test
+#  ratio: 0 # even clients for training & odd clients for tests (eval+tests)
+  ratio_eval_test: 50
+#  seed: 42
+
+dataset_dbsas_import_file: !!null
+dbsas: !!null
+
+dataset_cvae_import_file: !!null
+cvae: !!null
+
+dataset_tabddpm_import_file: !!null #import/xxx  # TABDDPM simulated data with Uniform randtype only
+tabddpm: !!null

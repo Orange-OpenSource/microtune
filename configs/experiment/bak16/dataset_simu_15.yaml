@@ -1,0 +1,19 @@
+# @package _global_
+defaults:
+  - _base
+  - override /datasets@orig: traintest-full     # BE CAREFULL to Use same selector in experimentations....
+  - override /datasets@dbsas: traintest-full    # BE CAREFULL to Use same selector in experimentations....
+  - override /datasets@cvae: traintest-full     # BE CAREFULL to Use same selector in experimentations....
+  - override /datasets@tabddpm: traintest-full  # BE CAREFULL to Use same selector in experimentations....
+  - _self_
+
+datasets_prefix: workloads_simu15 # BE CAREFULL to Use same prefix in dataset's experimentations....
+
+# Simu experiments on version 15 datasets with all randtypes and V9+V10+V12.1...V12.19 Datasets
+dataset_orig_import_file: import/original_full_dataset_with_original_columns15sall
+
+dataset_dbsas_import_file: import/db_fullnetwork_generated_full_dataset_with_original_columns15sall # DBSAS simulated data with all randtypes
+
+dataset_cvae_import_file: import/CVAE_generated_full_dataset_with_original_columns_clipped15sall # CVAE simulated data with all randtypes
+
+dataset_tabddpm_import_file: import/tabddpm_generated1_15sall # !!null or TABDDPM simulated data with Uniform randtype only

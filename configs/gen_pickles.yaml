@@ -4,10 +4,10 @@
 
 defaults:
   - base  # ouput paths, verbosity, ...
-  - datasets@orig: traintest-simu
-  - datasets@dbsas: traintest-simu
-  - datasets@cvae: traintest-simu
-  - datasets@tabddpm: traintest-simu
+  - datasets@orig: traintest-full     # Use same selecctor as default one in run_agentxxx....
+  - datasets@dbsas: traintest-full    # Use same selecctor as default one in run_agentxxx
+  - datasets@cvae: traintest-full     # Use same selecctor as default one in run_agentxxx
+  - datasets@tabddpm: traintest-full  # Use same selecctor as default one in run_agentxxx
   - _self_
 
 # objective_margin is used by Basic baseline in particular to apply a margin factor on the SLA threshold, 

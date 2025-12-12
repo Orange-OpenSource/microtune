@@ -2,17 +2,13 @@
 defaults:
   - _base
   - _sweep_basic
-#  - override /datasets: traintest-simu
+  - override /datasets: traintest-full  # BE CAREFULL to choose it accordingly to the one choosen in dataset_xxx experiment
   - override /tuner: ppo
   - override /tuner/reward: optimal_policy_distance
 #  - override /tuner/env/observations: simu
   - _self_
 
 info: TABDDPM (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
-
-# Workloads selection
-datasets:
-  pickles_prefix: ${datasets_prefix}_tabddpm
 
 # Adapted reward coefficients for Optimal Policy Distance reward ?
 REW_ALPHA_COEF: 0.09 

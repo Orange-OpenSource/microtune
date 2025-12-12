@@ -2,27 +2,34 @@
 defaults:
   - _base
   - _sweep_basic
-  - override /datasets: traintest-simu
+  - override /datasets: traintest-full  # BE CAREFULL to choose it accordingly to the one choosen in dataset_xxx experiment
   - override /tuner: ppo
-  - override /tuner/reward: sigmoidhybriddiscretmoveidelta
-  - override /tuner/env/observations: simu
+  - override /tuner/reward: optimal_policy_distance
+#  - override /tuner/env/observations: simu
   - _self_
 
-info: CVAE (simulated) dataset for comparaison with DBSAS, and fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward + DBSAS OBS 
+# Workloads selection
+datasets_prefix: workloads_simu15 # BE CAREFULL to Use same prefix in corresponding dataset_xxx experimentation....
+datasets:
+  pickles_prefix: ${datasets_prefix}_cvae
 
-datasets_prefix: workloads_cvae  # Workloads selection
+info: CVAE (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds
 
-REW_ALPHA_COEF: 0.2
-REW_BETA_COEF: 0
+# Adapted reward coefficients for Optimal Policy Distance reward ?
+REW_ALPHA_COEF: 0.09 
+REW_BETA_COEF: 0.6
+REW_ARMS_STRENGTH_OPTION: False # Do not emphasize arm's strength in the reward computation
 
-learning_rate: 0.0001
-batch_size: 64
+learning_rate: 0.0004
+batch_size: 128
 normalize_advantage: false
-n_epochs: 24
-gamma: 0.86
+n_epochs: 3
+gamma: 0.94
+use_sde: false
 
 tuner:
-  TRAINING_COVERAGE: 14
+  TRAINING_COVERAGE: 6
+  TRAINING_STEPS_PER_EPISODE: 65
   agent:
     policy:
       learning_rate: ${learning_rate}
@@ -30,4 +37,4 @@ tuner:
       normalize_advantage: ${normalize_advantage}
       n_epochs: ${n_epochs}
       gamma: ${gamma}
-#      use_sde: ${use_sde}
+      use_sde: ${use_sde}
