@@ -1,6 +1,6 @@
 
 version: 16 
-version_minor: 20sall
+version_minor: 21sall
 
 pickles_dirname: E${version}_${version_minor}_${hydra:runtime.choices.experiment}
 

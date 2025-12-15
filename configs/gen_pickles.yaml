@@ -13,9 +13,9 @@ defaults:
 # objective_margin is used by Basic baseline in particular to apply a margin factor on the SLA threshold, 
 # Basic baseline choose to do UP arm if the current latency is over the SLA latency threshold (ex. 20ms).
 # objective_margin defines an area under the SLA threshold into Basic BL decide to stop to decrease the buffer and choose to STAY at the current buffer value.
-# Ex if SLA threshold is 20ms and objective_margin=0.3, then the STAY zone is between 17ms and 20ms, meaning that is LAT is <17ms, Basic BL select a DOWN arm
-# Ex if SLA threshold is 20ms and objective_margin=0.1, then the STAY zone is between 19ms and 20ms, meaning that is LAT is <19ms, Basic BL select a DOWN arm 
-objective_margin: 0.1
+# Ex if SLA threshold is 20ms and objective_margin=0.3, then the STAY zone is between 17ms and 20ms, meaning that if LAT is <17ms, Basic BL select a DOWN arm
+# Ex if SLA threshold is 20ms and objective_margin=0.1, then the STAY zone is between 19ms and 20ms, meaning that if LAT is <19ms, Basic BL select a DOWN arm 
+objective_margin: 0.3
 
 # Input datasets files with .pickles extension. The "Original" one is issued from real observation samples (DataRef), the others are generated/simulated ones 
 # ORIGinal dataset
