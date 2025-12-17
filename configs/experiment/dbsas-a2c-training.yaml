@@ -15,11 +15,15 @@ datasets:
 
 info: DBSAS (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds 
 
-REW_ALPHA_COEF: 0.2
-REW_BETA_COEF: 0
+# Adapted reward coefficients for Optimal Policy Distance reward ?
+REW_ALPHA_COEF: 0.185 
+REW_BETA_COEF: 0.7
+
+# Use SB3 option in model's Exploration mode 
+DETERMINISTIC: True
 
 tuner:
-  TRAINING_COVERAGE: 14
+  TRAINING_COVERAGE: 6
   agent:
     policy:
       learning_rate: 0.0001

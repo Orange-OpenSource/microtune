@@ -15,9 +15,12 @@ datasets:
 
 info: DBSAS (simulated) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds 
 
-# From E11_57_dqn_alphabeta_gammaopti_sweepseed
-REW_ALPHA_COEF: 0.2
-REW_BETA_COEF: 0
+# Adapted reward coefficients for Optimal Policy Distance reward ?
+REW_ALPHA_COEF: 0.185 
+REW_BETA_COEF: 0.7
+
+# Use SB3 option in model's Exploration mode 
+DETERMINISTIC: True
 
 # Best gamma evaluation is 0.76 (learning_rate=0.00054 batch_size=64 train_freq=128)
 learning_rate: 0.00054
@@ -26,7 +29,7 @@ train_freq: 128
 gamma: 0.76
 
 tuner:
-  TRAINING_COVERAGE: 14
+  TRAINING_COVERAGE: 6
   agent:
     policy:
       learning_rate: ${learning_rate}
