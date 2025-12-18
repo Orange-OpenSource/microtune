@@ -70,6 +70,9 @@ class BasicPolicy(CtxPolicy):
         #SLA OK. Stay arm
         return self.getStayArmIndex()   
 
+# Oracle is not really an Oracle but it is an "Optimal Policy" here!!
+# Reason, this policy find the best arm regarding the actions space currently attributed (typically -1,1).
+# An Oracle would go directly to the Tipping point using as many arms as necessary
 class OraclePolicy(CtxPolicy):
     def __init__(self,actions: Actions, ctx=[], seed=None):
         super().__init__(actions, ctx=ctx, use_tips=False, seed=seed)
@@ -77,7 +80,23 @@ class OraclePolicy(CtxPolicy):
     # Overrides virtual method off ABC CtxPolicy class
     def select_arm(self, context, deterministic=False, debug=False):
         if debug:
-            print(self.env.unwrapped.getRewardStates())
+            cd = self.getCtxDict(context)
+            print(f"ContextDict:{cd}")
+        #    print(self.env.unwrapped.getRewardStates())
+        # return np.argmax(self.env.unwrapped.getRewardStates())
+        
+        return self.env.unwrapped.findOptimalPolicyArmIndex()
+
+class OraclePolicyOLD(CtxPolicy):
+    def __init__(self,actions: Actions, ctx=[], seed=None):
+        super().__init__(actions, ctx=ctx, use_tips=False, seed=seed)
+
+    # Overrides virtual method off ABC CtxPolicy class
+    def select_arm(self, context, deterministic=False, debug=False):
+        if debug:
+            cd = self.getCtxDict(context)
+            print(f"ContextDict:{cd}")
+        #    print(self.env.unwrapped.getRewardStates())
         # return np.argmax(self.env.unwrapped.getRewardStates())
         try:
             cur_idelta, down_idelta = self.env.unwrapped.getIDeltaOnAction(action=-1)

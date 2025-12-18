@@ -293,6 +293,17 @@ class ADBMSBufferCacheStates(ADBMSDataFrameEntrySelector):
         est = self.state()
         return est["OP_BUDGET"+self._qpslat_w] + est["OP_USLA"+self._qpslat_w]
 
+    # Return how many Buffer increment to perform to reach the SLA Tipping point. 0 means the current state sticks on the best buffer valuer. 
+    # +1 means we need to increment by 1 the buffer size (typicaly +128MB).
+    # -1 means we need to increment by -1 the buffer size (typicaly -128MB).
+    def getBufIncrementsToPolicyOptimal(self):
+        est = self.state()
+        OP_BUDGET = est["OP_BUDGET"+self._qpslat_w]    # The needed budget in moves to reach the SLA tipping point
+        USLA = est["OP_USLA"+self._qpslat_w]           # Is the SLA violated (>0) or not (==0)
+
+        # If Under SLA is Zero (there's enought RAM), return DOWN actions or STAY (i.e; 0) when OP_BUDGET is 0. Else return UP actions (the needed budget in moves to reach the SLA tipping point)
+        return -OP_BUDGET if USLA == 0 else OP_BUDGET
+
 ##
 # Specific implementation of selectors for ADBMS dataset from ObsSamples referential
 ##

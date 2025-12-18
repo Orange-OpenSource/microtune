@@ -25,7 +25,7 @@ defaults:
   - override tuner: bfr
   - _self_
 
-oracle:
-  actions: ${tuner.actions}
-  reward: ${tuner.reward}
+#oracle:
+#  actions: ${tuner.actions}
+#  reward: ${tuner.reward}
   

@@ -92,6 +92,11 @@ class VSEnv(gym.Env):
             return cur_state["delta_perf_target01"], None
         return cur_state["delta_perf_target01"], act_state["delta_perf_target01"]
 
+    # Regarding the current action spaces and the distance, in steps to perform, to the SLA tipping point, return the Optimal Policy arm index to use
+    def findOptimalPolicyArmIndex(self):
+        bufincr_actions = self.ds.getBufIncrementsToPolicyOptimal()
+        actions = max(bufincr_actions, self.reward.actions.min()) if bufincr_actions < 0 else min(bufincr_actions, self.reward.actions.max())
+        return self.reward.actions.arm(actions)
 
     def reinit(self):
         self.cur_episode = self.cur_step = -1

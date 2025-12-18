@@ -42,21 +42,21 @@ oracle:
 baseline:
   TEST_EPISODES_COUNT: ${tuner.TEST_EPISODES_COUNT}
   TEST_STEPS_PER_EPISODE: ${tuner.TEST_STEPS_PER_EPISODE}
-  actions: ${tuner.actions}
   reward: 
-    test: ${tuner.reward.test}
+    test:
+      _target_: ${tuner.reward.test._target_}
 
 baseline2:
   TEST_EPISODES_COUNT: ${tuner.TEST_EPISODES_COUNT}
   TEST_STEPS_PER_EPISODE: ${tuner.TEST_STEPS_PER_EPISODE}
-  actions: ${tuner.actions}
   reward: 
-    test: ${tuner.reward.test}
+    test:
+      _target_: ${tuner.reward.test._target_}
 
 baseline3:
   TEST_EPISODES_COUNT: ${tuner.TEST_EPISODES_COUNT}
   TEST_STEPS_PER_EPISODE: ${tuner.TEST_STEPS_PER_EPISODE}
-  actions: ${tuner.actions}
   reward: 
-    test: ${tuner.reward.test}
+    test:
+      _target_: ${tuner.reward.test._target_}
 

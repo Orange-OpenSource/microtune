@@ -1,6 +1,14 @@
 defaults:
   - base_baseline
 
+# Oracle is not really an Oracle but it is an "Optimal Policy" here!!
+# Reason, this policy select the best arm regarding the actions space currently attributed (typically -1,1).
+# An Oracle would go directly to the Tipping point using as many arms as necessary
+
+agent:
+  policy:
+    _target_: pkg.policy_baselines.OraclePolicy
+
 env:
   wrapper_test:
     perf_meter:
