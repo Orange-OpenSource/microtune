@@ -33,19 +33,26 @@ done
 
 s3_storage="$(python run_agent${OPTUNA}.py --cfg job --resolve | grep s3_storage | cut -d' ' -f 2)"
 
+typeset -i USE_MINIO=0
+mc -v &>> /dev/null
+if [ $? -eq 0 ]
+then
+    USE_MINIO=1
+fi
+
 for expe in ${expe_list}
 do
     picklefiles_dir="$(grep pickles_dirname /tmp/${expe}${pid} | cut -d' ' -f 2)"
     picklefiles_disq_dir="$(grep pickles_disq_dirname /tmp/${expe}${pid} | cut -d' ' -f 2)"
     picklefiles_disq_path="$(grep pickles_disq_path /tmp/${expe}${pid} | cut -d' ' -f 2)"
 
-    if [ ! -d ${picklefiles_disq_path} ] 
+    if [ ! -d ${picklefiles_disq_path} ] && [ ${USE_MINIO} -eq 1 ]
     then
+        sleep 30
         mkdir ${picklefiles_disq_path}
         cmd="mc cp -r ${s3_storage}/${picklefiles_disq_dir}/agent ${picklefiles_disq_path}/"
         echo "Retrieves models: ${cmd}"
         ${cmd}
-        sleep 30
     fi
 
     n_trials=$(ls -1 ${picklefiles_disq_path}/agent*.pickle | wc -l)
@@ -55,20 +62,22 @@ do
     res=$?
     [ ${res} -ne 0 ] && echo "Error ${res}. run_all_agent_test" >> /dev/stderr && continue 
 
-    # Copy result graph to S3 
-    cmd="mc cp ${picklefiles_disq_path}/*-disq.html ${s3_storage}/${picklefiles_dir}/"
-    echo "Save results to S3: ${cmd}"
-    ${cmd}    
-    res=$?
-    [ ${res} -ne 0 ] && echo "Error ${res}. expetestdisqualified" >> /dev/stderr 
+    if [ ${USE_MINIO} -eq 1 ]
+    then
+        # Copy result graph to S3 
+        cmd="mc cp ${picklefiles_disq_path}/*-disq.html ${s3_storage}/${picklefiles_dir}/"
+        echo "Save results to S3: ${cmd}"
+        ${cmd}    
+        res=$?
+        [ ${res} -ne 0 ] && echo "Error ${res}. expetestdisqualified" >> /dev/stderr 
 
-    # Copy logs to S3 
-    cmd="mc cp -r ${picklefiles_disq_path}/logs ${s3_storage}/${picklefiles_dir}/"
-    echo "Save logs to S3: ${cmd}"
-    ${cmd}    
-    res=$?
-    [ ${res} -ne 0 ] && echo "Error ${res}. expetestdisqualified" >> /dev/stderr
-
+        # Copy logs to S3 
+        cmd="mc cp -r ${picklefiles_disq_path}/logs ${s3_storage}/${picklefiles_dir}/"
+        echo "Save logs to S3: ${cmd}"
+        ${cmd}    
+        res=$?
+        [ ${res} -ne 0 ] && echo "Error ${res}. expetestdisqualified" >> /dev/stderr
+    fi
 done
 
 for ff in ${tmpcfglist}

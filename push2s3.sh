@@ -33,7 +33,7 @@ then
     bakdir=${picklefiles_path}/.bak$$
     mkdir -p ${bakdir}
     mv ${picklefiles_path}/*-best.pickle ${bakdir}/.
-    mc mv ${picklefiles_path}/*.pickle ${s3_storage}/${picklefiles_dir}_disq/
+    mc cp ${picklefiles_path}/*.pickle ${s3_storage}/${picklefiles_dir}_disq/
     res=$?
     mv ${bakdir}/*-best.pickle ${picklefiles_path}/.
     rmdir ${bakdir}

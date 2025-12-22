@@ -316,7 +316,7 @@ class VSAgent():
             if verbose > 1:
                 print(f"Search for matching: {filename}")
             flist = glob.glob(filename)
-            filename = flist[0] if len(flist)>0 else None
+            filename = flist[0] if len(flist)>0 else ""
 
         if verbose > 1:
             print(f"File to load: {filename}")

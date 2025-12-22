@@ -70,8 +70,13 @@ def run(cfg: DictConfig) -> None:
     for trial in range(n_trials):
         agent = instantiate(cfg.tuner.agent)
 
+        # We are not 'strict' in file loading, if not possible we continue
         filever = f'{cfg.iterations_name}{trial}S*'
-        htmlfiles, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=cfg.xtraverbosity)
+        htmlfiles, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=cfg.xtraverbosity, strict=False)
+
+        if len(htmlfiles)==0 and len(optdict)==0:
+            log.warning(f"File not found: {cfg.pickles_path}/{filever}")
+            continue
 
         for ff in htmlfiles:
             os.remove(ff)
