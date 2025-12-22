@@ -3,10 +3,11 @@
 # Script to download all logs from S3 for different versions, datasets and models,
 # and concatenate specific log files into a single log file for analysis.
 
-version="15sall"
-version_minor_desc="15sall_15: orig+dbsas+cvae+tabddpm"
-version_minor_list="15" 
-ds_list="orig dbsas cvae tabddpm"
+# Compose the experiences to scrap on S3 here: <version>_<version_minor>_<ds>_<model>_<expe_name>
+version="16"
+version_minor_desc="21sall: orig+dbsas+cvae+tabddpm"
+version_minor_list="21sall" 
+ds_list="orig dbsas cvae tabddpm" # Datasets list: orig dbsas cvae tabddpm
 model_list="ppo a2c dqn"
 expe_name_list="training"
 

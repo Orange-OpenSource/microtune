@@ -1,0 +1,67 @@
+# @package _global_
+defaults:
+  - _base
+  - _sweep_optuna
+  - override /datasets: traintest-full
+  - override /tuner: ppo
+#  - override /tuner/env: continous_actions #discrete_actions (not the default)
+  - override /tuner/actions: lesstenplusten      # The Min and Max action values. Here we have 21 arms: -10 up to -1, 0 and then 1 up to 10
+  - override /tuner/reward: optimal_policy_distance # In paper: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: Hyper params & ALPHA,BETA optim with Optuna + rew=optimal_policy_distance FIXED with Arm's factor + Arms (-10,+10)
+
+datasets_prefix: workloads_legacy
+
+n_seeds: 4
+n_jobs: 2 # Number of parallel trainings with different seed
+n_trials: 20
+hydra_launcher_n_jobs: 2 # Number of trials in parallel with Optuna
+
+REW_ALPHA_COEF: 0.185 
+REW_BETA_COEF: 0.7
+REW_ARMS_STRENGTH_OPTION: False # Should be True with the Sigmoid Reward and False with the Optima Distance to the policy reward
+
+# learning_rate=0.0003, n_steps=2048, batch_size=64, n_epochs=10, gamma=0.99, gae_lambda=0.95, clip_range=0.2, clip_range_vf=None, normalize_advantage=True, 
+# ent_coef=0.0, vf_coef=0.5, max_grad_norm=0.5, use_sde=False, sde_sample_freq=-1, rollout_buffer_class=None, rollout_buffer_kwargs=None, 
+# target_kl=None, stats_window_size=100, 
+# tensorboard_log=None, policy_kwargs=None, verbose=0, seed=None, device='auto', _init_setup_model=True
+learning_rate: 0.0003
+batch_size: 64
+normalize_advantage: False
+n_epochs: 12
+gamma: 0.99
+use_sde: False  # Works only with continous action space
+
+hydra:
+  sweeper:
+    params:
+      REW_ALPHA_COEF: range(0.05,0.201, step=0.005)
+      REW_BETA_COEF: range(0.5, 1.01, step=0.05)
+      learning_rate: range(0.0003,0.001, step=0.0001)
+      batch_size: choice(64,128)
+      normalize_advantage: choice(True,False)
+      n_epochs: choice(3,24)
+      gamma: range(0.9,1, step=0.01) # Lower value enforce reward values earlier (on first steps)
+      use_sde: choice(True,False)
+#      DETERMINISTIC: choice(True,False)
+#      gae_lambda: choice(0.90,0.95,0.98)
+#      clip_range: choice(0.1,0.2,0.4,0.6)
+#      steps_success_count_threshold: choice(8,12)
+
+
+tuner:
+  TRAINING_COVERAGE: 6
+  TRAINING_STEPS_PER_EPISODE: 65
+  env:
+    wrapper:
+      env:
+        on_terminate: -1 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
+  agent:
+    policy:
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+      use_sde: ${use_sde}
