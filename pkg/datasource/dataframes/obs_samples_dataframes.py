@@ -35,6 +35,7 @@ class ObsSamplesDF():
     def retrieve_all_documents(self, mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__"):
         # Connect to MongoDB (i.e. 192.168.0.206)
         client = MongoClient(f"mongodb://{mongohost}:{mongoport}/")
+        print(f'Connected to {mongohost}:{mongoport}')
 
         # Access the database and collection
         db = client[dbname]
@@ -235,11 +236,12 @@ class ObsSamplesDF():
         return df.reset_index(drop=True, inplace=False)
 
     # Import data from MongoDB (DataRef Obs Samples), fix/add some columns and return the full indexed dataframe
-    def getMongoDataRef(self,  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__" ,objective_margin=0.3):
+    def getMongoDataRef(self,  mongohost="localhost", mongoport=27017, dbname="adbms-obs-ref-mariadb-11_1_3", colname="sysbench__oltp_read_write__" ,objective_margin=0.1):
         list_documents, list_documents0 = self.retrieve_all_documents(mongohost=mongohost, mongoport=mongoport, dbname=dbname, colname=colname)
         df_filtered = self.docs2flat_list(list_documents)
         # Fixes and add some columns with constants
-        return self.fixColumns(df_filtered, objective_margin=objective_margin, combined_col=True, combine_with_origin=True)
+        df = self.additionalColumns(df_filtered)
+        return self.fixColumns(df, objective_margin=objective_margin, combined_col=False)
 
     def saveToPickle(self, fullname, df):
         df.to_pickle(fullname+'.pickle', compression={'method': 'gzip', 'compresslevel': 1, 'mtime': 1})
