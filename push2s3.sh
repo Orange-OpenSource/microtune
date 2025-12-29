@@ -14,15 +14,15 @@ then
 
     echo "Copy symlinks in logs dir..."    
     pushd ${picklefiles_path}/logs
-    dirlist=$(find . -type l | sed 's/^\.\///')
-    for dd in ${dirlist}
-    do
-        mc mb ${s3_storage}/${picklefiles_dir}/logs/${dd}
-    done
+    full_list=$(find . -type l | sed 's/^\.\//')  # liste des liens relatifs
+    full_list=$(echo "$full_list" | sed "s|^|${s3_storage}/${picklefiles_dir}/logs/|")  # ajouter le chemin de base
+    mc mb ${full_list}
     popd
-    sleep 4
+
+    sleep 3
     for dd in ${dirlist}
     do
+        sleep 0.5
         mc cp -r ${picklefiles_path}/logs/${dd}/ ${s3_storage}/${picklefiles_dir}/logs/${dd}/
     done
     echo "Logs pushed to: ${picklefiles_path}/logs/"
@@ -33,7 +33,9 @@ then
     bakdir=${picklefiles_path}/.bak$$
     mkdir -p ${bakdir}
     mv ${picklefiles_path}/*-best.pickle ${bakdir}/.
-    mc cp ${picklefiles_path}/*.pickle ${s3_storage}/${picklefiles_dir}_disq/
+
+    # Nove files to S3. Do not keep locally all models to save disk (important in some )
+    mc mv ${picklefiles_path}/*.pickle ${s3_storage}/${picklefiles_dir}_disq/
     res=$?
     mv ${bakdir}/*-best.pickle ${picklefiles_path}/.
     rmdir ${bakdir}
