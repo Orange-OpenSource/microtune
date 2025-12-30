@@ -12,7 +12,8 @@ then
     res=$?
     [ ${res} -ne 0 ] && echo "Error ${res}. S3, logs dir/subdir creation" >> /dev/stderr && exit 1
 
-    echo "Copy symlinks in logs dir..."    
+    # TODO: HUGELY Improve this by a unique mc cp -r ${full_list} ${s3_storage}/${picklefiles_dir}/logs/
+    echo "Copy symlinks in logs dir..."
     pushd ${picklefiles_path}/logs
     dirlist=$(find . -type l | sed 's/^\.\///')  # liste des liens relatifs
     full_list=$(echo "$dirlist" | sed "s|^|${s3_storage}/${picklefiles_dir}/logs/|")  # ajouter le chemin de base
@@ -24,7 +25,7 @@ then
     do
         ((count++))
         if (( count % 9 == 0 )); then
-            sleep 5
+            sleep 5 # Because our S3 seems to block too frequent requests after 9 subsequent iterations
         else
             sleep 0.5
         fi

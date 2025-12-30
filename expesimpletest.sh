@@ -35,7 +35,7 @@ fi
 typeset -i res=0
 
 # Check names of experiments
-echo "Check names of experiments and exit if error appears..."
+echo "Check names of experiments..."
 for expe in ${expe_list}
 do
     python run_simple_test.py +experiment=${expe} ++trial=${TRIAL} ++seed=${SEEDID} --cfg job --resolve

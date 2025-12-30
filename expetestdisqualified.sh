@@ -21,7 +21,7 @@ pid=$$
 tmpcfglist=''
 
 # Check names of experiments
-echo "Check names of experiments and exit if error appears..."
+echo "Check names of experiments..."
 for expe in ${expe_list}
 do
     python run_all_agents_test.py +experiment=${expe} $* --cfg job --resolve > /tmp/${expe}${pid}
