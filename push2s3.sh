@@ -14,15 +14,20 @@ then
 
     echo "Copy symlinks in logs dir..."    
     pushd ${picklefiles_path}/logs
-    full_list=$(find . -type l | sed 's/^\.\//')  # liste des liens relatifs
-    full_list=$(echo "$full_list" | sed "s|^|${s3_storage}/${picklefiles_dir}/logs/|")  # ajouter le chemin de base
+    dirlist=$(find . -type l | sed 's/^\.\///')  # liste des liens relatifs
+    full_list=$(echo "$dirlist" | sed "s|^|${s3_storage}/${picklefiles_dir}/logs/|")  # ajouter le chemin de base
     mc mb ${full_list}
     popd
 
-    sleep 3
+    count=0
     for dd in ${dirlist}
     do
-        sleep 0.5
+        ((count++))
+        if (( count % 9 == 0 )); then
+            sleep 5
+        else
+            sleep 0.5
+        fi
         mc cp -r ${picklefiles_path}/logs/${dd}/ ${s3_storage}/${picklefiles_dir}/logs/${dd}/
     done
     echo "Logs pushed to: ${picklefiles_path}/logs/"
