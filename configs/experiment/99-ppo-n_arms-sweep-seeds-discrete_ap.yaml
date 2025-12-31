@@ -1,0 +1,40 @@
+# @package _global_
+defaults:
+  - _base
+  - _sweep_basic
+  - override /datasets: traintest-full
+  - override /tuner: ppo
+  - override /tuner/env: discrete_actions #continous_actions (default) or discrete_actions 
+  - override /tuner/actions: lessoneplussix
+  - override /tuner/reward: optimal_policy_distance # In paper: sigmoidhybriddiscretmoveidelta
+  - _self_
+
+info: Use Discrete Action Space + Optimal Hyper params & ALPHA,BETA + rew=optimal_policy_distance + Arms (-1,+6) + NOT DETERMINISTIC in tests (default)
+
+datasets_prefix: workloads_legacy
+
+# Best parameters from 04-opt-ppo-n_arms with best evaluated model (Trial 77)
+REW_ALPHA_COEF: 0.15
+REW_BETA_COEF: 0.25
+
+# Use SB3 option in model's Exploration mode 
+#DETERMINISTIC: False (Default)
+learning_rate: 0.0006
+batch_size: 128
+normalize_advantage: False
+n_epochs: 3
+gamma: 0.97
+
+tuner:
+  TRAINING_COVERAGE: 6
+  agent:
+    policy:
+      discrete_arms_mode: True
+      use_sde: False
+      learning_rate: ${learning_rate}
+      batch_size: ${batch_size}
+      normalize_advantage: ${normalize_advantage}
+      n_epochs: ${n_epochs}
+      gamma: ${gamma}
+
+n_jobs: 4

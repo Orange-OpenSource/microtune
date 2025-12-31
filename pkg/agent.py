@@ -282,21 +282,20 @@ class VSAgent():
     def _loadFile(self, filename, verbose=0, strict=True):
         if os.path.isfile(filename) is False:
             if strict:
-                print(f'cwd:{os.getcwd()} filename not found: {filename}')
+                print(f'WARNING: cwd:{os.getcwd()}/{filename} not found!')
+                assert filename, f"Error: {filename}. No filename specified nor built by default (no policy)"
             else:
                 self.filename = None
                 return ([],{})
-            filename = None
         elif verbose > 1:
             print(f"Load {filename}...")
         
-        assert filename, "No filename specified nor built by default (no policy)"
         self.filename = filename
 
         objlist = self._load_obj_list(filename) 
         if verbose:
             ol = "" if verbose < 2 else f' with {objlist}' 
-            print(f"{filename} is loaded{ol}.")
+            print(f"{self.filename} is loaded{ol}.")
 
         objlist = self.policy.restoreData(objlist)
 

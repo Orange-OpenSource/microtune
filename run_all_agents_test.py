@@ -23,7 +23,8 @@ import hydrauti as hu
 from pkg.graph import GraphPerfMeterComparaison
 
 # Test all agents of all trials on Test Dataset and produce a graph to compare them
-# Command: python run_disq_agent_test.py +experiment=<sweepseed_experiment> ++n_trials=N
+# Default path of models is the output path without "_disq" suffix
+# Command: python run_disq_agent_test.py +experiment=<sweepseed_experiment> [++pickles_path=<path_of_all_models>]
 
 # A logger for this file
 log = logging.getLogger(__name__)
@@ -81,7 +82,11 @@ def run(cfg: DictConfig) -> None:
         agent = instantiate(cfg.tuner.agent)
 
         filever = f'{cfg.iterations_name}{trial}S*'
-        _, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=0, dftext='.pickle')
+        _, optdict = agent.load(filepath=cfg.pickles_path, filever=filever, verbose=0, strict= False, dftext='.pickle')
+
+        if agent.filename is None:
+            log.warning(f'Agent not found with: filepath={cfg.pickles_path} filever={filever} ext=.pickle')
+            continue
 
         log.info(f'AgentFilename: {agent.filename}')
         log.info(f'AgentLearningParams: {optdict["sweeper_params"]}')

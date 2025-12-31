@@ -40,7 +40,7 @@ then
     mkdir -p ${bakdir}
     mv ${picklefiles_path}/*-best.pickle ${bakdir}/.
 
-    # Nove files to S3. Do not keep locally all models to save disk (important in some )
+    # Nove files to S3. Do not keep locally all models to save disk space (important in cases with multiple experiments launched by expecomplete.sh)
     mc mv ${picklefiles_path}/*.pickle ${s3_storage}/${picklefiles_dir}_disq/
     res=$?
     mv ${bakdir}/*-best.pickle ${picklefiles_path}/.

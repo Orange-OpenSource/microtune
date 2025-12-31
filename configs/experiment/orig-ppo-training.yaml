@@ -8,6 +8,10 @@ defaults:
 #  - override /tuner/env/observations: simu
   - _self_
 
+# TODO: 
+#   - See 04-opt-ppo-n_arms to see how to switch into Discrete ActionSpace.
+#   - Apply setting in every PPO experiments or set it as default in code base
+
 datasets_prefix: workloads_simu15 # BE CAREFULL to Use same prefix in corresponding dataset_xxx experimentation....
 
 info: Original (live) dataset v15, OptimalPolicy Distance reward, fixed hyper-parameters and basic sweep on multiple seeds

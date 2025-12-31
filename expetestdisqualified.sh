@@ -48,15 +48,19 @@ do
 
     if [ ! -d ${picklefiles_disq_path} ] && [ ${USE_MINIO} -eq 1 ]
     then
-        sleep 30
         mkdir ${picklefiles_disq_path}
         cmd="mc cp -r ${s3_storage}/${picklefiles_disq_dir}/agent ${picklefiles_disq_path}/"
+        sleep 20
         echo "Retrieves models: ${cmd}"
         ${cmd}
+        PICKLES_DIR_OPT="++pickles_path=${picklefiles_disq_path}"
+    else
+        PICKLES_DIR_OPT=""
     fi
 
-    n_trials=$(ls -1 ${picklefiles_disq_path}/agent*.pickle | wc -l)
-    cmd="python run_all_agents_test.py +experiment=${expe} ++n_trials=${n_trials} ++pickles_path=${picklefiles_disq_path} $*"
+    #n_trials=$(ls -1 ${picklefiles_disq_path}/agent*.pickle | wc -l)
+    #cmd="python run_all_agents_test.py +experiment=${expe} ++n_trials=${n_trials} ++pickles_path=${picklefiles_disq_path} $*"
+    cmd="python run_all_agents_test.py +experiment=${expe} ${PICKLES_DIR_OPT} $*"
     echo "TEST: ${cmd}"
     ${cmd}
     res=$?

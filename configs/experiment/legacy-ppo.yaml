@@ -7,6 +7,10 @@ defaults:
   - override /tuner/reward: sigmoidhybriddiscretmoveidelta
   - _self_
 
+# TODO: 
+#   - See 04-opt-ppo-n_arms to see how to switch into Discrete ActionSpace.
+#   - Apply setting in every PPO experiments or set it as default in code base
+
 datasets_prefix: workloads_legacy # BE CAREFULL to Use same prefix in corresponding dataset_xxx experimentation....
 
 info: PPO 11 Revival with fixed hyper-parameters and basic sweep on multiple seeds + Sigmoid reward +  Optimized OBS (Dav.) + cleaned WL (c98, Yif.)
