@@ -272,6 +272,10 @@ class VSEnv(gym.Env):
 
         return self._step_unscaled_action(u_action)
 
+    def _msg_terminate(self, action="Preparing to Force"):
+        msg = f'TERMINATE!: {action} Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret'
+        return msg
+    
     # Use unscaled action in [action_min, action_max] interval, where action_min is typically negative for a DOWN action, and positiv for a UP action. STAY action is 0.
     def _step_unscaled_action(self, action: int):
         #assert self.ds.globalIndex() >=0, f"Error: GIDX:{self.ds.globalIndex()}"
@@ -300,10 +304,10 @@ class VSEnv(gym.Env):
             # On count condition, Stop the episode, if STAY action is done without any regret!
             if action == 0 and regret == 0:
                 self._on_terminate_count += 1
-                rew += self._on_terminate_count*2 #(self._on_terminate_count/(self._on_terminate+1)) #self._on_terminate
-                self._logmsg(0, f'TERMINATE!: Prepare to Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
+                rew += self._on_terminate_count #(self._on_terminate_count/(self._on_terminate+1)) #self._on_terminate
+                self._logmsg(0, self._msg_terminate)
                 if self._on_terminate_count >= self._on_terminate:
-                    self._logmsg(0, f'TERMINATE!: Force Terminate episode Ep:{self.cur_episode} Step:{self.cur_step} after {self._on_terminate_count} STAY actions with no regret')
+                    self._logmsg(0, self._msg_terminate, "Force")
                     terminated=True
 
         return obs, rew, terminated, truncated, self._info(regret=regret, pact=pact, terminated=terminated, truncated=truncated, eoep_reason=eoep_reason) #obs, reward, terminated, truncated, info

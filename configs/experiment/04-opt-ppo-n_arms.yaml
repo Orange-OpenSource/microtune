@@ -31,7 +31,7 @@ batch_size: 64
 normalize_advantage: False
 n_epochs: 12
 gamma: 0.99
-use_sde: False  # Works only with continous action space
+#use_sde: False  # True value, requires a continous action space
 
 hydra:
   sweeper:
@@ -55,7 +55,7 @@ tuner:
   env:
     wrapper:
       env:
-        on_terminate: -1 # If >=0 Stop the episode, if STAY action is done without any regret! In such a case reward is increased + on_terminate value
+        on_terminate: -1 # If >=0 Stop the episode, if STAY action is done on_terminate times, without any regret! In such a case, the reward is increased by adding on_terminate subsequent count value
   agent:
     policy:
       discrete_arms_mode: True
