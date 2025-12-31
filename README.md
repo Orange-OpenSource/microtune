@@ -37,7 +37,7 @@ See the `requirements.txt` [file](requirements.txt) to know all Python's depende
 
 ## Getting started
 
-Pickup dataset (last version) in Git's Releases. 
+Pickup dataset (last version) in Git's Releases. See also `import/Readme.md`.
 
 ### Code version 1.x
 Files (`workloads_c098_xxx.pickle` delivered in 1.0 release) must be located at the top level folder of the code.
