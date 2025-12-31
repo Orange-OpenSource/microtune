@@ -10,9 +10,11 @@ This repo contains:
 + Exploration phase (see [Microtune paper](ask_us)): the code to launch all experimentations for training and models tests
 + Real-time Exploitation phase (see [Microtune paper](ask_us)): the code to run an agent operating an on-line MariaDB database and tuning its InnoDB's buffer pool size
 
-[Research Paper](ask_us): Ask us. VLDB 25, is still under review(s) for publication...
+[Research Paper](ask_us): Ask us...
 
-The experimentations details in `Experiments.md` [file](Experiments.md) in this repository, can be replayed.
+The experimentations details in `Experiments1.md` [file](Experiments1.md) in this repository, can be replayed. They are the one used to write the first version (2025) of the Microtune paper. They require the code tagged 1.x only.
+
+The experimentations details in `Experiments2.md` [file](Experiments2.md) in this repository, can be replayed. They are the one used to prepare and write the next Microtune paper and test some simulations works. The require the code tagged 2.x.
 
 Otherwise, detailed Results (internal Orange users only) are availables here: 
     + S3 CAV (OB)
@@ -37,7 +39,17 @@ See the `requirements.txt` [file](requirements.txt) to know all Python's depende
 
 Pickup dataset (last version) in Git's Releases. 
 
-Files (`workloads_c098_xxx.pickle`) must be located at the top level folder of the code.
+### Code version 1.x
+Files (`workloads_c098_xxx.pickle` delivered in 1.0 release) must be located at the top level folder of the code.
+
+Or ask contributors to provide them.
+
+Install python (min is 3.10, tested with 3.10.12).
+
+Run `pip install -r requirements.txt`
+
+### Code version 2.x
+Files (`workloads_xxx.pickle` delivered in 2.x release) must be located at the top level of the code in `import` folder.
 
 Or ask contributors to provide them.
 
@@ -50,15 +62,23 @@ Run `pip install -r requirements.txt`
 
 We describe here a short view of differents stages in game to train, test and generate several curves of results through several experiments (in the Hydra's terms) or scripts. The full process is more detailed in the next paragraph.
 
-Each stage has a python or shell script:
-+ Train/Eval/Test `expetraintest.sh`:
-	+ train and evaluation, with some graphs (html)
-	+ determine best model
-	+ test best model and generate graphs (html)
+All experiments are located in `configs/experiment`.
+
+Each stage has a python script but a convenient shell script is provided when working :
++ Train/Eval/Test `expetraintest.sh [--optuna] experiment1,experiment2,...`:
+	+ trainning and evaluation, with some graphs (html). The training consists of N Trials, with M Seeds per trial as defined per configuration
+	+ determine best evaluated model
+	+ test best evaluated model and generate graphs (html) to compare it alone against baselines and the Optimal Policy (wrongly named Oracle). The best model and baselines have their performance computed with the distance to the optimal policy.
 	+ Optionaly, publish results on S3, disabled from a command line option.
-+ Optional `python run_simple_test.py`: 
-	+ SLA curve, i.e. latency curve on N steps during evaluation and tests. Each workload is crossed twice, one time starting from the maximum buffer size, the second time starting from the minimmu buffer size
-+ Variability tests 
++ Optional `expesimpletest.sh experiment1,experiment2,...`: 
+	+ SLA curve, i.e. latency curve on N steps during evaluation and tests. Each workload is crossed twice, one time starting from the maximum buffer size, the second time starting from the minimmun buffer size
+    + The generated graph if the best evaluated model has be found at Tiral 27 and Seed 0: `agent-T27S0-test-sla_perf-xxx-best.html`
++ Optional `expetestdisqualified.sh experiment1,experiment2,...`: 
+    + Retrieve all best evaluated models a all Trials and Test them on Test dataset, and generate a unique graph (html) comparing all of them against baseline and the Optimal Policy (wrongly called Oracle). Each model and baselines have their performance computed with the distance to the optimal policy.
+    + The generated graph `agent-Tall-perfmeters_comp-xxx.html`
+
+See 'Misc. examples' below for other examples not using the Shell scripts.
+
 
 ### Chained execution from learning models up to variability tests
 
@@ -66,7 +86,7 @@ The purpose is to train models with different settings of hyper parameters, eval
 Models are trained on a dataset different than the dataset used for tests.
 Results and models are pushed to a S3 (can be disabled from an option of the Bash commmand line)
 
-We use Optuna to tune models's hyper-parameters on X trials. For each trials we learn N models using N different Random Seeds (from 4242 up to 4242+N).
+We use Optuna to tune models's hyper-parameters on X trials. For each trials we learn N models using M different Random Seeds (from 4242 up to 4242+M).
 
 See in `Experiments.md` the list of experiments already created and their description.
 

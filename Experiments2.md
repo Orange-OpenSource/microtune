@@ -3,11 +3,11 @@
 
 Experiments configuration overrides are located in Hydra's config folder: `configs/experiments`.
 
-All latest experiments use the Distance to the Optimal Policy reward which is simpler than sigmoïd. Model's Hyperparams and ALPHA,BETA parameters are re-tuned here.
+Sub-folders with configurations like `configs/experiments/bakxxx/yyy.yaml` cannot be used directly. Sub-folders are there to be used as backuped experimentations.
+
+All latest experiments use the Distance to the Optimal Policy (`optimal_policy_distance`) reward which is simpler than sigmoïd. Model's Hyperparams and ALPHA,BETA parameters are re-tuned here.
 
 Determining best ALPHA and BETA values are done during Optuna optimisations of Hyperparametes, new trend is ALPHA closed to 0 and BETA over 0.5.
-
-Some backuped experiments are located in `configs/experiments/bak...`
 
 
 # Hyper-parameters optimization with Optuna
@@ -16,9 +16,13 @@ Expermiments names <experiment_name> are located in are prefixed either by `03-o
 
 - "E16_21sall_03-opt-xxx", with Arms (-1, +6) Reward is OptimalPolicyDistance, Continous action space (default) :
 	- PPO is best than A2C, best than DQN. LinUCB buggy (matrix inversion problem).
-	- On observe des phénomènes d'oscillation dans la zone optimale mais le fait de pouvoir augmenter de +6 incréments de buffers, induit de grosses variations (sur-allocations) qu'on n'aurait peut-être pas avec un incrément limité à +1. Ex regarder ce qui se passe sous les 20ms: https://s3selfcare-vstune.s3-region01.cloudavenue.orange-business.com/E16_21sall_03-opt-dqn-n_arms/agent-T47S2-test-sla_perf-SB3DQN_-1_6D-best.html
-	- Pendant les test (sla), le paramètre "deterministic" est positionné à False, on a bien des comportements différents pour 2 inputs identiques. Sur les expériences PPO avec "99-xxx" et "99-xxx-nd", on observe bien qu'il y a plus de fluctuations autour des valeurs cibles avec DETERMINISTIC=False (ND). Le résultat est finalement moins bon en DETERMINISTIC=True ^^ (plus de VIOLATIONS 618 vs 380), USLA (855 vs 536), CRAM proches
-- "E16_21sall_04-opt-ppo-xxx", with Arms (-1, +6) Reward is OptimalPolicyDistance, Discrete action space (default) and DETERMINISTIC in test OFF :
+	- We observe oscillation phenomena in the optimal zone, but the ability to increase buffer size by +6 increments induces large variations (over-allocations) that might not occur with an increment limited to +1. For example, look at what happens below 20ms.: https://s3selfcare-vstune.s3-region01.cloudavenue.orange-business.com/E16_21sall_03-opt-dqn-n_arms/agent-T47S2-test-sla_perf-SB3DQN_-1_6D-best.html
+	- During the tests (SLA), with the "deterministic" parameter set to False, we observed different behaviors for two identical inputs. In the PPO experiments with "99-xxx" and "99-xxx-nd", we clearly saw more fluctuations around the target values ​​with DETERMINISTIC=False (ND). The result was ultimately worse with DETERMINISTIC=True (more VIOLATIONS: 618 vs. 380), USLA (855 vs. 536), and CRAM values ​​close.
+- "E16_21sall_04-opt-ppo-xxx", Discrete ActionSpace + Hyper params & ALPHA,BETA optim with Optuna + rew=optimal_policy_distance + Arms (-1,+6) + NOT DETERMINISTIC in tests (default)
+- "E16_21sall_04-opt-ppo-n_arms-ot", Discrete ActionSpace + Hyper params & ALPHA,BETA optim with Optuna + rew=optimal_policy_distance + Arms (-1,+6) + NOT DETERMINISTIC in tests (default) + on_terminate rewarding. The 'on_terminate' option in Env, has for purpose to reward more when the agent decide to use the STAY arm with NO Regret! 
+If on_terminate>=0 we'll Stop the episode when STAY action is done after on_terminate times, without any regret! In such a case, the reward is increased by adding to the reward value count of on_terminate subsequents True conditions
+- All digital twin experiments are named as follow '<simuname>-<modelname>-training'. the simu named 'orig' use a dataset not simulated.
+
 
 # Basic sweep on parameters with constant hyper-parameters
 
