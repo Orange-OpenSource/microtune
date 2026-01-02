@@ -42,7 +42,7 @@ Some files are private to Orange, but the one used in Microtune's paper is deliv
 
 We describe here only the public datasets.
 
-- `workloads_fe_11.pickle`, v11 (actually V9+V10) data collected in Flexible Engine, used in Microtune's paper and experiments E11. Source: Git Release
+- `workloads_fe_11.pickle`, v11 (actually V9+V10) data collected in Flexible Engine, used in Microtune's paper and experiments E11. Source: Git Release 2.x (found as workloads_c098_xxx in release 1.0)
 - `workloads_gke_14.pickle`, v14 data is a set of workloads collected on GKE/GCP, less data than the v11 collection but on a different infrastrucure and VM flavour. Source: please ask
 - `workloads_fe_15.pickle`, v15 is v11 data + additional workloads observations collected on Flexible Engine like v11. Source: please ask
 - `workloads_feless63_15.pickle`, v15 data while removing many workloads observations where SLA tipping point have a buffer index >= 63 (over 256MB). Source: please ask
